@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>带tab切换的字体图标选择器</title>
+        <!-- 官网地址 https://farbelous.io/fontawesome-iconpicker/-->
+        <!--本地地址-->
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/fontawesome-iconpicker.min.css" rel="stylesheet">
+        <link href="../layui/css/layui.css" rel="stylesheet">
+
+        <!--远程地址-->
+        <!--<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+        <link href="https://farbelous.io/fontawesome-iconpicker/dist/css/fontawesome-iconpicker.min.css" rel="stylesheet">-->
+        <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <style>
+            .form-control, .form-group{
+                position: relative;
+            }
+            .form-group{
+                text-align: left;
+                margin-bottom: 30px;
+            }
+            .form-group label{
+                display:block;
+                margin-bottom: 15px;
+            }
+            .lead iframe{
+                display:inline-block;
+                vertical-align: middle;
+            }
+            .iconpicker-items>a{
+                text-decoration:none;
+            }
+            .iconpicker-items>a>.layui-icon{
+                top:6px;
+            }
+            .iconpicker .iconpicker-item.iconpicker-selected{
+                /*#286090 #276fad*/
+                background: #276fad;
+            }
+            /* 如果使用远程，请自行调整图标容器宽度*/
+            .iconpicker-popover.popover{width:335px;}
+        </style>
+    </head>
+
+    <body>
+        <div class="container" style="text-align: center ; padding-top: 100px;width:600px">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <p>版本使用说明：</p>
+                        <p>本地地址使用fontawesome 版本 4.7.0</p>
+                        <p>远程地址使用fontawesome 版本 5.0</p>
+                    </div>
+                    <div class="form-group">
+                        <label>搜索图标</label>
+                        <input class="form-control icp icp-auto" data-input-search="true" value="" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label>选择图标带按钮</label>
+                        <div class="input-group">
+                            <input data-placement="bottomRight" class="form-control icp icp-auto" value=""  type="text"/>
+                            <span class="input-group-addon"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>点击下拉按钮显示图标</label>
+                        <div class="btn-group">
+                            <button data-selected="graduation-cap" type="button" class="icp icp-dd btn btn-default dropdown-toggle iconpicker-component" data-toggle="dropdown">
+                                Dropdown  <i class="fa fa-fw"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu"></div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary iconpicker-component"><i class="fa fa-fw fa-heart"></i></button>
+                            <button type="button" class="icp icp-dd btn btn-primary dropdown-toggle" data-selected="fa-car" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu"></div>
+                        </div>
+                        <p class="m-t-10">注意：在下拉列表中，放置由Bootstrap下拉插件控制</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--本地地址-->
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="./js/fontawesome-iconpicker2.js"></script>
+        <!--远程地址-->
+        <!--<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+        <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://farbelous.io/fontawesome-iconpicker/dist/js/fontawesome-iconpicker.js"></script>-->
+        <script>
+            $(function() {
+                // 图标可以点击选中 icp-auto 操作图标元素
+                $('.icp-auto').iconpicker({
+                    title: '请选择一个图标',
+                    tab:'layui-icon', //定义tab 选项  true(fa) glyphicon fa  layui-icon
+                    //  指定图标
+                    //icons:['fa-github', 'fa-heart', 'fa-html5', 'fa-css3'],
+                    // 添加其他图标 加入 bootstrap  glyphicon 字体图标
+                    /*icons: $.merge(['layui-icon-release','glyphicon-home', 'glyphicon-repeat', 'glyphicon-search',
+                        'glyphicon-arrow-left', 'glyphicon-arrow-right', 'glyphicon-star'], $.iconpicker.defaultOptions.icons),*/
+                    fullClassFormatter: function(val){
+                        if(val.match(/fa-/)){
+                            return 'fa '+val;
+                        }else if(val.match(/glyphicon-/)){
+                            return 'glyphicon '+val;
+                        }else {
+                            return 'layui-icon '+val;
+                        }
+                    },
+                    component: '.input-group-addon', // 图标存放容器
+                   /* Placements: inline topLeftCorner topLeft top topRight topRightCorner rightTop right rightBottom bottomRightCorner bottomRight bottom bottomLeft bottomLeftCorner leftBottom left leftTop*/
+                    placement:'right',  // 图标容器位置
+                });
+
+                // 图标不可以点击, 绑定 .icp 元素
+                // $.iconpicker.batch('.icp', 'destroy');
+
+                // 点击下拉按钮显示图标
+                $('.btn-group>button').one("click",function(){
+                    console.log(1);
+                    $('.icp-dd').iconpicker({
+                        //title: 'Dropdown with picker',
+                        //component:'.btn > i'
+                    });
+                }) ;
+            });
+        </script>
+    </body>
+</html>

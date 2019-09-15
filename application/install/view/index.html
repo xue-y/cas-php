@@ -1,0 +1,107 @@
+{__NOLAYOUT__}
+{include file="common@head" /}
+<body class="all_full_bg">
+
+<div class="container install" >
+    <div class="row" >
+        <h3 class="text-center">{$Request.param.view_tit}</h3>
+
+        <form class="b_from m-t-30" action="{:url('install')}">
+            <div class="form-group">
+                <p class="col-md-7 text-danger">
+                    {:lang('explain',['<br/>','<br/>','<br/>',get_cas_config('default_pass')])}
+                </p>
+                <label class="control-label col-md-2" style="text-align: right">{$Think.lang.lang}：</label>
+                <div class="col-md-3">
+                <select class="form-control " name="lang"> <!-- 最好从配置文件中取得，语言数组 -->
+                    <option value="zh-CN"  selected >简体中文</option>
+                    <option value="en_US">English</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="host" class="col-md-2 control-label">{$Think.lang.host}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" value="127.0.0.1" class="form-control" id="host" name="host" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="port" class="col-md-2 control-label">{$Think.lang.port}： </label>
+                <div class="col-md-10">
+                    <input type="text" value="3306" class="form-control"  id="port" name="port" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dbuser" class="col-md-2 control-label">{$Think.lang.dbuser}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" value="root" class="form-control" id="dbuser" name="dbuser" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dbpass" class="col-md-2 control-label">{$Think.lang.dbpass}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" value="root" class="form-control" id="dbpass" name="dbpass" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dbname" class="col-md-2 control-label">{$Think.lang.dbname}： <span class="red">*</span></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="dbname" name="dbname" placeholder="">
+                </div>
+            </div>
+            <input  type="hidden" name="table" class="table_data" value="0">		
+            <div class="form-group">
+                <label for="prefix" class="col-md-2 control-label">{$Think.lang.prefix}： </label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="prefix" name="prefix" placeholder="" value="cas">
+                </div>
+            </div>			
+			<div class="form-group">
+                <label for="utf8" class="col-md-2 control-label">{$Think.lang.charset}： </label>
+                 <div class="col-md-10 radio m-t-5">
+                    <input type="radio" name="charset" id="utf8" checked value="utf8">
+                    <label for="utf8" style="width:75px;">UTF8</label>
+                    <input type="radio" name="charset" id="gbk" value="gbk">
+                    <label for="gbk">GBK</label>
+                    <p style="margin-left: -20px;">{$Think.lang.default_collation}： UTF8：utf8_general_ci ; GBK：gbk_chinese_ci</p>
+                </div>
+            </div>
+            <div class="form-group" id="name_v">
+                <label for="name" class="col-md-2 control-label">{$Think.lang.name}： <span class="red">*</span></label>
+
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="" value="admin" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pass" class="col-md-2 control-label">{$Think.lang.pass}：</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="pass" name="pass" placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pass2" class="col-md-2 control-label">{$Think.lang.pass2}： </label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="pass2" name="pass2" placeholder="">
+                </div>
+            </div>
+            <div class="form-group text-center m-t-10">
+                <input type="submit" value="{$Think.lang.install_submit}"  class="btn btn-success">
+            </div>
+        </form>
+    </div>
+</div>
+{include file="common@vaildator" /} <!--表单-->
+<script src="{:get_cas_config('cas_js')}validators.js"></script>
+<script src="{:get_cas_config('cas_js')}install.js"></script> <!--当前页面-->
+<script>
+    //js判断当前浏览器语言类型
+    var lang=window.navigator.language;
+   $("select").find("option").each(function(){
+       if(lang==$(this).val())
+       {
+           $(this).prop('selected',true);
+       }
+   });
+</script>
+</body></html>

@@ -1,0 +1,133 @@
+<body>
+<style>
+    @media (max-width: 767px) {
+        .container{width:100%;padding:0px;}
+    }
+</style>
+ <!--Start login Section-->
+  <section class="login-section all_full_bg">
+       <div class="container">
+           <div class="row">
+               <div class="login-wrapper">
+                   <div class="login-inner">
+                   		<h2 class="header-title text-center">{$Think.lang.pub_pass}</h2>
+                        <form class="b_from m-t-30">
+                           {:token()}
+                           <div class="form-group">
+                                <input type="text" class="form-control" name="name"  />
+                           </div>
+                           <div class="form-group m-t-20">
+                               <input type="text" class="form-control"  placeholder="" name="reemail" >
+                           </div>
+                           <div class="form-group v_code m-t-15">
+                               <input type="text" class="form-control"  name="v_code" >
+                               {:captcha_img()}
+                           </div>
+                           <a href="{:url('pub/Login/index')}" class="a-link">
+                               <i class=" icon-login"></i> {$Think.lang.pub_login}
+                           </a>
+                           <a href="#" class="email_url f-right text-danger" target="_blank"></a>
+                           <p class="p-t-10 email_info hidden text-success">{:lang('email_alter_info')}</p>
+                            <div class="form-group  m-t-20">
+                               <input type="submit" value="{:lang('email_send')}" class="btn btn-primary btn-block email" >
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+  </section>
+<!--邮件提醒信息-->
+
+ <!--End login Section-->
+{include file="common@vaildator" /}<!--表单验证插件-->
+<script src="{:get_cas_config('cas_js')}validators.js"></script>
+<script>
+  // 弹层
+  layui.use('layer', function(){
+      let layer = layui.layer;
+  });
+  // 点击切换 验证码图片
+  $(".v_code img").click(function () {
+      let src=$(this).attr("src");
+      src = src.split("?");
+      src=src.shift();
+      $(this).attr("src",src+'?'+Math.random())
+  });
+
+  // 邮件发送
+  let email_txt_default="{:lang('email_send')}"; // 记录原始按钮文本
+
+  // 记录时间间隔
+  let interval_t={$email_interval_t},t=null;
+  let btn=false;
+
+  $('.b_from').on('success.form.bv',function(e){
+     e.preventDefault();
+
+      $('.email_url').text('');
+      if(btn==true)
+          return;
+
+      btn=true;
+      let _this=$('.email');
+      _this.attr('disabled',true);
+
+      // 开始计时
+      t=setInterval(function(){
+          interval_t--;
+          $('.email').val(interval_t+'秒后重发');
+          if(interval_t<=0)
+          {
+              btn=false;
+              $('.email').val(email_txt_default);
+              _this.removeAttr('disabled');
+              clearInterval(t);
+          }
+      },1000);
+
+      let email=$("input[name='reemail']").val();
+      let app_debug="{:config('app_debug')}";
+
+      // ajax 发送数据、邮件
+      $.ajax({
+          type:"POST",
+          url:"{:url('sendEmail')}",
+          data:$('.b_from').serialize(),
+          success: function(data,status,xhr){
+            if(app_debug){
+                  console.log(data);
+              }
+              if(data.code==1)
+              {
+                  $('.email_url').attr('href','https://'+gotoEmail(email));
+                  $('.email_url').text("{:lang('email_send_success')}");
+                  $("p.email_info").removeClass('hidden');
+                  $('.email').removeAttr('disabled').val("{:lang('email_again_send')}");
+              }else
+              {
+                  if (data.data) {
+                      $('.b_from').find("input[name='__token__']").val(data.data);
+                  }
+                  layer.alert(data.msg);
+              }
+          },
+          complete:function(){
+              _this.removeAttr('disabled');
+              clearInterval(t);
+              btn=false;
+          },
+          error: function(xhr,status,errorinfo){
+              if(app_debug){
+                  console.log(xhr);
+              }
+              layer.alert('', {
+                  icon: 2,
+                  title:"{:lang('prompt_message')}",
+                  content:status+': '+errorinfo,
+              });
+          },
+          timeout:5000
+      });
+  });
+</script>

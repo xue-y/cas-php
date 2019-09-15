@@ -1,0 +1,11 @@
+<input type="text" class="layui-input form-control {$data.class|default=''}" id="date" placeholder="yyyy-MM-dd" {$data.extra|default=''} name="{$data.field_name}" value="{$data[$data.field_name]|default=''}" >
+<script>
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+
+        //常规用法
+        laydate.render({
+            elem: '#date'
+        });
+    });
+</script>

@@ -1,0 +1,48 @@
+<body>
+<style>
+    @media (max-width: 767px) {
+        .container{width:100%;padding:0px;}
+    }
+</style>
+ <!--Start login Section-->
+  <section class="login-section all_full_bg">
+       <div class="container">
+           <div class="row" >
+               <div class="login-wrapper">
+                   <div class="login-inner">
+                   		<h2 class="header-title text-center">{:lang('pass_repass')}</h2>
+                       <form class="b_from" method="post" action="{:url('repassSave')}">
+                           {:token()}
+                           <div class="form-group">
+                               <label class="col-md-12 ">{:lang('pass_text')} </label>
+                               <div class=" col-md-12">
+                                   <input type="password" class="form-control" name="newpass"  />
+                               </div>
+                           </div>
+                           <div class="form-group m-t-15">
+                               <label class="col-md-12">{:lang('pass2_text')}</label>
+                               <div class=" col-md-12">
+                                   <input type="password" class="form-control" name="newpass2" />
+                               </div>
+                           </div>
+                            <div class="form-group  m-t-20">
+                               <input type="submit" value="{:lang('pass_repass')}" class="btn btn-primary btn-block" >
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+  </section>
+ <!--End login Section-->
+{include file="common@vaildator" /}<!--表单验证插件-->
+<script src="{:get_cas_config('cas_js')}validators.js"></script>
+<script>
+    if("{:get_cas_config('ajax_submit')}") {
+        // 弹层
+        layui.use('layer', function(){
+            let layer = layui.layer;
+        });
+        form_submit($('form'),"{:config('app_debug')}",true,true);
+    }
+</script>

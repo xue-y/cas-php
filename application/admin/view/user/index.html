@@ -1,0 +1,44 @@
+<!-- Start responsive Table-->
+     <div class="white-box">
+       <form method="post" action="{:url('delete')}">
+             <table class="layui-hide" lay-filter="table">
+              <thead>
+                <tr>
+                    <th lay-data="{field:'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th>
+                    <th lay-data="{field:'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>
+                    <th lay-data="{field:'name', width:150}">{:lang('admin_user')['name']}</th>
+                    <th lay-data="{field:'r_id'}">{:lang('tit_admin_role')}</th>
+                    <th lay-data="{field:'email'}">{:lang('email')}</th>
+                    <th lay-data="{field:'is_enable',width:110, unresize: true}">{:lang('is_enable_text')}</th>
+                    <th lay-data="{field:'operate',fixed:'right',width:200}">{:lang('operation')}</th>
+                </tr>
+              </thead>
+              <tbody>
+              {foreach $list as $k=>$v }
+                <tr>
+                  <td></td>
+                  <td>{$v.id}</td>
+                  <td>{$v.name}</td>
+                  <td>{$role[$v.r_id]|default=lang('not_role')}</td><!--如果角色已经删除了-->
+                  <td>{$v.email}</td>
+                  <td>
+                      {eq name="user_sys" value="$v.r_id"}
+                      <div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch" title="{:lang('is_sys_disable')}"><em>{:lang('is_enable_end')}</em><i></i></div>
+                      {else /}
+                      <input type="checkbox" name="is_enable" value="{$v.id}" lay-skin="switch" lay-text="{:lang('is_enable_but')}" lay-filter="is_enable" {eq name="v.is_enable" value="$Think.IS_ENABLE"} checked {/eq}>
+                      {/eq}
+                  </td>
+                  <td>
+                      {neq name='user_sys' value='$v.r_id'}
+                      <a href="{:url('edit',['id'=>$v.id])}" ><i class="fa fa-edit text-warning"></i></a>
+                      <a lay-event="del" href="#"><i class="fa fa-trash-o text-danger"></i></a>
+                      {/neq}
+                  </td>
+                </tr>
+              {/foreach}
+               </tbody>
+            </table>
+       </form>
+     </div>
+   <!-- End responsive Table-->
+<!--End main content -->

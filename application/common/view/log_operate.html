@@ -1,0 +1,100 @@
+<!--Start row-->
+<style>
+    .panel-title span{display: block;  float: left; width:19%;  white-space: nowrap;}
+    .panel-title span:first-child{margin-left:10px; width: 10% }
+    .panel-title span:last-child{ text-align: right;}
+    .input-daterange input{width:40%; display: inline}
+    .form-group [class^="col-md"],.form-group [class^="col-md"] select,.form-group [class^="col-md"] input,.form-group [class^="col-md"] span{ height: 40px;}
+    @media screen and (max-width: 1100px) {
+        .form-group .col-md-5,.form-group .col-md-4{ padding: 0px !important; margin-bottom: 5px;}
+    }
+    @media screen and (max-width: 500px) {
+        .panel-title span{ width: auto; margin-right: 4%;}
+    }
+    a[data-toggle="collapse"]::before {
+        content: '\f107';
+        font-family: 'FontAwesome';
+        font-size: 18px;
+        text-align: right;
+    }
+</style>
+<div class="white-box">
+     <form class="table-responsive m-b-0" method="get">
+
+        <div class="form-group">
+           <!--  <div class="input-daterange " id="date-range">
+               <input type="text" class="form-control" name="start"  autocomplete="off"  placeholder="{$start_t}" >
+               <span class="input-group-addon no-border text-white" >to</span>
+               <input type="text" class="form-control" name="end"   autocomplete="off" placeholder="{$end_t}">
+           </div>  
+           
+           <div class="f-left m-b-5">
+               {empty name="uid"}
+               <select name="name"  class=" form-control h-40"   style="width:170px;display: inline" >
+                   <option value="">{$n_search}</option>
+                   {foreach $name as $k=>$v }
+                   <option value="{$k}">{$v}</option>
+                   {/foreach}
+               </select>
+               {/empty}
+               // 如果 行为不为空
+               <select name="behavior"  class=" form-control h-40"   style="width:170px; display: inline">
+                   <option value="">{$b_search}</option>
+                   {foreach $behavior as $k=>$v }
+                   <option value="{$k}">{$v}</option>
+                   {/foreach}
+               </select>
+               </div>
+               <input type="submit" id="search"  class=" btn btn-primary"  value="{:lang('search')}">
+           </div> -->
+        </div>
+
+        <div class="clear"></div>
+        <table class="layui-hide" lay-filter="table" >
+            <thead>
+            <tr>
+                <th lay-data="{field: 'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th> 
+                <th lay-data="{field: 'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>       
+                <th lay-data="{field:'uid', width:120}">{:lang('log_operate')['uid']}</th>
+                <th lay-data="{field:'behavior',width:120}">{:lang('log_operate')['behavior']}</th>
+                <th lay-data="{field:'details'}">{:lang('log_operate')['details']}</th>
+                <th lay-data="{field:'t',width:170, sort: true}">{:lang('log_operate')['t']}</th>
+                <th lay-data="{field:'operate',fixed: 'right',width:100, align:'center'}">{:lang('operation')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $v}
+            <tr>
+                <td></td>
+                <td>{$v.id}</td>
+                <td>
+                    {present name="name[$v.uid]"}
+                        {$name[$v.uid]}
+                    {else /}
+                        {:lang('log_user_del',[$v.uid])}
+                    {/present}
+                </td>
+                <td>
+                    {present name="behavior[$v.behavior]"}
+                        {$behavior[$v.behavior]}
+                    {else /}
+                        {:lang('not_module')}
+                    {/present}
+                </td>
+                <td>{$v.details} </td>
+                <td>{$v.t} </td>
+                <td><a lay-event="del" href="#" ><i class="fa fa-trash-o text-danger"></i></a></td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </form>
+    <nav aria-label="Page navigation" class="text-center">
+        {$list|raw}
+    </nav>
+</div>
+<!--End row-->
+{include file="common@com_js" /}<!-- 公共-->
+<script>
+    let operateToolbar=['delete'];
+</script>

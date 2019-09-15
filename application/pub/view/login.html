@@ -1,0 +1,92 @@
+<style>
+    @media (max-width: 767px) {
+        .container {
+            width: 100%;
+            padding: 0px;
+        }
+    }
+
+    .modal {
+        transition: all ease-in 2s;
+    }
+</style>
+<body>
+<!--Start login Section-->
+<section class="login-section all_full_bg">
+    <div class="container">
+        <div class="row">
+            <div class="login-wrapper">
+                <div class="login-inner">
+                    <h2 class="header-title text-center">{$Think.lang.pub_login}</h2>
+                    <form class="b_from" action="{:url('Login/sign')}" method="post">
+                        {:token()}
+                        <div class="form-group m-t-20">
+                            <input type="text" class="form-control" name="name"
+                                   value='{present name="name"}{$name}{/present}'>
+                        </div>
+                        <div class="form-group m-t-15">
+                            <input type="password" class="form-control" autocomplete="off" name="repass">
+                        </div>
+                        <div class="form-group v_code m-t-15">
+                            <input type="text" class="form-control" name="v_code">
+                            {:captcha_img()}
+                        </div>
+                        <div class="form-group  m-t-15">
+                            <div class="pull-left">
+                                <div class="primary">
+                                    <input id="checkbox-2" type="checkbox" name="re_name">
+                                    <label for="checkbox-2">{$Think.lang.re_name}</label>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{:url('pub/Pass/index')}" class="a-link">
+                                    <i class="fa fa-unlock-alt"></i> {$Think.lang.pub_pass}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group m-t-20">
+                            <input type="submit" value="{$Think.lang.pub_login}" class="btn btn-primary btn-block">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{include file="common@vaildator" /} <!--表单-->
+<script src="{:get_cas_config('cas_js')}validators.js"></script>
+<script>
+    // 弹层
+    layui.use('layer', function () {
+        let layer = layui.layer;
+    });
+    // 登录失败
+    let user_login_fail = "{notempty name='user_login_fail'}{$user_login_fail}{else /}{/notempty}";
+    if (user_login_fail && (user_login_fail != '')) {
+        layer.alert('', {
+            title: "{$Think.lang.user_login_fail}",
+            content: "{$Think.lang.user_login_con}"
+        });
+    }
+    // 登录下线通知
+    var user_down_info = "{notempty name='user_down_info'}{$user_down_info}{else /}{/notempty}";
+    if (user_down_info && (user_down_info != '')) {
+        layer.alert('', {
+            title: "{$Think.lang.user_down_info}",
+            content: "{:lang('user_down_con',['<br/>','<br/>'])}"
+        });
+    }
+    // 点击切换 验证码图片
+    $(".v_code img").click(function () {
+        var src = $(this).attr("src");
+        src = src.split("?");
+        src = src.shift();
+        $(this).attr("src", src + '?' + Math.random())
+    });
+
+    // 表单提交
+    if("{:get_cas_config('ajax_submit')}") {
+        form_submit($('form'),"{:config('app_debug')}",true);
+    }
+</script>

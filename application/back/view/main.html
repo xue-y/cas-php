@@ -1,0 +1,110 @@
+{__NOLAYOUT__}
+{include file="common@head" /}
+<body class="sticky-header">
+    <!--Start left side Menu-->
+    <div class="left-side sticky-left-side">
+        <!--logo-->
+        <div class="logo">
+            <!--<a href="index" target="right"><img src="{:get_cas_config('cas_img')}logo.png"></a>-->
+            {:get_cas_config('web_tit')}
+        </div>
+        <div class="logo-icon text-center">
+           <!-- <a href="index" target="right"><img src="{:get_cas_config('cas_img')}logo-icon.png"></a>-->
+            <!--{:get_cas_config('web_tit')}-->
+        </div>
+        <!--logo-->
+        <div class="left-side-inner">
+            <!--Sidebar nav  这里显示 2 个级别菜单-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                {foreach $menu as $k=>$v }
+                <li class="menu-list"><a href="#"> <i class="{$v.icon}"></i> <span>{$v.name}</span></a>
+                    <ul class="sub-menu-list">
+                      {if isset($menu[$k]['items']) AND is_array($menu[$k]['items']) }
+                        {foreach $menu[$k]['items'] as $kk=>$vv }
+                         <!--判断是否锁屏-->
+                            {if ($vv.url == get_cas_config('lock_screen'))}
+                                <li><a href="{:url($vv.url)}"  target="_self" onclick="setUrl($(this))"><i class="{$vv.icon}"></i>{$vv.name}</a></li>
+                            {else  /}
+                                <li><a href="{:url($vv.url,$vv.param)}"  target="right" onclick="setUrl($(this))"><i class="{$vv.icon}"></i>{$vv.name}</a></li>
+                            {/if}
+                        {/foreach}
+                      {/if}
+                    </ul>
+                </li>
+                {/foreach}
+            </ul>
+            <!--End sidebar nav-->
+        </div>
+    </div>
+    <!--End left side menu-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+        <!-- header section start-->
+        <div class="header-section">
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--notification menu start -->
+            <div class="menu-right">
+                <ul class="notification-menu">
+                    <li>
+                        <a href="{:url('index/index/index')}" target="_blank">{:lang('tit_back_index')}</a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-user"></i>
+                            {$name}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu">
+                          <li><a href="{:url(get_cas_config('lock_screen'))}"><i class="icon-logout"></i>{:lang('lock_screen')}</a></li>
+                          <li><a href="{:url('pub/Login/out')}"><i class="icon-logout"></i>{:lang('login_out')}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--notification menu end -->
+        </div>
+        <!-- header section end-->
+   <!-- start content -->
+   <iframe src="{:url('index')}" frameborder="0" width="100%" name="right" bgcolor="none"  class="wrapper"></iframe>
+   <!--end content-->
+    </div>
+<!-- end main content  -->
+<!--Begin core plugin -->
+<script  src="{:get_cas_config('cas_js')}jquery.slimscroll.js "></script>
+<script src="{:get_cas_config('cas_js')}jquery.nicescroll.js"></script>
+<script src="{:get_cas_config('cas_js')}functions.js"></script>
+<!-- End core plugin -->
+<script>
+    // 锚点锁定页面
+   var hash=(!window.location.hash)?"":window.location.hash;
+   if((hash!='') && (hash.indexOf('###')!=-1))
+   {
+       $('iframe').attr('src',hash.substring(3));
+   }
+
+   function setUrl(obj) {
+        let url=obj.attr('href');
+        $('iframe').attr('src',url);
+       var hash=(!window.location.hash)?"":window.location.hash;
+       if((hash!='') && (hash.indexOf('###')!=-1))
+       {
+           let base_url=obj.context.baseURI.replace(hash,'###'+url);
+           window.history.replaceState(null,null,base_url);
+       }else{
+           window.history.pushState(null,null,'###'+url);
+       }
+   }
+
+   // 登录提醒
+    var login_user="{notempty name='login_user'}{$login_user}{else /}{/notempty}";
+    if(login_user && (login_user!='')){
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.alert('',{
+                content: "{:lang('login_user_info',[$login_user])}"+"<a href=\"{:url('Login/index',['id'=>$id])}\" target=\"right\">"+"{:lang('tit_log_login')}"+"</a>"
+            });
+        });
+    }
+</script>
+</body></html>

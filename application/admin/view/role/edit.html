@@ -1,0 +1,31 @@
+<!--Start row-->
+<div class="row">
+    <div class="white-box">
+        <!--<h2 class="header-title">Form Validation</h2>-->
+        <form class="b_from" method="post" action="{:url('save')}">
+            {:token()}
+            <input type="hidden" value="{$data.id|default=''}" name="id">
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_role')['name']} <span class="red">*</span></label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="name" value="{$data.name|default=''}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_role')['describe']} </label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="describe" value="{$data.describe|default=''}"/>
+                </div>
+            </div>
+            {if (empty($data.a_id) OR ($data.a_id!=get_cas_config('admin_auth'))) }
+            {include file="common@field/enable" /}
+            {/if}
+            {include file="common@field/edit-btn" /}
+        </form>
+    </div>
+</div>
+<!--表单验证插件-->
+{include file="common@vaildator" /}
+<script>
+
+</script>

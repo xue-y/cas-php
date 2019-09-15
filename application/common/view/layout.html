@@ -1,0 +1,139 @@
+{include file="common@head" /}
+{include file="common@nav" /}
+{eq name="$Request.action" value="index"}
+	<!-- 列表页面 -->
+{__CONTENT__}
+<script>
+	if(typeof operateToolbar == 'undefined'){
+	    operateToolbar=['add','delete']; //'update',
+	}
+  layui.use(['table','layer','form'], function(){
+	  let table = layui.table;
+	  let layer= layui.layer;
+	  table.init('table', { //转化静态表格
+		  toolbar:true,
+		  page:false,//不分页
+		  operateToolbar:operateToolbar,
+	  });
+
+	  let form=layui.form;
+	  // 是否开始debug
+	  let app_debug="{:config('app_debug')}";
+	  //监听指定开关
+	  form.on('switch(is_enable)', function(obj){
+		  obj.event=this.name;
+		  switchEvent($(this),obj,"{:url('ajaxOperate')}",app_debug);
+	  });
+      form.on('switch(is_menu)', function(obj){
+          obj.event=this.name;
+          switchEvent($(this),obj,"{:url('ajaxOperate')}",app_debug);
+      });
+
+	  //删除操作提示语
+	  let del_msg=$('a[lay-event="del"]').eq(0).attr('data-del-msg');
+	  del_msg=del_msg!=undefined?del_msg:"{:lang('del_msg')}";
+
+	  //监听头工具栏事件
+	  table.on('toolbar(table)', function(obj){
+		let checkStatus = table.checkStatus(obj.config.id),
+		data = checkStatus.data; //获取选中的数据
+		switch(obj.event){
+		  case 'delete':
+			if(data.length === 0){
+			  layer.msg("{:lang('select_empty')}");
+			} else {
+				 let index=layer.confirm(del_msg, function(index)
+				 {
+					  layer.close(index); // 关闭当前窗口
+					  let len=data.length;
+					  let del_data=[];
+					  for(let i=0;i<len;i++){
+						  del_data.push(data[i].id);
+					  }
+					  del(del_data,false,app_debug);
+				 });
+			}
+		  break;
+		  case 'add':
+                 let url="{:url('edit')}";
+                 // 额外参数
+		      	 let key=$('input[type=hidden]').attr('name');
+		      	 let val=$('input[type=hidden]').val();
+		      	 if(key!=undefined){
+		      	     url="{:url('edit',['data-key'=>'data-val'])}";
+                     url=url.replace('data-key',key).replace('data-val',val);
+				  }
+                  window.location.href=url;
+		   break;
+		}
+	  });
+
+	 //监听行工具事件
+	  table.on('tool(table)', function(obj){
+		let data = obj.data, //获得当前行数据
+		layEvent = obj.event; //获得 lay-event 对应的值
+		if(layEvent === 'del')
+		{
+			layer.confirm(del_msg, function(index)
+			{
+				 layer.close(index); // 关闭当前窗口
+				 del(data.id,obj,app_debug);
+			});
+		}
+	  });
+});
+
+/**
+ * 执行删除操作
+ * @param  string|array  del_data 要删除的id
+ * @param  object        obj      要删除的对象,批量删除为false
+ */
+function del(del_data,obj,app_debug){
+	// 这里判断是否使用ajax
+	 let ajax_submit="{:get_cas_config('ajax_submit')}";
+	 if(!ajax_submit){
+		if(obj){
+			// 删除单个
+			let url="{:url('delete',['id'=>'data-id'])}";
+			url=url.replace('data-id',del_data);
+			window.location.href=url;
+		}else{
+		  // 批量删除
+		  $(".layui-table-body input[name='layTableCheckbox']:checked").each(function(i,e){
+			  	$(this).attr('name','id[]');
+		  });
+		  $('form').submit();
+		}
+		return;
+	 }
+	 let url="{:url('delete')}";
+	 $.post(url,{id:del_data},function(data)
+	 {
+		 let index=layer.alert(data.msg,function(){
+			 if(app_debug){
+				 console.log(data)
+			 }
+			 if(data.code==1)
+			 {
+				if(del_data instanceof Array)
+					window.location.reload();
+				else
+				  obj.del(); //删除对应行（tr）的DOM结构
+			  }
+			  layer.close(index); // 关闭当前窗口
+			});
+		 },'json').fail(function(xhr,status,error){
+			  // 调试模式
+		  if(app_debug){
+				console.log(xhr);
+			}
+		 layer.alert(status+':'+error);
+	  });
+}
+
+</script>
+{else/}
+	<!-- 表单页面 -->
+	{__CONTENT__}
+{/eq}
+</body></html>

@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="white-box">
+        <div class="layui-tab">
+            <ul class="layui-tab-title">
+                {foreach $type as $k=>$v}
+                {eq name="t_id" value="$k"}
+                <li class="layui-this">{$v}</li>
+                {else /}
+                <li><a href="{:url('',['t_id'=>$k])}">{$v}</a></li>
+                {/eq}
+                {/foreach}
+            </ul>
+        </div>
+    {present name="list"}
+        <form class="b_from" method="post" action="{:url('seeSave')}">
+            <input type="hidden" name="t_id" value="{$t_id}">
+            {:token()}
+            {foreach $list as $k=>$data}
+            <div class="form-group">
+                <label class="col-md-2  control-label">{$data.label}</label>
+                <div class="col-md-5">
+                {switch $data.type}
+                 {case date}
+                 {include file="common@field/date" /}
+                 {/case}
+                 {case time}
+                 {include file="common@field/time" /}
+                 {/case}
+                 {case date-range}
+                 {include file="common@field/date-range" /}
+                 {/case}
+                 {case time-range}
+                 {include file="common@field/time-range" /}
+                 {/case}
+                 {default /}
+                 {include file="common@field/input" /}
+                {/switch}
+                </div>
+                {present name="data.notes"}
+                <div class="text-muted col-md-5">
+                    <i class="fa fa-info-circle color-info1"></i> {$data.notes}
+                </div>
+                {/present}
+            </div>
+            {/foreach}
+            {include file="common@field/edit-btn" /}
+        </form>
+     {else /}
+        <p class="text-center text-muted">{:lang('data_empty')}</p>
+     {/present}
+    </div>
+</div>

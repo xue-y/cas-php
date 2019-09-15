@@ -1,0 +1,53 @@
+<style>
+    .expander{cursor: pointer;padding:5px 5px 5px 0px;}
+    .layui-form-switch{height: auto; line-height: inherit; margin-top: 0px;}
+    .layui-table-tool .layui-inline[lay-event]{ margin-right: 5px;}
+    .layui-table td.sort{padding:0px;}
+    .layui-table-tool-temp>.sort{-webkit-transform:rotate(90deg);transform:rotate(90deg);}
+    .sort>input{
+        border: none;
+        height: 41px;
+    }
+    .rotate-90{-webkit-transform:rotate(90deg);
+        transform:rotate(90deg);transform-origin:30% 55%;
+        -webkit-transition:-webkit-transform 0.1s linear;
+        transition:transform 0.1s linear;}
+    .rotate-0{
+        -webkit-transform:rotate(0deg);
+        transform:rotate(0deg);transform-origin:30% 55%;
+        -webkit-transition:-webkit-transform 0.1s linear;
+        transition:transform 0.1s linear;
+    }
+</style>
+<div class="row">
+    <div class="white-box">
+        <form class="layui-form" method="post" action="{:url('authSave')}">
+            <div class="col-md-10 col-md-offset-1">
+                <p class="text-info">{eq name="data.role_sys" value="0"}{:lang('auth_sys_save')}{/eq}</p>
+                <table class="layui-table">
+                    <tbody>
+                    {$data.auth_list|raw}
+                    </tbody>
+                </table>
+            </div>
+            <input type="hidden" name="r_id" value="{$data.id}">
+            {include file="common@field/edit-btn" /}
+        </form>
+    </div>
+</div>
+<script src="{:get_cas_config('cas_js')}cas.js"></script>
+<script>
+    // 显示复选框
+    layui.use(['form'],function(){
+        var form=layui.form;
+        form.render();
+    });
+    // 判断是否ajax
+    if("{:get_cas_config('ajax_submit')}"){
+        // 提交表单
+        $("form").on("submit",function(e){
+            e.preventDefault();
+            ajax_request($(this),"{:config('app_debug')}",true,true)
+        });
+    }
+</script>

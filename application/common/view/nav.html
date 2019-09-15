@@ -1,0 +1,21 @@
+<body>
+    <!-- start postion nav-->
+    <div class="page-title-box">
+        <h4 class="page-title"><a href="{:url('back/Index/index')}">{$Request.param.postion_nav['c']}</a></h4>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#"><span style="vertical-align: inherit;">{$Request.param.postion_nav['m']}</span></a>
+            </li>
+            <li>
+                <a href="{:url($Request.param.postion_nav['url'])}">{$Request.param.postion_nav['c']}</a>
+            </li>
+            <li class="active">
+                <span style="vertical-align: inherit;">
+                  {$Request.param.postion_nav['a']}
+                </span>
+            </li>
+        </ol>
+        <div class="clearfix"></div>
+    </div>
+    <!-- end postion nav-->
+    <div class="wrapper_row clearfix">

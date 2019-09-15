@@ -1,0 +1,178 @@
+{__NOLAYOUT__}
+{include file="common@head" /}
+{include file="common@nav" /}
+<!--Start row-->
+<div class="row">
+    <div class="white-box">
+        <div class="text-danger col-md-offset-1 col-md-5 m-b-20">
+            <p>{:lang('pass_empty_info')}</p>
+            <p>{:lang('admin_user')['name_takeeffect']}</p>
+        </div>
+        <form class="b_from" method="post" action="{:url('save')}">
+            {:token()}
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('admin_user')['name']} <span class="red">*</span></label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="name" value="{$Request.param.user_name}"  autocomplete="off"   />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('pass_old')} </label>
+                <div class=" col-md-5">
+                    <input type="password" class="form-control" name="pass_old"  autocomplete="off" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('pass_text')} </label>
+                <div class=" col-md-5">
+                    <input type="password" class="form-control" name="pass" autocomplete="off" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('pass2_text')}</label>
+                <div class=" col-md-5">
+                    <input type="password" class="form-control" name="pass2" autocomplete="off" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 ">{:lang('email')}</label>
+                <div class="col-md-4 m-b-5" >
+                    <input type="text"  class="form-control" name="email" value="{$email}" />
+                </div>
+                <label class="col-md-1">
+                    <a class="btn btn-primary email outline-btn"  target="_blank" style="line-height: 38px; padding: 0px 7px;" ></a>
+                </label>
+                <label class="col-md-5">
+                    <p class="email_info hidden text-success" style="line-height: 30px;"> &nbsp;{:lang('email_alter_info')}</p>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2"></label>
+                <div class="col-md-5" >
+                    <input type="submit" value="{:lang('submit_save')}"  class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--表单验证插件-->
+{include file="common@vaildator" /}
+<script src="{:get_cas_config('cas_js')}validators.js"></script>
+<script>
+    // 弹层
+    layui.use('layer', function(){
+        let layer = layui.layer;
+    });
+
+    // 发送邮件处理
+    $("input[name='email']").blur(function () {
+        $('.email').attr('disabled',false);
+    });
+    // 邮箱
+    let email=$("input[name='email']").val();
+    let email_txt_default,behavior; // 记录原始按钮文本,行为
+    if(email=='')
+    {
+        email_txt_default='{:lang("email_bind")}';
+        $('.email').text('{:lang("email_bind")}');
+        behavior='email_bind';
+    }else
+    {
+        email_txt_default="{:lang('email_ubind')}";
+        $('.email').text("{:lang('email_ubind')}");
+        behavior='email_ubind';
+    }
+
+    //重新发送邮件
+   let e_a_s= "{:lang('email_again_send')}";
+   // 进入邮箱
+   let e_s_s="{:lang('email_send_success')}";
+
+    // 记录时间间隔
+   let interval_t={$email_interval_t},t=null;
+   let btn=false;
+   // 判断是否是开发模式
+   let app_debug="{:config('app_debug')}";
+
+   $('.email').click(function(){
+	
+        if(btn==true){
+            return;
+        }
+        // 重新发送邮件
+        if($('.email').hasClass('email_ok') && ($('.email').text()==e_s_s)){
+            return;
+        }
+        btn=true;
+        let _this=$('.email');
+        _this.attr('disabled',true);
+
+        // 验证 email 字段
+        let email=$("input[name='email']").val();
+        email=$.trim(email);
+        if(email=='')
+        {
+            layer.alert("{:lang('email_empty')}");
+            return;
+        }
+        if(!$("input[name='email']").siblings('i').hasClass('glyphicon-ok') &&  (behavior=='email_bind'))
+        {
+            return;
+        }
+
+        // 开始计时
+        t=setInterval(function(){
+            interval_t--;
+            $('.email').text(interval_t+'秒后重发');
+            if(interval_t<=0)
+            {
+                btn=false;
+                $('.email').text(email_txt_default);
+                _this.removeAttr('disabled');
+                clearInterval(t);
+            }
+        },1000);
+
+        // ajax 发送邮件
+        $.ajax({
+           type:"POST",
+           url:"{:url('sendEmail')}",
+           data:{'email':email,'behavior':behavior},
+           success: function(data,status,xhr){
+               if(app_debug){
+                   console.log(data);
+               }
+              if(data.code==1)
+               {
+                   $('.email').addClass('email_ok');
+                   $('.email').attr('href','https://'+gotoEmail(email));
+                   $('.email').text(e_s_s);
+               }else
+               {
+                   layer.alert(data.error,{icon: 2});
+                   $('.email').text(e_a_s);
+               }
+           },
+           complete:function(){
+               _this.removeAttr('disabled');
+               clearInterval(t);
+               $("p.email_info").removeClass('hidden');
+               btn=false;
+           },
+           error: function(xhr,status,errorinfo){
+               if(app_debug){
+                   console.log(xhr);
+               }
+               $('.email').text(e_a_s);
+               layer.alert(status+': '+errorinfo,{icon: 2});
+           },
+           timeout:5000
+       });
+    });
+
+    // 表单提交
+    if("{:get_cas_config('ajax_submit')}") {
+        form_submit($('form'),app_debug);
+    }
+</script>
+</body></html>

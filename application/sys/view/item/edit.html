@@ -1,0 +1,73 @@
+<!--Start row-->
+<div class="row">
+   <div class="white-box">
+       <form class="b_from" method="post" action="{:url('save')}">
+           {:token()}
+           <input type="hidden" name="id" value="{$data.id}">
+           <div class="form-group">
+               <label class="col-md-2 control-label">{:lang('sys_item')['t_id']} <span class="red">*</span> </label>
+               <div class="col-md-5">
+                   {eq name="data.is_sys" value="$Think.IS_SYS"}
+                   <input type="text" class="form-control" readonly value="{$type[$t_id]}">
+                   <input type="hidden" name="t_id" value="{$t_id}">
+                   {else /}
+                   <select class="form-control" name="t_id">
+                       <option value="0">-- {:lang('type_select')} --</option>
+                       {foreach $type as $k=>$v}
+                       <option value="{$k}" {eq name="data.t_id" value="$k"} selected{/eq}>{$v}</option>
+                       {/foreach}
+                   </select>
+                   {/eq}
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-md-2 control-label">{:lang('sys_item')['name']} <span class="red">*</span> </label>
+               <div class="col-md-5">
+                   <input type="text" class="form-control" name="name" {eq name="data.is_sys" value="$Think.IS_SYS"} readonly {/eq} placeholder="" value="{$data.name}"/>
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-md-2  control-label">{:lang('sys_item')['describe']} <span class="red">*</span> </label>
+               <div class="col-md-5">
+                   <input type="text" class="form-control" name="describe" value="{$data.describe}"  />
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-md-2  control-label">{:lang('sys_item')['val']}</label>
+               <div class="col-md-5">
+                   <textarea name="val" class="form-control">{$data.val}</textarea>
+               </div>
+               <div class="text-muted col-md-5">
+                   <i class="fa fa-info-circle color-info1"></i> {:lang('sys_item')['val_info']}
+               </div>
+           </div>
+           <div class="form-group">{$data.type}
+               <label class="col-md-2  control-label">{:lang('sys_item')['field']}</label>
+               <div class="col-md-5">
+                   <select name="type" class="form-control">
+                       <option value="text">-- {:lang('item_field_select')} --</option>
+                       {foreach $field as $v}
+                       <option value="{$v}" {eq name="v" value="$data.type"} selected{/eq}>{$v}</option>
+                       {/foreach}
+                   </select>
+               </div>
+               <div class="text-muted col-md-5">
+                   <i class="fa fa-info-circle color-info1"></i> {:lang('item_field_default')}
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-md-2  control-label">{:lang('sys_item')['notes']}</label>
+               <div class="col-md-5">
+                   <textarea name="notes" class="form-control">{$data.notes}</textarea>
+               </div>
+           </div>
+           <div class="form-group">
+               <label class="col-md-2  control-label">{:lang('sort')}</label>
+               <div class="col-md-5">
+                   <input type="number" min="0" class="form-control" name="sort" value="{$data.sort}" />
+               </div>
+           </div>
+           {include file="common@field/edit-btn" /}
+       </form>
+   </div>
+</div>

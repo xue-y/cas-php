@@ -1,0 +1,16 @@
+<div class="form-group">
+    <label class="col-md-2 control-label">{:lang('is_enable_text')}</label>
+    <div class="col-md-5 radio m-t-5">
+        {present name="data.is_enable"}
+        <input type="radio" name="is_enable"  value="{$Think.IS_ENABLE}" {eq name="data.is_enable" value="$Think.IS_ENABLE"}checked{/eq}>
+        <label style="width:65px;">{:lang('is_enable')}</label>
+        <input type="radio" name="is_enable"  value="0"  {eq name="data.is_enable" value="0"}checked{/eq}>
+        <label >{:lang('is_disable')}</label>
+        {else /}
+        <input type="radio" name="is_enable"  value="{$Think.IS_ENABLE}" checked>
+        <label style="width:65px;">{:lang('is_enable')}</label>
+        <input type="radio" name="is_enable"  value="0" >
+        <label >{:lang('is_disable')}</label>
+        {/present}
+    </div>
+</div>

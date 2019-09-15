@@ -1,0 +1,58 @@
+{__NOLAYOUT__}
+{include file="common@head" /}
+<body>
+<style>
+    @media (max-width: 767px) {
+        .container{width:100%;padding:0px;}
+    }
+</style>
+<!--Start login Section-->
+<section class="login-section all_full_bg">
+    <div class="container">
+        <div class="row">
+            <div class="login-wrapper">
+                <div class="login-inner">
+                    <h2 class="header-title text-center">{$name}{:lang('unlock_tips')}</h2>
+                    <form class="b_from" method="post" action="{:url('unlock')}">
+                        {:token()}
+                        <div class="form-group m-t-20">
+                            <label class="m-b-20">{$Think.lang.unlock_screen}</label>
+                            <div class="col-md-12 add-m-lr-15">
+                                <input type="password" class="form-control"  autocomplete="off" placeholder="" name="repass">
+                            </div>
+                        </div>
+                        <div class="form-group  m-t-15">
+                            <div class="pull-left">
+                                <div class="primary">
+                                    <a href="{:url('pub/Login/out')}" class="a-link">
+                                        <i class="icon-logout"></i> {$Think.lang.login_out}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{:url('pub/Pass/index')}" class="a-link">
+                                    <i class="fa fa-unlock-alt"></i> {$Think.lang.tit_pub_pass}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group  m-t-20">
+                            <input type="submit" value="{$Think.lang.unlock}" class="btn btn-primary btn-block" >
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{include file="common@vaildator" /}<!--表单验证插件-->
+<script src="{:get_cas_config('cas_js')}validators.js"></script>
+<script>
+    if("{:get_cas_config('ajax_submit')}") {
+          // 弹层
+          layui.use('layer', function(){
+              let layer = layui.layer;
+          });
+          form_submit($('form'),"{:config('app_debug')}",true);
+    }
+</script>
+</body></html>

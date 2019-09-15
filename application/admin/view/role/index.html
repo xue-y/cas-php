@@ -1,0 +1,49 @@
+<!-- Start responsive Table-->
+<style>
+.layui-hide>thead>tr>th:nth-child(5){display: none;background: #000}
+</style>
+<div class="white-box">
+ <form method="post" action="{:url('delete')}" class="layui-form">
+   <table class="layui-hide" lay-filter="table">
+    <thead>
+      <tr>
+        <th lay-data="{field:'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th>
+        <th lay-data="{field:'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>
+        <th lay-data="{field:'name', width:150}">{:lang('admin_role')['name']}</th>
+        <th lay-data="{field:'describe'}">{:lang('admin_role')['describe']}</th>
+        <th lay-data="{field:'is_enable',width:110, unresize: true}">{:lang('is_enable_text')}</th>
+        <th lay-data="{field:'operate',fixed:'right',width:200}">{:lang('operation')}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {foreach $list as $v }
+      <tr>
+        <td></td>
+        <td>{$v.id}</td>
+        <td>{$v.name}</td>
+        <td>{$v.describe}</td> 
+        <td>
+            {eq name="v.a_id" value="$Think.config.config.admin_auth"}
+            <div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch" title="{:lang('is_sys_disable')}"><em>{:lang('is_enable_end')}</em><i></i></div>
+            {else /}
+            <input type="checkbox" name="is_enable" value="{$v.id}" lay-skin="switch" lay-text="{:lang('is_enable_but')}" lay-filter="is_enable" {eq name="v.is_enable" value="$Think.IS_ENABLE"} checked {/eq}>
+            {/eq}
+        </td>
+        <td>
+            <a lay-event="auth" href="{:url('auth',['id'=>$v.id])}">{:lang('auth_set')}</a>
+            <a lay-event="edit" href="{:url('edit',['id'=>$v.id])}" ><i class="fa fa-edit text-warning"></i></a>
+            <!-- d.undefined (a_id) layui只能取到赋值td的数据-->
+            {neq name="v.a_id" value="$Think.config.config.admin_auth"}
+            <a lay-event="del" href="#"><i class="fa fa-trash-o text-danger"></i></a>
+            {/neq}
+        </td>
+      </tr>
+    {/foreach}
+     </tbody>
+  </table>
+ </form>
+</div>
+<!-- End responsive Table-->
+<script src="{:get_cas_config('cas_js')}cas.js"></script>
+<script>
+</script>

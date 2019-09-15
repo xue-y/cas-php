@@ -1,0 +1,67 @@
+<!--Start row-->
+<div class="row">
+    <div class="white-box">
+        <form class="b_from" method="post" action="{:url('save')}">
+            {:token()}
+            <div class="form-group">
+                <label class="col-md-2 control-label">{:lang('sys_item')['t_id']} <span class="red">*</span> </label>
+                <div class="col-md-5">
+                    <select class="form-control" name="t_id">
+                        <option value="0">-- {:lang('type_select')} --</option>
+                        {foreach $type as $k=>$v}
+                        <option value="{$k}" {eq name="t_id" value="$k"} selected{/eq}>{$v}</option>
+                        {/foreach}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">{:lang('sys_item')['name']} <span class="red">*</span> </label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="name"  placeholder="" value=""/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2  control-label">{:lang('sys_item')['describe']} <span class="red">*</span> </label>
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="describe" value=""  />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2  control-label">{:lang('sys_item')['val']}</label>
+                <div class="col-md-5">
+                    <textarea name="val" class="form-control"></textarea>
+                </div>
+                <div class="text-muted col-md-5">
+                    <i class="fa fa-info-circle color-info1"></i> {:lang('sys_item')['val_info']}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2  control-label">{:lang('sys_item')['field']}</label>
+                <div class="col-md-5">
+                    <select name="type" class="form-control">
+                        <option value="text">-- {:lang('item_field_select')} --</option>
+                        {foreach $field as $v}
+                        <option value="{$v}" {eq name="v" value="text"}selected {/eq}>{$v}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                <div class="text-muted col-md-5">
+                    <i class="fa fa-info-circle color-info1"></i> {:lang('item_field_default')}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2  control-label">{:lang('sys_item')['notes']}</label>
+                <div class="col-md-5">
+                    <textarea name="notes" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2  control-label">{:lang('sort')}</label>
+                <div class="col-md-5">
+                    <input type="number" min="0" class="form-control" name="sort" value="" />
+                </div>
+            </div>
+            {include file="common@field/edit-btn" /}
+        </form>
+    </div>
+</div>

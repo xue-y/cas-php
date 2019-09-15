@@ -1,0 +1,66 @@
+<!--Start row-->
+<div class="white-box">
+        <form method="get" action="{:url('log/login/delete')}">
+             <!-- <div class="form-group">
+                 <a class="btn btn-del outline-btn m-b-5 f-left" onclick="operation($(this),'{:lang(\'delete\')}','{:url(\'delete\')}')">
+                     <i class="fa fa-trash-o"></i>
+                     <input type="button" value="{:lang('deletes')}"  >
+                 </a>删除
+                 时间搜索
+                 {empty name="uid"}
+                 <div class="form-group m-l-10"   style="width: 170px;">
+                     <select name="name" class=" form-control h-40">
+                         <option value="" selected>{$n_search}</option>
+                         {foreach $name as $k=>$v }
+                         <option value="{$k}">{$v}</option>
+                         {/foreach}
+                     </select>
+                 </div>用户搜索
+                 {/empty}
+                 <input id="search" type="submit" class="btn btn-primary"  value="{:lang('search')}">
+              </div> --> 
+            <div class="clear"></div>
+            <table class="layui-hide" lay-filter="table" >
+                <thead>
+                <tr>
+                  <th lay-data="{field: 'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th>
+                  <th lay-data="{field: 'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>
+                  <th lay-data="{field:'name', width:100}">{:lang('log_name')}</th>
+                  <th lay-data="{field:'device'}">{:lang('log_login')['device']}</th>
+                  <th lay-data="{field:'t',width:170, sort: true}">{:lang('log_login')['t']}</th>
+                  <th lay-data="{field:'ip',width:100 }">{:lang('log_login')['ip']}</th>
+                  <th lay-data="{field:'operate',fixed: 'right',width:100, align:'center'}">{:lang('operation')}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {foreach $list as $v }
+                    <tr>
+                        <td></td>
+                        <td>{$v.id}</td>
+                        <td>
+                            {present name="name[$v.uid]"}
+                            {$name[$v.uid]}
+                            {else /}
+                            {:lang('log_user_del',[$v.uid])}
+                            {/present}
+                        </td>
+                        <td>{$v.device}</td>
+                        <td>{$v.t} </td>
+                        <td>{$v.ip}</td>
+                        <td><a lay-event="del" href="#" ><i class="fa fa-trash-o text-danger"></i></a></td>
+                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+		
+        </form>
+        <nav aria-label="Page navigation" class="text-center">
+            {$list|raw}
+        </nav>
+		
+</div>
+<!--End row-->
+{include file="common@com_js" /}<!-- 公共-->
+<script>
+    let operateToolbar=['delete'];
+</script>

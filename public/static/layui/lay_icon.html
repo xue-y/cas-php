@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lay字体图标选择器</title>
+    <link rel="stylesheet" href="./css/layui.css">
+    <script src="./layui.js"></script>
+    <style>
+        .layui-iconpicker {
+            width: 100px;
+            float: left;
+        }
+
+        .layui-select-title {
+            width: 100px;
+        }
+
+        .layui-iconpicker .layui-anim {
+            width: 315px;
+            display: none;
+            position: absolute;
+            right: 14px;
+            top: 42px;
+            z-index: 899;
+            border: 1px solid #d2d2d2;
+            height: 375px;
+            overflow-y: auto;
+            background-color: #fff;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+            box-sizing: border-box;
+        }
+
+        .layui-iconpicker-item {
+            border: 1px solid #e6e6e6;
+            width: 90px;
+            height: 38px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            box-sizing: border-box;
+            left: -4px;
+        }
+
+        .layui-iconpicker-icon {
+            border-right: 1px solid #e6e6e6;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            display: block;
+            width: 60px;
+            height: 100%;
+            float: left;
+            text-align: center;
+            background: #fff;
+            transition: all .3s;
+        }
+
+        .layui-iconpicker-icon i {
+            line-height: 38px;
+            font-size: 18px;
+        }
+
+        .layui-iconpicker-item > .layui-edge {
+            left: 70px;
+        }
+
+        .layui-iconpicker-item:hover {
+            border-color: #D2D2D2 !important;
+        }
+
+        .layui-iconpicker-item:hover .layui-iconpicker-icon {
+            border-color: #D2D2D2 !important;
+        }
+
+        .layui-iconpicker.layui-form-selected .layui-anim {
+            display: block;
+        }
+
+        .layui-iconpicker-body {
+            margin: 10px;
+        }
+
+        .layui-iconpicker .layui-iconpicker-list {
+            background-color: #fff;
+            margin: 10px 0px 0px 2px;
+        }
+
+        .layui-iconpicker .layui-iconpicker-icon-item {
+            display: inline-block;
+            width: 38px;
+            line-height: 36px;
+            text-align: center;
+            cursor: pointer;
+            vertical-align: top;
+            height: 36px;
+            margin: 4px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            transition: 300ms;
+        }
+
+        .layui-iconpicker .layui-iconpicker-icon-item i.layui-icon {
+            font-size: 17px;
+        }
+
+        .layui-iconpicker .layui-iconpicker-icon-item:hover {
+            background-color: #eee;
+            border-color: #ccc;
+            -webkit-box-shadow: 0 0 2px #aaa, 0 0 2px #fff inset;
+            -moz-box-shadow: 0 0 2px #aaa, 0 0 2px #fff inset;
+            box-shadow: 0 0 2px #aaa, 0 0 2px #fff inset;
+            text-shadow: 0 0 1px #fff;
+        }
+
+        .layui-iconpicker-search {
+            position: relative;
+            margin: 0px;
+            border: 1px solid #e6e6e6;
+            border-radius: 2px;
+            transition: 300ms;
+        }
+
+        .layui-iconpicker-search:hover {
+            border-color: #D2D2D2 !important;
+        }
+
+        .layui-iconpicker-search .layui-input {
+            cursor: text;
+            display: inline-block;
+            width: 86%;
+            border: none;
+            padding-right: 0;
+            margin-top: 1px;
+        }
+
+        .layui-iconpicker-search .layui-icon {
+            position: absolute;
+            top: 11px;
+            right: 4%;
+        }
+
+        .layui-iconpicker-tips {
+            text-align: center;
+            padding: 8px 0;
+            cursor: not-allowed;
+        }
+
+        .layui-iconpicker-page {
+            position: absolute;
+            bottom: 10px;
+            width: 90%;
+            font-size: 14px;
+            padding: 7px 4px;
+        }
+
+        .layui-iconpicker-page-count {
+            display: inline-block;
+        }
+
+        .layui-iconpicker-page-operate {
+            display: inline-block;
+            float: right;
+            cursor: default;
+        }
+
+        .layui-iconpicker-page-operate .layui-icon {
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .layui-iconpicker-body-page .layui-iconpicker-icon-limit {
+            display: none;
+        }
+
+        .layui-iconpicker-body-page .layui-iconpicker-icon-limit:first-child {
+            display: block
+        }
+        .popover-title{
+            padding: 12px;
+            font-size: 13px;
+            line-height: 15px;
+            border-bottom: 1px solid #ebebeb;
+            background-color: #f7f7f7;
+        }
+        #iconPicker{ width:300px; float:left;}
+    </style>
+    <script src="lay/iconPicker/iconPicker.js"></script>
+</head>
+<body>
+<p>xzcxcs</p>
+    <div class="layui-form">
+        <div class="layui-form-item">
+            <label  class="layui-form-label">选择图标</label>
+            <div class="layui-input-block">
+                <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <script>
+			layui.config({
+			base: './lay/' // 相对于当前文件的目录
+			}).extend({
+				iconPicker: 'modules/iconPicker'
+			}).use(['iconPicker', 'form'], function () {
+                var iconPicker = layui.iconPicker,
+                form = layui.form;
+            
+            iconPicker.render({
+                // 选择器，推荐使用input
+                elem: '#iconPicker',
+                // 标题
+                title:true,
+                // 数据类型：fontClass/unicode，推荐使用fontClass
+                type: 'fontClass',
+                // 是否开启搜索：true/false
+                search: true,
+                // 是否开启分页
+                page: true,
+                // 每页显示数量，默认12
+                limit: 30,
+                // 点击回调
+                click: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

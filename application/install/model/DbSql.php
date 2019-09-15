@@ -1,0 +1,140 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Think
+ * Date: 2018/12/6
+ * Time: 20:48
+ * 安装系统 sql
+ */
+
+namespace app\install\model;
+
+class DbSql
+{
+    private $sql=array();
+    public function index($prefix,$charset)
+    {
+        $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}admin_user` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT, 
+  `name` varchar(20) NOT NULL COMMENT '".lang('admin_user')['name']."',
+  `pass` varchar(40) NOT NULL COMMENT '".lang('pass')."',
+  `r_id` smallint(5) unsigned NOT NULL COMMENT '".lang('admin_user')['r_id']."',
+  `email` varchar(40) NOT NULL COMMENT '".lang('email')."',
+  `is_enable` tinyint(3) NOT NULL DEFAULT '1' COMMENT '".lang('is_enable')."',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET={$charset} COMMENT='".lang('menu_admin_user')."' AUTO_INCREMENT=1 ;";
+
+     $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}admin_role` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) NOT NULL COMMENT '".lang('admin_role')['name']."',
+  `describe` varchar(20) NOT NULL COMMENT '".lang('admin_role')['describe']."',
+  `a_id` varchar(255) NOT NULL COMMENT '".lang('admin_role')['a_id']."',
+  `is_enable` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('is_enable')."',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET={$charset} COMMENT='".lang('menu_admin_role')."' AUTO_INCREMENT=1 ;" ;
+
+     $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}admin_auth` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['name']."',
+  `name` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['name']."',
+  `pid` smallint(5) unsigned NOT NULL COMMENT '".lang('admin_auth')['pid']."',
+  `icon` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['icon']."'
+  `sort` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('sort')."',
+  `is_menu` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('is_menu')."',
+  `is_enable` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('is_enable')."',
+  `is_sys` tinyint(1) NOT NULL DEFAULT '0' COMMENT '".lang('is_sys')."',
+  `is_auth` tinyint(1) NOT NULL DEFAULT '0' COMMENT '".lang('is_auth')."',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET={$charset} COMMENT='".lang('menu_admin_auth')."' AUTO_INCREMENT=1 ;";
+
+
+     $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}log_login` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` smallint(5) unsigned NOT NULL COMMENT '".lang('log_login')['uid']."',
+  `t` datetime NOT NULL COMMENT '".lang('log_login')['t']."',
+  `device` varchar(100) NOT NULL COMMENT '".lang('log_login')['device']."',
+  `ip` varchar(20) NOT NULL COMMENT '".lang('log_login')['ip']."',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET={$charset} COMMENT='".lang('menu_log_login')."' AUTO_INCREMENT=1 ;";
+
+     $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}log_operate` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` smallint(5) unsigned NOT NULL COMMENT '".lang('log_operate')['uid']."',
+  `t` datetime NOT NULL COMMENT '".lang('log_operate')['t']."',
+  `behavior` smallint(5) unsigned NOT NULL COMMENT '".lang('log_operate')['behavior']."',
+  `details` varchar(255) NOT NULL COMMENT '".lang('log_operate')['details']."',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET={$charset} COMMENT='".lang('menu_log_operate')."' AUTO_INCREMENT=1 ;";
+
+
+     $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}sys_type` (
+  `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '".lang('sys_type')['name']."',
+  `describe` varchar(20) NOT NULL COMMENT '".lang('sys_type')['describe']."',
+  `is_menu` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('sys_type')['is_menu']."',
+  `is_sys` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '".lang('is_sys')."',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET={$charset} COMMENT='".lang('menu_sys_stype')."' AUTO_INCREMENT=1 ;";
+
+    $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}sys_sset` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `t_id` smallint(5) unsigned NOT NULL COMMENT '".lang('sys_sset')['t_id']."',
+  `name` varchar(20) NOT NULL COMMENT '".lang('sys_sset')['name']."',
+  `describe` varchar(20) NOT NULL COMMENT '".lang('sys_sset')['describe']."',
+  `val` varchar(255) NOT NULL COMMENT '".lang('sys_sset')['val']."',
+  `field` varchar(10) NOT NULL DEFAULT 'text' COMMENT '".lang('sys_sset')['field']."',
+  `notes` varchar(100) DEFAULT NULL COMMENT '".lang('sys_sset')['notes']."',
+  `is_sys` tinyint(1) NOT NULL DEFAULT '0' COMMENT '".lang('is_sys')."',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET={$charset} COMMENT='".lang('menu_sys_sset')."' AUTO_INCREMENT=1 ;";
+
+    $this->sql[]="INSERT INTO `{$prefix}admin_auth` (`id`, `name`, `name`, `pid`, `icon`, `sort`,  `is_menu`, `is_enable`,`is_sys`,`is_auth`) VALUES
+(1, 'admin', '".lang('menu_admin')."', 0, '', 0, 1, 1, 1, 0),
+(2, 'back', '".lang('menu_back')."', 0, 'icon-home', 0, 1, 1, 1, 1),
+(3, 'sys', '".lang('menu_sys')."', 0, 'icon-settings', 0, 1, 1, 1, 0),
+(4, 'log', '".lang('menu_log')."', 0, 'icon-calendar', 0, 1, 1, 1, 0),
+(5, 'admin/User', '".lang('menu_admin_user')."', 1, '', 0, 1, 1, 1, 0),
+(6, 'admin/Role', '".lang('menu_admin_role')."', 1, '', 0, 1, 1, 1, 0),
+(7, 'admin/Auth', '".lang('menu_admin_auth')."', 1, '', 0, 1, 1, 1, 0),
+(8, 'back/Index', '".lang('menu_back_index')."', 2, '', 0, 1, 1, 1, 1),
+(9, 'back/Info', '".lang('menu_back_info')."', 2, '', 0, 1, 1, 1, 1),
+(10, 'back/Login', '".lang('menu_log_login')."', 2, '', 0, 1, 1, 1, 1),
+(11, 'back/Operate', '".lang('menu_log_operate')."', 2, '', 0, 1, 1, 1, 1),
+(12, 'back/Lock', '".lang('menu_back_lock')."', 2, '', 0, 1, 1, 1, 1),
+(13, 'sys/Type', '".lang('menu_sys_type')."', 3, '', 0, 1, 1, 1, 0),
+(14, 'sys/System', '".lang('menu_sys_system')."', 3, '', 0, 1, 1, 1, 0),
+(15, 'sys/Email', '".lang('menu_sys_email')."', 3, '', 0, 1, 1, 1, 0),
+(16, 'sys/Upfile', '".lang('menu_sys_upfile')."', 3, '', 0, 1, 1, 1, 0),
+(17, 'log/Login', '".lang('menu_log_login')."', 4, '', 0, 1, 1, 1, 0),
+(18, 'log/Operate', '".lang('menu_log_operate')."', 4, '', 0, 1, 1, 1, 0);";
+
+
+  $admin_auth=get_cas_config('admin_auth');
+
+   $this->sql[]="INSERT INTO `{$prefix}admin_role`  (`id`, `name`, `describe`, `a_id`, `is_enable`) VALUES
+(1, '".lang('administrator')."', '".lang('all_permissions')."','".$admin_auth."',1);";
+
+   $this->sql[]="INSERT INTO `{$prefix}sys_type` (`id`, `name`, `describe`, `is_menu`, `is_sys`) VALUES
+(1, 'system', '".lang('menu_sys_system')."', 1, 1),
+(2, 'email', '".lang('menu_sys_email')."', 1, 1),
+(3, 'upfile', '".lang('menu_sys_upfile')."', 1, 1);";
+
+    $this->sql[]="INSERT INTO `{$prefix}sys_sset`  (`id`, `t_id`, `name`, `describe`, `val`, `field`, `notes`, `is_sys`) VALUES
+(1, 1, 'user_only_sign', '', '0', '', '".lang('user_only_sign')."', 1),
+(3, 1, 'pass_error_num', '', '5', '', '".lang('pass_error_num')."', 1),
+(4, 1, 'lock_t', '', '86400', '', '".lang('lock_t')."', 1),
+(5, 2, 'email_interval_t', '', '120', '', '".lang('email_interval_t')."', 1),
+(6, 2, 'smtp_server', '', 'smtp.sina.com', '', '".lang('smtp_server')."', 1),
+(7, 2, 'smtp_server_port', '', '25', '', '".lang('smtp_server_port')."', 1),
+(8, 2, 'smtp_user_email', '', '', '', '".lang('smtp_user_email')."', 1),
+(9, 2, 'smtp_pass', '', '', '', '".lang('smtp_pass')."', 1),
+(10, 2, 'email_send_c', '', '50', '', '".lang('email_send_c')."', 1),
+(11, 2, 'email_t', '', '86400', '', '".lang('email_t')."', 1),
+(12, 2, 'email_activate_t', '', '1800', '', '".lang('email_activate_t')."', 1);";
+
+        return $this->sql;
+    }
+
+}

@@ -1,0 +1,37 @@
+{
+	"repositories": {
+		"packagist": {
+			"type": "composer",
+			"url": "https://packagist.phpcomposer.com"
+		}
+	},
+    "name": "xue-y/CasPHP",
+    "description": "Convenient and succinct PHP framework",
+    "version": "1.0.0-dev",
+    "type": "project",
+    "license": "Apache-2.0",
+    "minimum-stability":"stable",
+    "authors": [
+        {
+            "name": "xue-y",
+            "email": "php.develop@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "topthink/framework": "5.1.*",
+		"topthink/think-helper":"*",
+        "topthink/think-captcha":"*"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "application"
+        }
+    },
+    "extra": {
+        "think-path": "thinkphp"
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}

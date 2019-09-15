@@ -1,0 +1,164 @@
+{__NOLAYOUT__}
+{include file="common@head" /}
+{include file="common@nav" /}
+<!--为了操作上下级没有使用layui table-->
+<style>
+   .expander{cursor: pointer;padding:5px 5px 5px 0px;}
+   .layui-form-switch{height: auto; line-height: inherit; margin-top: 0px;}
+   .layui-table-tool .layui-inline[lay-event]{ margin-right: 5px;}
+   .layui-table td.sort{padding:0px;}
+   .layui-table-tool-temp>.sort{-webkit-transform:rotate(90deg);transform:rotate(90deg);}
+   .sort>input{    
+        border: none;
+        height: 41px;
+  }
+   .rotate-90{-webkit-transform:rotate(90deg);
+       transform:rotate(90deg);transform-origin:30% 55%;
+       -webkit-transition:-webkit-transform 0.1s linear;
+       transition:transform 0.1s linear;}
+   .rotate-0{
+       -webkit-transform:rotate(0deg);
+       transform:rotate(0deg);transform-origin:30% 55%;
+       -webkit-transition:-webkit-transform 0.1s linear;
+       transition:transform 0.1s linear;
+   }
+</style>
+<!-- Start responsive Table-->
+ <div class="white-box table-responsive">
+    <form method="post" class="layui-form" action="">
+        <table class="layui-table">
+          <thead>
+            <tr class="layui-table-tool">
+                {eq name="Think.config.app_debug" value="true"}
+                <th colspan="8" >
+                    {else /}
+                <th colspan="6" >
+                    {/eq}
+                <div class="layui-table-tool-temp">
+                    <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div>
+                    <div class="layui-inline sort" lay-event="sort"><i class="fa fa-exchange"></i></div>
+                    <!--<div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div>-->
+                    <div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+                </div>
+                </th>
+            </tr>
+            <tr>
+              <th width="80"><input type="checkbox" lay-skin="primary" ></th>
+              {eq name="Think.config.app_debug" value="true"}
+              <th width="80">ID</th>
+              <th width="300" class="layui-elip">{:lang('admin_auth')['url']}</th>
+              {/eq}
+              <th width="300" class="layui-elip">{:lang('admin_auth')['name']}</th>
+              <th class="layui-elip">{:lang('sort')}</th>
+              <th class="layui-elip">{:lang('is_menu_text')}</th>
+              <th class="layui-elip" style="min-width:110px;">{:lang('is_enable_text')}</th>
+              <th class="layui-elip" width="150">{:lang('operation')}</th>
+            </tr>
+          </thead>
+          <tbody>
+           {$list|raw}
+           </tbody>
+        </table>
+   </form>
+</div>
+<script src="{:get_cas_config('cas_js')}cas.js"></script>
+<script type="text/javascript">
+    // 全选
+    check_all();
+    // 是否开始app_debug
+    let app_debug="{:config('app_debug')}";
+
+    // 判断是否ajax
+    let ajax_submit="{:get_cas_config('ajax_submit')}";
+
+    //删除操作提示语
+    let del_msg=$('a[lay-event="del"]').eq(0).attr('data-del-msg');
+    del_msg=del_msg!=undefined?del_msg:"{:lang('del_msg')}";
+    del_msg+='<br/>'+"{:lang('auth_del_alter')}";
+
+    layui.use(['form'],function(){
+        let form=layui.form;
+        //监听指定开关,事件切换操作
+        form.on('switch(is_menu)', function(obj){
+            obj.event=this.name;
+            switchEvent($(this),obj,"{:url('ajaxOperate')}",app_debug);
+        });
+        form.on('switch(is_enable)', function(obj){
+            obj.event=this.name;
+            switchEvent($(this),obj,"{:url('ajaxOperate')}",app_debug);
+        });
+    });
+ 
+    // 批量排序
+    updateSort("{:url('sort')}",app_debug);
+
+    // 添加
+    $('div[lay-event="add"]').click(function(){
+        window.location.href="{:url('edit')}";
+    });
+
+    // 批量删除
+    $('div[lay-event="delete"]').click(function(){
+        let check_ele=$('span>input[type="checkbox"]:checked');
+        let ele_num=check_ele.length;
+        if(ele_num<1){
+            layer.msg("{:lang('select_empty')}");
+        }else{
+            // 询问是否删除？
+            let index=layer.confirm(del_msg, function(index)
+            {
+                layer.close(index); // 关闭当前窗口
+                if(ajax_submit){
+                    let del_data=[];
+                    check_ele.each(function(i,e){
+                        del_data.push(check_ele.eq(i).val());
+                    });
+                    del(del_data);
+                }else{
+                    let url="{:url('delete')}";
+                    $('form').attr('action',url).submit();
+                }
+            });
+        }
+    });
+
+    // 删除单个
+    $('a[lay-event="del"]').click(function(){
+        let _this=$(this);
+        let index=layer.confirm(del_msg, function(index)
+        {
+            layer.close(index); // 关闭当前窗口
+            if(ajax_submit){
+                del(_this.closest('tr').attr('data-id'))
+            }else{
+                window.location.href=_this.attr('data-href');
+            }
+        });
+    });
+
+    // 执行删除
+    function del(del_data) {
+        $.post("{:url('delete')}",{id:del_data},function(data){
+            // 调试模式
+            if(app_debug){
+                console.log(data);
+            }
+            layer.alert(data.msg);
+            // 手动更新页面--- 页面操作完不会自动更新
+            if(data.code==1){
+              $.each(data.data,function(i,e){
+                    $('tr.node-'+e).remove();
+                })
+            }
+         
+        },'json').fail(function(xhr,status,error){
+            // 调试模式
+            if(app_debug){
+                console.log(xhr);
+            }
+            layer.alert(status+':'+error);
+        });
+    }
+
+</script>
+</body></html>
