@@ -12,6 +12,8 @@ use think\Model;
 
 class AdminAuth extends Model
 {
+    private $menu_field='id,name,module,controller,action,param,pid,icon';
+    private $menu_sort='sort asc,id asc';
     /**
      * getMenu  menu
      * 取得权限,这里只取 2 层 --- 后台系统左菜单
@@ -25,10 +27,10 @@ class AdminAuth extends Model
         if(!empty($a_id))
         {
             $where['id']=['in',$a_id];
-            $menu=$this->getComMenu()+$this->where($where)->field('id,name,module,controller,action,param,pid,icon')->order('sort asc,id asc')->select()->toArray();
+            $menu=$this->getComMenu()+$this->where($where)->field($this->menu_field)->order($this->menu_sort)->select()->toArray();
         }else
         {
-            $menu=$this->where($where)->field('id,name,module,controller,action,param,pid,icon')->order('sort asc,id asc')->select()->toArray();
+            $menu=$this->where($where)->field($this->menu_field)->order($this->menu_sort)->select()->toArray();
         }
         return $menu;
     }
@@ -43,7 +45,7 @@ class AdminAuth extends Model
         $where['is_menu']=IS_MENU;
         $where['is_enable']=IS_ENABLE;
         $where['is_auth']=IS_AUTH;
-        return $this->where($where)->field('id,name,module,controller,action,param,pid,icon')->order('sort asc,id asc')->select()->toArray();
+        return $this->where($where)->field($this->menu_field)->order($this->menu_sort)->select()->toArray();
     }
 
     /**
@@ -79,15 +81,15 @@ class AdminAuth extends Model
     public function getList($where=[],$except_field='icon')
     {
         if(empty($where)){
-            return $this->field($except_field,true)->order('sort asc,id asc')->select()->toArray();
+            return $this->field($except_field,true)->order($this->menu_sort)->select()->toArray();
         }else{
-            return $this->field($except_field,true)->order('sort asc,id asc')->where($where)->select()->toArray();
+            return $this->field($except_field,true)->order($this->menu_sort)->where($where)->select()->toArray();
         }
     }
 
     // 权限分配
     public function geAuthList(){
-        return $this->field('id,pid,name')->where('is_auth','<>',IS_AUTH)->order('sort asc,id asc')->select()->toArray();
+        return $this->field('id,pid,name')->where('is_auth','<>',IS_AUTH)->order($this->menu_sort)->select()->toArray();
     }
 
     // 控制器
@@ -146,17 +148,23 @@ class AdminAuth extends Model
     }
 
 
-    // 根据id 取得数据-- 修改
+    // 根据id 取得数据
     public function getDataById($id)
     {
         return $this->field('id,is_sys',true)->find($id);
     }
 
-    // 根据id 查询字段
-    public function id_field($id,$field)
+    // 根据模块 url 获取 name
+    public function getModuleName($module)
     {
-        $data=$this->field($field)->find($id);
-        return $data[$field];
+        $where['pid']=0;
+        $where['module']=$module;
+        return $this->where($where)->value('name');
+    }
+
+    // 根据访问的地址或控制器名称
+    public function getControllerName($where){
+        return $this->where($where)->value('name');
     }
 
     /**
@@ -212,36 +220,4 @@ class AdminAuth extends Model
         $operate_module=config('operate_module');
         return $this->where([['pid','=','0'],['name','in',$operate_module]])->column($filed,'id');
     }
-
-    /**
-     * 取得可以分配的权限
-     * @return array
-     * */
-    public function role_power()
-    {
-        // 排除公共默认权限 --- 排除不分配的权限
-        $com_modular=config('user_com_modular');
-        $except_module=config('except_module');
-
-         array_push($except_module,$com_modular);
-         $id=$this->mc_id($except_module);
-         return $this->field('biaoshi_name as n,id,pid')->whereNotIn('id',$id)->select();
-    }
-
-    // 根据模块名称取得id
-    public function mc_id($name)
-    {
-        if(is_array($name))
-        {
-        $id=$this->where('name','in',$name)->field('id')->select();
-        }else
-        {
-         $id=$this->where('name','=',$name)->field('id')->select();
-        }
-        if(empty($id))
-            return $id;
-        $id=$id->toArray();
-        return array_column($id,'id');
-    }
-
 }

@@ -1,9 +1,4 @@
-{php}
-if(empty($data['field_name'])){
-    $data['field_name']='icon';
-}
-{/php}
-<input class="form-control icp icp-auto" value="{$data[$data.field_name]|default='fa-circle-o'}" name="{$data.field_name}"  type="text"/>
+<input class="form-control icp icp-auto {$class|default=''}"  {$extra|default=''} value="{$value|default='fa-circle-o'}" name="{$name}"  type="text"/>
 <span class="input-group-addon"><i class=""></i></span>
 <link href="/static/css/fontawesome-iconpicker.min.css" rel="stylesheet">
 <script src="/static/awesome-icon/js/fontawesome-iconpicker2.js"></script>

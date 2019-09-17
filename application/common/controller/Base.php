@@ -9,7 +9,6 @@
 
 namespace app\common\controller;
 
-use think\App;
 use think\Controller;
 
 class Base extends Controller
@@ -45,7 +44,8 @@ class Base extends Controller
     }
 
     // 删除带有系统不可删除的数据
-    protected function delSysData($id,$sys_id,$module){
+    protected function delSysData($id,$sys_id,$module)
+    {
         if(!is_array($id) && ($id==$sys_id))
         {
             if($this->request->isAjax()){
@@ -97,5 +97,17 @@ class Base extends Controller
         return $id;
     }
 
+    /**
+     * formItem
+     * @todo 表单元素调用
+     * @param string $template 模板名称
+     * @param array $data 模板数据
+     * @return mixed
+     */
+    public function formItem($template,$data){
+        $this->view->engine->layout(false);
+        $template='common@/field/'.$template;
+        return $this->fetch($template,$data);
+    }
 
 }

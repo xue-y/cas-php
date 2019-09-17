@@ -132,10 +132,13 @@ class Before
            $postion_nav['c']=$auth_info['name'];
         }else{
            // 当前控制器
-           $postion_nav['c']=$admin_auth->getFieldByController($curren_c,'name');
+           $controller_w['module']=$current_m;
+           $controller_w['controller']=$curren_c;
+           $controller_w['param']=http_build_query($request->route());
+           $postion_nav['c']=$admin_auth->getControllerName($controller_w);
        }
         // 当前位置 当前模块
-        $postion_nav['m']=$admin_auth->getFieldByModule($current_m,'name');
+        $postion_nav['m']=$admin_auth->getModuleName($current_m);
 	    // 当前列表访问地址  当前控制器 模块名 ["controller"] => string(9) "User.test"  多层控制器
         $curren_mc=$current_m.'/'.str_replace('.','/',$curren_c);
         $postion_nav['url']=$curren_mc.'/'.config('default_action');

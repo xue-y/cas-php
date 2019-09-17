@@ -47,7 +47,7 @@ class AdminUser extends Validate
         'reemail'   => 'require|email'
     ];
 
-    protected $scene = [
+    protected $scene=[
         'login'           => ['name', '__token__', 'repass', 'v_code'], // 用户登录
         'info_save'       => ['name', '__token__', 'pass', 'pass2', 'oldpass'], // 个人信息
         'unlock'          => ['__token__', 'repass'],  // 解屏

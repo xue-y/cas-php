@@ -17,30 +17,21 @@
             {:token()}
             {foreach $list as $k=>$data}
             <div class="form-group">
-                <label class="col-md-2  control-label">{$data.label}</label>
+                <label class="col-md-2 control-label">{$data.label}</label>
                 <div class="col-md-5">
                 {switch $data.type}
-                 {case date}
-                 {include file="common@field/date" /}
-                 {/case}
-                 {case time}
-                 {include file="common@field/time" /}
-                 {/case}
-                 {case date-range}
-                 {include file="common@field/date-range" /}
-                 {/case}
-                 {case time-range}
-                 {include file="common@field/time-range" /}
+                 {case date|time|date-range|time-range}
+                    {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
                  {/case}
                  {default /}
-                 {include file="common@field/input" /}
+                    {:action("common/Base/formItem",['template'=>'input','data'=>$data])}
                 {/switch}
                 </div>
-                {present name="data.notes"}
+                {notempty name="data.notes"}
                 <div class="text-muted col-md-5">
                     <i class="fa fa-info-circle color-info1"></i> {$data.notes}
                 </div>
-                {/present}
+                {/notempty}
             </div>
             {/foreach}
             {include file="common@field/edit-btn" /}

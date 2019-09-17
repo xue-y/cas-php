@@ -133,11 +133,6 @@ class Item extends Base
         $sys_item=new SysItem();
         $list=$sys_item->getTypeItemData($t_id);
         if(!empty($list)) {
-            foreach ($list as $k=>$v) {
-                $list[$k][$v['field_name']]=$v['val'];
-                unset($list[$k]['val']);
-                if(empty($v['type']))$list[$k]['type']=$this->default_field_type;
-            }
             $this->assign('list',$list);
         }
         $sys_type=new SysType();
@@ -163,9 +158,9 @@ class Item extends Base
         unset($data['__token__']);
         $is_save=$sys_item->setItemData($data,$t_id);
         if($is_save>=1) {
-            $this->success(lang('edit_success'),url('index',['t_id'=>$t_id]));
+            $this->success(lang('update_success'),url('index',['t_id'=>$t_id]));
         }else {
-            $this->error(lang('edit_fail'));
+            $this->error(lang('update_fail'));
         }
     }
 }

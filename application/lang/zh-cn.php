@@ -30,12 +30,9 @@ $admin_auth=[
     "param_info"=>"访问参数url字符串形式"
 ];
 $sys_type=[
-    "name"=>"配置分类名称",
-    "describe"=>"配置分类标识名",
+    "name"=>"分类名称",
+    "describe"=>"分类标识名",
     "is_menu"=>"是否为系统配置子菜单,0不是菜单,1菜单",
-/*    "name_length"=>"分类名称长度2-20之间",
-    "name_unique"=>" 分类名称重复",
-    "type_children"=>"ID： %s 分类有配置项在使用不可删除, 如要删除请先删除分类下的配置项",*/
 ];
 $sys_item=[
     "t_id"=>"配置项分类",
@@ -46,8 +43,6 @@ $sys_item=[
     "val"=>"配置项值",
     "val_info"=>"配置项值;多个值中间用英文逗号分隔",
     "field"=>"表单字段类型",
-   /* "val_default"=>"如果值为空默认不配置",
-    "sys_null"=>"配置项不存在",*/
 ];
 $log_login=[  
     "uid"=>"登录用户ID",
@@ -81,6 +76,7 @@ return [
     "update_sort"=>"更新排序",
     "search"=>"搜索",
     "main"=>"首页",
+    "see"=>"查看",
     // 执行操作提示语
     "close"=>"关闭",
     "cancel"=>"取消",
@@ -122,6 +118,8 @@ return [
     "edit_success"=>"修改成功",
     "update_sort_fail"=>"更新排序失败",
     "update_sort_success"=>"更新排序成功",
+    "update_fail"=>"未更新数据",
+    "update_success"=>"更新成功",
     "del_fail"=>"删除失败",
     "delete_fail"=>"删除失败或系统内置不可删除",
     "del_success"=>"删除成功",

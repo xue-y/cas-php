@@ -59,13 +59,11 @@ class Login extends Base
        {
            return  redirect(config('login_url'));
        }
-
        $validate =new VAdminUser();
        $result = $validate->scene('login')->check($post);
        if(!$result){
            $this->error($validate->getError());
        }
-
       //数据查询是否有此用户
        $admin_user=new AdminUser();
        $data=$admin_user->isUser($post['name']);
