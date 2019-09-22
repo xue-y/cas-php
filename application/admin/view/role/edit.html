@@ -17,15 +17,11 @@
                     <input type="text" class="form-control" name="describe" value="{$data.describe|default=''}"/>
                 </div>
             </div>
-            {if (empty($data.a_id) OR ($data.a_id!=get_cas_config('admin_auth'))) }
+            {if ($data.a_id!=get_cas_config('admin_auth')) }
             {include file="common@field/enable" /}
             {/if}
             {include file="common@field/edit-btn" /}
         </form>
     </div>
 </div>
-<!--表单验证插件-->
-{include file="common@vaildator" /}
-<script>
-
-</script>
+{include file="common@vail_form" /}

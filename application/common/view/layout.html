@@ -1,7 +1,11 @@
 {include file="common@head" /}
 {include file="common@nav" /}
 {eq name="$Request.action" value="index"}
-	<!-- 列表页面 -->
+<!-- 列表页面 -->
+<style type="text/css">
+.btn{padding: 7px 12px;vertical-align:top;}
+.search{width:200px;display:inline;height:36px;}
+</style>
 {__CONTENT__}
 <script>
 	if(typeof operateToolbar == 'undefined'){
@@ -135,5 +139,11 @@ function del(del_data,obj,app_debug){
 {else/}
 	<!-- 表单页面 -->
 	{__CONTENT__}
+<script type="text/javascript">
+	$(function(){ 
+	    // 去掉所有input的autocomplete, 显示指定的除外 
+	    $('input:not([autocomplete]),textarea:not([autocomplete]),select:not([autocomplete])').attr('autocomplete', 'off'); 
+	}); 
+</script>	
 {/eq}
 </body></html>

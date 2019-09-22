@@ -168,20 +168,22 @@ class AdminAuth extends Model
     }
 
     /**
-     * @todo 判断name 在数据表中是否唯一
+     * @todo 判断菜单在数据表中是否唯一
      * @param $name 需要验证的值
      * @param $id 排除主键ID默认null
      * @return int 查询个数
      * */
-    public function checkUrlUnique($module,$controller,$id=null)
+    public function checkUrlUnique($data)
     {
         $where=[
-            ['module','=',$module],
-            ['controller','=',$controller],
+            ['module','=',$data['module']],
+            ['controller','=',$data['controller']],
+            ['action','=',$data['action']],
+            ['param','=',$data['param']],
         ];
-        if(!empty($id))
+        if(!empty($data['id']))
         {
-            $where[]=['id','<>',$id];
+            $where[]=['id','<>',$data['id']];
             $c=$this->where($where)->count();
         }else
         {

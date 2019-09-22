@@ -44,7 +44,7 @@
     });
     // 判断是否ajax
     if("{:get_cas_config('ajax_submit')}"){
-        // 提交表单
+        // 提交表单---不验证表单
         $("form").on("submit",function(e){
             e.preventDefault();
             ajax_request($(this),"{:config('app_debug')}",true,true)

@@ -19,8 +19,7 @@
     }
 </style>
 <div class="white-box">
-     <form class="table-responsive m-b-0" method="get">
-
+     <form method="get">
         <div class="form-group">
            <!--  <div class="input-daterange " id="date-range">
                <input type="text" class="form-control" name="start"  autocomplete="off"  placeholder="{$start_t}" >
@@ -48,8 +47,8 @@
                <input type="submit" id="search"  class=" btn btn-primary"  value="{:lang('search')}">
            </div> -->
         </div>
-
-        <div class="clear"></div>
+      </form>
+      <form method="post" action="{:url('delete')}">
         <table class="layui-hide" lay-filter="table" >
             <thead>
             <tr>

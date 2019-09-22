@@ -116,7 +116,7 @@ class Item extends Base
         // 删除配置
         $sys_item=new SysItem();
         // 返回 int 类型  1
-        $is_del=1;//$sys_item->delData($id);
+        $is_del=$sys_item->delData($id);
         if($is_del) {
             // 取得t_id
             $t_id=$sys_item->getFieldById($current_id,'t_id');

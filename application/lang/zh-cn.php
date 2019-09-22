@@ -75,6 +75,7 @@ return [
     "operation"=>"操作",
     "update_sort"=>"更新排序",
     "search"=>"搜索",
+    "reset"=>"清空",
     "main"=>"首页",
     "see"=>"查看",
     // 执行操作提示语

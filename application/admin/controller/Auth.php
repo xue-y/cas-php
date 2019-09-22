@@ -81,11 +81,11 @@ class Auth extends Base
         }
    
         // 判断模块控制器是否唯一
-        /*$is_unique=$admin_auth->checkUrlUnique($data['module'],$data['controller'],$data["id"]);
+        $is_unique=$admin_auth->checkUrlUnique($data);
         if($is_unique>0)
         {
             $this->error(lang('auth_url_unique'));
-        }*/
+        }
 
         if(empty($data["id"]))
         {
