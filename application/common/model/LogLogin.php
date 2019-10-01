@@ -13,6 +13,11 @@ use think\Model;
 class LogLogin extends Model
 {
 
+    /*protected $autoWriteTimestamp = true;
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+    protected $createTime = 't';*/
+
     /**
      * 查看登录记录
      * @param $uid 指定用户id

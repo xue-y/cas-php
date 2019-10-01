@@ -2285,6 +2285,7 @@ div.checker span {
 
 .form-control {
     border: 1px solid #c5bebe;
+	height: 38px;
 }
 /*--------------------------------------------*/
 /*   chart
@@ -2906,6 +2907,10 @@ vertical-tabs-main .vertical-tabs. .nav > li >  a {
 .checkbox label {
   display: inline-block;
   position: relative;
+	margin-right:14px;
+	margin-left: -15px;
+	z-index: 1;
+	padding-left: 30px;
 }
 
 .checkbox label::before {
@@ -2949,8 +2954,11 @@ vertical-tabs-main .vertical-tabs. .nav > li >  a {
 }
 
 .checkbox input[type="checkbox"] {
-  cursor: pointer;
-
+  cursor: pointer;opacity:0;
+	margin-left: -5px;
+	z-index: 2;
+	width: 18px;
+	height: 18px;
 }
 
 .checkbox input[type="checkbox"]:disabled + label {
@@ -3045,17 +3053,17 @@ vertical-tabs-main .vertical-tabs. .nav > li >  a {
 	-moz-border-radius:100%;
 	border-radius:100%
 }
+.checkbox label, .radio label{
+	cursor:default
+}
 
 /* Radios */
 
-.radio {
-  padding-left: 30px;
-}
-
 .radio label {
   display: inline-block;
-  padding-left: 5px;
+  padding-left: 0px;
   position: relative;
+ margin: 0px 15px;
 }
 
 .radio label::before {
@@ -3097,10 +3105,14 @@ vertical-tabs-main .vertical-tabs. .nav > li >  a {
 }
 
 .radio input[type="radio"] {
-  cursor: pointer;
-  opacity: 0;
-  z-index: 1;
-  outline: none !important;
+	cursor: pointer;
+	opacity: 0;
+	z-index: 1;
+	outline: none !important;
+	margin-left: -5px;
+	margin-top: -0px;
+	width: 18px;
+	height: 18px;
 }
 
 .radio input[type="radio"]:disabled + label {
@@ -4983,7 +4995,7 @@ section.all_full_bg .row{display:flex;
 .b_from  .col-md-2{ line-height: 34px;}
 .b_from .white-box{ padding-top: 35px;}
 
-.b_from .form-control{height: 40px;}
+
 .b_from textarea.form-control{height:100px;resize:vertical;min-height: 100px;}
 .b_from .form-group small{ transition:all cubic-bezier(0.1, 0.57, 0.58, 1.04) 1s;}
 .b_from .has-feedback .form-control-feedback {
@@ -5007,7 +5019,7 @@ section.all_full_bg .row{display:flex;
 	border:none;border-left: 1px solid #ddd;border-top: 1px solid #ddd;
 }
 input.text-center{border:1px solid #ddd;width:50px;margin-right: 10px;}
-#DataTables_Table_0{border-left:none;}
+
 
 td>a{ cursor: pointer;    width: 100%;
 	height: 100%;}
@@ -5022,16 +5034,11 @@ tr.checked {
 }
 
 nav>.pagination{ margin: 0px;}
-/* 搜索框*/
-/*#date-range{ width: 500px;  float: left; margin: 0px 10px 5px;}
-#date-range>span{ padding: 9px 12px;    vertical-align: baseline;width: 50px;display: inline;}
-#date-range>input{  display: inline;width:calc((500px - 50px)/2);}
-#date-range>input,.h-40,#search{	height: 40px;}
-button#list_all{ float: left; height: 40px;}
-#search{  margin-left: 5px;}*/
-/* 警告弹窗*/
-/*#alert{ display: none;}
-.close{ font-size: 26px; font-weight: normal}*/
+.pagination>li:last-child>a, .pagination>li:last-child>span,
+.pagination>li:first-child>a, .pagination>li:first-child>span,
+.form-control,.pagination{
+    border-radius: 0px; 
+}
 
 @media screen and (max-width: 767px) {
 	.table-responsive {
@@ -5059,3 +5066,4 @@ button#list_all{ float: left; height: 40px;}
 	.add-m-lr-15{margin:0px;}
 }
 .f-left{ float: left;}
+.text-disable{color:#bfbebe;}

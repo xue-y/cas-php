@@ -30,6 +30,7 @@ class Role extends Base
     {
         $id=input('param.id/d');
         $admin_role=new AdminRole();
+        $data['a_id']=0;
         if(!empty($id))
         {
             $data=$admin_role->find($id);
@@ -37,8 +38,8 @@ class Role extends Base
             {
                 $this->error(lang('error_id'));
             }
-            $this->assign('data',$data);
         }
+        $this->assign('data',$data);
         return $this->fetch();
     }
 

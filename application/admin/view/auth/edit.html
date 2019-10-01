@@ -52,11 +52,12 @@
            </div>
            <div class="form-group">
                <label class="col-md-2 control-label">{$data.lable|default=lang('admin_auth')['icon']} </label>
-               <div class="col-md-5 all-icon">
+               <div class="col-md-5">
                    {php}
                         if(!isset($data['icon'])){
                             $data['icon']='';
                         }
+                        $all_icon=true; // 定义变量标识
                    {/php}
                    {:action("common/Base/formItem",['template'=>'all-icon','data'=>['name'=>'icon','value'=>$data['icon']]])}
                </div>
@@ -74,12 +75,12 @@
                <div class="col-md-5 radio m-t-5">
                    {present name="data.is_auth"}
                    <input type="radio" name="is_auth"  value="{$Think.IS_AUTH}" {eq name="data.is_auth" value="$Think.IS_AUTH"}checked {/eq}>
-                   <label style="width:65px;">{:lang('is_yes')}</label>
+                   <label>{:lang('is_yes')}</label>
                    <input type="radio" name="is_auth"  value="0" {eq name="data.is_auth" value="0"}checked {/eq} >
                    <label >{:lang('is_no')}</label>
                    {else /}
                    <input type="radio" name="is_auth"  value="{$Think.IS_AUTH}">
-                   <label style="width:65px;">{:lang('is_yes')}</label>
+                   <label>{:lang('is_yes')}</label>
                    <input type="radio" name="is_auth"  value="0" checked >
                    <label >{:lang('is_no')}</label>
                    {/present}

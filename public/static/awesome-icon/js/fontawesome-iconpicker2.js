@@ -567,7 +567,6 @@
                     console.log('错误信息：'+error)
                 });
             }
-            console.log(temp_icon_this);
             // 请求成功并且有数据
             if((ajax_success==true) && (temp_icon_this.length>=1)){
                 this.options.icons= temp_icon_this;

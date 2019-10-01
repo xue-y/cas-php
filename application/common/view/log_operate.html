@@ -19,35 +19,7 @@
     }
 </style>
 <div class="white-box">
-     <form method="get">
-        <div class="form-group">
-           <!--  <div class="input-daterange " id="date-range">
-               <input type="text" class="form-control" name="start"  autocomplete="off"  placeholder="{$start_t}" >
-               <span class="input-group-addon no-border text-white" >to</span>
-               <input type="text" class="form-control" name="end"   autocomplete="off" placeholder="{$end_t}">
-           </div>  
-           
-           <div class="f-left m-b-5">
-               {empty name="uid"}
-               <select name="name"  class=" form-control h-40"   style="width:170px;display: inline" >
-                   <option value="">{$n_search}</option>
-                   {foreach $name as $k=>$v }
-                   <option value="{$k}">{$v}</option>
-                   {/foreach}
-               </select>
-               {/empty}
-               // 如果 行为不为空
-               <select name="behavior"  class=" form-control h-40"   style="width:170px; display: inline">
-                   <option value="">{$b_search}</option>
-                   {foreach $behavior as $k=>$v }
-                   <option value="{$k}">{$v}</option>
-                   {/foreach}
-               </select>
-               </div>
-               <input type="submit" id="search"  class=" btn btn-primary"  value="{:lang('search')}">
-           </div> -->
-        </div>
-      </form>
+    {:action("common/Base/includePage",['template'=>'search','data'=>$search])}
       <form method="post" action="{:url('delete')}">
         <table class="layui-hide" lay-filter="table" >
             <thead>

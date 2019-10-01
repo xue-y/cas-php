@@ -1,12 +1,1 @@
-<input type="text" class="layui-input form-control {$class|default=''}" id="date-range" placeholder=" - "  {$extra|default=''}   name="{$name}" value="{$value|default=''}" >
-<script>
-    layui.use('laydate', function() {
-        var laydate = layui.laydate;
-
-        //常规用法
-        laydate.render({
-            elem: '#date-range',
-            range: true
-        });
-    });
-</script>
+<input type="text" class="form-control laydate {$class|default=''}" id="date-range" placeholder="{$placeholder|default='-'}"  {$extra|default=''} name="{$name|default='date-range'}" value="{$value|default=''}" >

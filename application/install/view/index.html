@@ -1,11 +1,8 @@
-{__NOLAYOUT__}
 {include file="common@head" /}
 <body class="all_full_bg">
-
 <div class="container install" >
     <div class="row" >
         <h3 class="text-center">{$Request.param.view_tit}</h3>
-
         <form class="b_from m-t-30" action="{:url('install')}">
             <div class="form-group">
                 <p class="col-md-7 text-danger">
@@ -60,7 +57,7 @@
                 <label for="utf8" class="col-md-2 control-label">{$Think.lang.charset}： </label>
                  <div class="col-md-10 radio m-t-5">
                     <input type="radio" name="charset" id="utf8" checked value="utf8">
-                    <label for="utf8" style="width:75px;">UTF8</label>
+                    <label for="utf8">UTF8</label>
                     <input type="radio" name="charset" id="gbk" value="gbk">
                     <label for="gbk">GBK</label>
                     <p style="margin-left: -20px;">{$Think.lang.default_collation}： UTF8：utf8_general_ci ; GBK：gbk_chinese_ci</p>
@@ -68,7 +65,6 @@
             </div>
             <div class="form-group" id="name_v">
                 <label for="name" class="col-md-2 control-label">{$Think.lang.name}： <span class="red">*</span></label>
-
                 <div class="col-md-10">
                     <input type="text" class="form-control" id="name" name="name" placeholder="" value="admin" autocomplete="off">
                 </div>

@@ -1,0 +1,29 @@
+.popover-content .nav-tabs > li > a{
+    padding: 10px 20px;
+}
+.iconpicker .iconpicker-items{
+    max-height: 200px;
+}
+.input-group-addon{
+    position: absolute;
+    top: 1px;
+    padding: 0px;
+    width: 40px;
+    height: 38px;
+    right: 16px;border:none;border-left:1px solid #ccc;
+    text-align: center;
+    line-height: 40px;
+}
+.iconpicker-items>a{
+    text-decoration:none;
+}
+.iconpicker-items>a>.layui-icon{
+    top:6px;
+}
+.iconpicker .iconpicker-item.iconpicker-selected{
+    /*#286090 #276fad*/
+    background: #276fad;
+}
+/* 如果使用远程，请自行调整图标容器宽度*/
+.iconpicker{height:205px;}
+.iconpicker-popover.popover{width:290px;}

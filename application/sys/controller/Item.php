@@ -132,13 +132,16 @@ class Item extends Base
         $t_id=input('param.t_id/d',1);
         $sys_item=new SysItem();
         $list=$sys_item->getTypeItemData($t_id);
-        if(!empty($list)) {
-            $this->assign('list',$list);
-        }
+
         $sys_type=new SysType();
-        $this->assign('t_id',$t_id);
-        $this->assign('type',$sys_type->column('describe','id'));
-        return $this->fetch();
+        // 构建表单
+        $form=new Form();
+        return $form->tabNav(
+            $sys_type->column('describe','id'),$t_id,'','','t_id'
+         )->method('post')->action(url('seeSave'))->token()->hiddenItem([
+             ['name'=>'t_id','value'=>$t_id]
+        ])->fieldItem($list)->create();
+
     }
 
     //TODO 设置配置项数据

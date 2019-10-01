@@ -52,5 +52,5 @@ return [
     // 框架名称
     'web_tit'=>'CasPHP系统',
     // 是否ajax 方式提交操作
-    'ajax_submit'=>true,   // 默认不使用ajax
+    'ajax_submit'=>false,   // 默认不使用ajax
 ];

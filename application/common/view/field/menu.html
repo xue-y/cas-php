@@ -3,12 +3,12 @@
     <div class="col-md-5 radio m-t-5">
         {present name="data.is_menu"}
         <input type="radio" name="is_menu"  value="{$Think.IS_MENU}" {eq name="data.is_menu" value="$Think.IS_MENU"}checked{/eq}>
-        <label style="width:65px;">{:lang('is_yes')}</label>
+        <label>{:lang('is_yes')}</label>
         <input type="radio" name="is_menu"  value="0"  {eq name="data.is_menu" value="0"}checked{/eq}>
         <label >{:lang('is_no')}</label>
         {else /}
         <input type="radio" name="is_menu"  value="{$Think.IS_MENU}" checked>
-        <label style="width:65px;">{:lang('is_yes')}</label>
+        <label>{:lang('is_yes')}</label>
         <input type="radio" name="is_menu"  value="0" >
         <label >{:lang('is_no')}</label>
         {/present}

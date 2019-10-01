@@ -3,7 +3,6 @@
     <div class="white-box">
         <div class="text-danger col-md-offset-1 col-md-5 m-b-20">
             <p>{:lang('pass_empty_info')}</p>
-            <p>{:lang('admin_user')['name_takeeffect']}</p>
         </div>
         <form class="b_from" method="post" action="{:url('save')}">
             <input type="hidden" name="id" value="{$data.id|default=0}">
@@ -37,6 +36,7 @@
                     </select>
                 </div>
             </div>
+            {include file="common@field/enable" /}
             {include file="common@field/edit-btn" /}
         </form>
     </div>

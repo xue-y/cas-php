@@ -1,0 +1,40 @@
+{notempty name="field_data"}
+<form method="{$method|default='get'}" action="{$action|default=''}" {$extra|default=''}>
+    <div class="form-group">
+        {foreach $field_data as $k=>$data}
+            {switch $data.type}
+            {case date|time|date-range|time-range|select}
+            {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
+            {/case}
+            {default /}
+            {:action("common/Base/formItem",['template'=>'input','class'=>'search','data'=>$data])}
+            {/switch}
+        {/foreach}
+        {empty name='button_data'}
+            <input type="submit" class="btn btn-primary"  value="{:lang('search')}">
+            <input type="reset" class="btn btn-default"  value="{:lang('reset')}"><!-- 添加js事件 -->
+        {else /}
+            {foreach $button_data as $k=>$data}
+                {notempty name="data"}
+                    <input type="{$data.type}" class="btn btn-primary {$data.class|default=''}"  value="{$data.value|default=''}">
+                {/notempty}
+            {/foreach}
+        {/empty}
+    </div>
+</form>
+<script>
+    // 清空按钮
+    $(function () {
+        $("input[type='reset']").click(function(){
+            $(this).siblings('input,select').each(function(i,e){
+                if(e.tagName =='INPUT'){
+                    $("input[type!='submit'],input[type!='reset']").removeAttr('value');
+                }else{
+                    $(this).find('option:selected').removeAttr('selected');
+                }
+            });
+        });
+    });
+</script>
+<div class="clear"></div>
+{/notempty}

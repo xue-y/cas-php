@@ -170,6 +170,7 @@ function updateSort(url,debug)
  * @return 
  */
 function switchEvent(_this,obj,url,app_debug){
+
     let text=_this.attr('lay-text').split('|');
     let val=(obj.elem.checked==true)?1:0; // 现在的值
     let old_val=(obj.elem.checked==true)?0:1; // 原来的值
@@ -184,9 +185,13 @@ function switchEvent(_this,obj,url,app_debug){
             // 更新失败还原样式
             if(old_val==1){
                 // 选中状态/
+                _this.attr("checked","checked");
+                _this.prop("checked","checked");
                 _this.siblings('.layui-form-switch').addClass('layui-form-onswitch');
             }else{
                 // 未选中状态
+                _this.attr("checked",false);
+                _this.prop("checked",false);
                 _this.siblings('.layui-form-switch').removeClass('layui-form-onswitch');
             }
             // 数据库的设计与layui 相反 
@@ -199,11 +204,15 @@ function switchEvent(_this,obj,url,app_debug){
             console.log(xhr);
         }
         // 更新失败还原样式
-        if(obj.value==1){
+        if(old_val==1){
             // 选中状态/
+            _this.attr("checked","checked");
+            _this.prop("checked","checked");
             _this.siblings('.layui-form-switch').addClass('layui-form-onswitch');
         }else{
             // 未选中状态
+            _this.attr("checked",false);
+            _this.prop("checked",false);
             _this.siblings('.layui-form-switch').removeClass('layui-form-onswitch');
         }
         // 数据库的设计与layui 相反 

@@ -60,7 +60,7 @@ class AdminAuth extends Model
         $where['is_enable']=IS_ENABLE;
         $where['module']=$module;
         $where['controller']=$controller;
-        return $this->where($where)->find();
+        return $this->where($where)->column('id,name,is_auth','param');
     }
 
     /**
@@ -164,7 +164,7 @@ class AdminAuth extends Model
 
     // 根据访问的地址或控制器名称
     public function getControllerName($where){
-        return $this->where($where)->value('name');
+        return $this->where($where)->column('name','param');
     }
 
     /**
@@ -219,7 +219,7 @@ class AdminAuth extends Model
      * */
     public function getTopModule($filed='name')
     {
-        $operate_module=config('operate_module');
-        return $this->where([['pid','=','0'],['name','in',$operate_module]])->column($filed,'id');
+        $operate_module=get_cas_config('operate_module');
+        return $this->where([['pid','=','0'],['module','in',$operate_module]])->column($filed,'module');
     }
 }

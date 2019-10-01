@@ -1,40 +1,39 @@
-    <!-- Start responsive Table-->
-    <div class="white-box">
-        <form method="post" action="{:url('delete')}">
-            <table class="layui-hide" lay-filter="table">
-                <thead>
-                <tr>
-                    <th lay-data="{field:'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th>
-                    <th lay-data="{field:'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>
-                    <th lay-data="{field:'name'}">{:lang('sys_type')['name']}</th>
-                    <th lay-data="{field:'describe'}">{:lang('sys_type')['describe']}</th>
-                    <th lay-data="{field:'is_menu',width:120,}">{:lang('is_menu_text')}</th>
-                    <th lay-data="{field:'operate',fixed:'right',width:150}">{:lang('operation')}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {foreach $list as $k=>$v }
-                <tr>
-                    <td></td>
-                    <td>{$v.id}</td>
-                    <td>{$v.name}</td>
-                    <td>{$v.describe}</td>
-                    <td>
-                        <input type="checkbox" name="is_menu" value="{$v.id}" lay-skin="switch"  lay-text="{:lang('is_menu_but')}" lay-filter="is_menu" {eq name="v.is_menu" value="$Think.IS_MENU" } checked {/eq}>
-                    </td>
-                    <td>
-                        <a href="{:url('Item/see',['t_id'=>$v.id])}" title="{:lang('type_see_item')}"><i class="fa fa-eye text-success"></i></a>
-                        <a href="{:url('edit',['id'=>$v.id])}"><i class="fa fa-edit text-warning"></i></a>
-                        {neq name="v.is_sys" value="$Think.IS_SYS"}
-                        <a lay-event="del" href="#"><i class="fa fa-trash-o text-danger"></i></a>
-                        {/neq}
-                    </td>
-                </tr>
-                {/foreach}
-                </tbody>
-            </table>
-        </form>
-    </div>
-    <!-- End responsive Table-->
-    <!--End main content -->
-    <script src="{:get_cas_config('cas_js')}cas.js"></script>
+<!-- Start responsive Table-->
+<div class="white-box">
+    <form method="post" action="{:url('delete')}">
+        <table class="layui-hide" lay-filter="table">
+            <thead>
+            <tr>
+                <th lay-data="{field:'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th>
+                <th lay-data="{field:'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>
+                <th lay-data="{field:'name'}">{:lang('sys_type')['name']}</th>
+                <th lay-data="{field:'describe'}">{:lang('sys_type')['describe']}</th>
+                <th lay-data="{field:'is_menu',width:120,}">{:lang('is_menu_text')}</th>
+                <th lay-data="{field:'operate',fixed:'right',width:150}">{:lang('operation')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $k=>$v }
+            <tr>
+                <td></td>
+                <td>{$v.id}</td>
+                <td>{$v.name}</td>
+                <td>{$v.describe}</td>
+                <td>
+                    <input type="checkbox" name="is_menu" value="{$v.id}" lay-skin="switch"  lay-text="{:lang('is_menu_but')}" lay-filter="is_menu" {eq name="v.is_menu" value="$Think.IS_MENU" } checked {/eq}>
+                </td>
+                <td>
+                    <a href="{:url('Item/see',['t_id'=>$v.id])}" title="{:lang('type_see_item')}"><i class="fa fa-eye text-success"></i></a>
+                    <a href="{:url('edit',['id'=>$v.id])}"><i class="fa fa-edit text-warning"></i></a>
+                    {neq name="v.is_sys" value="$Think.IS_SYS"}
+                    <a lay-event="del" href="#"><i class="fa fa-trash-o text-danger"></i></a>
+                    {/neq}
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </form>
+</div>
+<!-- End responsive Table-->
+<!--End main content -->

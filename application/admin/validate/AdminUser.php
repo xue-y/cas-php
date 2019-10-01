@@ -49,7 +49,7 @@ class AdminUser extends Validate
 
     protected $scene=[
         'login'           => ['name', '__token__', 'repass', 'v_code'], // 用户登录
-        'info_save'       => ['name', '__token__', 'pass', 'pass2', 'oldpass'], // 个人信息
+        'info_save'       => ['name'=>'require|unique:admin_user,name', '__token__', 'pass', 'pass2', 'oldpass'], // 个人信息
         'unlock'          => ['__token__', 'repass'],  // 解屏
         'pass_sendEmail'  => ['__token__','name','reemail','v_code'],  //找回密码验证邮箱
     ];

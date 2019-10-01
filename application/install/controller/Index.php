@@ -20,13 +20,6 @@ class Index extends Controller{
 
     private $pdo;
 
-    public function test(){
-        /*$sql=new DbSql();
-        dump(lang('admin_user'));
-        $sql_Data=$sql->index('a_','utf8');
-        dump($sql_Data);*/
-    }
-
     //TODO 进入安装页面
     public function index()
     {

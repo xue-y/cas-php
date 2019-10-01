@@ -9,10 +9,13 @@
 
 namespace app\common\controller;
 
+use app\common\model\LogOperate;
 use think\Controller;
 
 class Base extends Controller
 {
+    private $t_range=' - ';
+
     protected function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
         // 排除不生成token的方法
@@ -34,12 +37,35 @@ class Base extends Controller
     // 重构success
     protected function success($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
-        // 记录操作记录
-        // 取得配置项中模块 记录操作的方法名，如果当前的方法名在配置中
-        // 写入操作记录表
-        // 操作记录 
-        // 行为：控制器；详情：方法名+控制器名称：数据id,多个用英文逗号隔开
-        parent::success($msg, $url, $data, $wait = 5,$header);
+        // 判断操作记录是否启用
+        // 判断当前访问的是否在配置的操作模块中，是否在操作方法中
+        $operate_module=get_cas_config('operate_module');
+        $current_m=$this->request->module();
+        if(!empty($operate_module) && in_array($current_m,$operate_module)){
+             $operate_action=get_cas_config('operate_action');
+              $current_a=$this->request->action(true);
+             if(!empty($operate_action) && in_array($current_a,$operate_action)){
+                // 操作记录数据
+                $operate_data['uid']=$this->request->user_id;
+                $operate_data['behavior']=$current_m;
+                $operate_data['t']=date('Y-m-d H:i:s',time());
+                //详情：方法名+控制器名称：数据id,多个用英文逗号隔开
+                $id=$this->request->param('id');
+                if(!empty($id) && is_array($id)){
+                    $id=implode(',',$this->request->param('id'));
+                }
+                $id=': '.$id;
+                $operate_data['details']=$this->request->postion_nav['a'].$this->request->postion_nav['m'].$id;
+                // 写入操作记录表
+                 $log_operate=new LogOperate();
+                 $is_save=$log_operate->allowField(true)->save($operate_data);
+                 if($is_save!==true)
+                 {
+                     trace($this->request->user_id.': '.$this->request->user_name.'用户操作记录写入失败'.print_r($operate_data,true),'log_operate');
+                 }
+             }
+        }
+        parent::success($msg, $url,  $this->request->param('id'), $wait = 5,$header);
         exit;
     }
 
@@ -104,10 +130,50 @@ class Base extends Controller
      * @param array $data 模板数据
      * @return mixed
      */
-    public function formItem($template,$data){
+    public function formItem($template,$data)
+    {
         $this->view->engine->layout(false);
         $template='common@/field/'.$template;
         return $this->fetch($template,$data);
+    }
+
+    /**
+     * formItem
+     * @todo 页面调用
+     * @param string $template 模板名称
+     * @param array $data 模板数据
+     * @return mixed
+     */
+    public function includePage($template,$data)
+    {
+        $this->view->engine->layout(false);
+        $template='common@/'.$template;
+        return $this->fetch($template,$data);
+    }
+
+    /**
+     * dataRangeWhere
+     * @todo 时间区间查询
+     * @param string $t_range 时间日期字符串
+     * @return array
+     */
+    public function dataRangeWhere($t_range)
+    {
+        $data=explode($this->t_range,$t_range);
+        $t['start']=$data[0];
+        $t['end']=$data[1];
+        if(isset($t['start']) && isset($t['end']) && ($t['start']!=$t['end']))
+        {
+            $t_arr=[$t['start'],$t['end']];
+            $w=['t','between time',$t_arr];
+        }elseif (isset($t['start']))
+        {
+            $w=['t','>= time',$t['start']];
+        }elseif (isset($t['end']))
+        {
+            $w=['t','<= time',$t['end']];
+        }
+        return $w;
     }
 
 }

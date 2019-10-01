@@ -8,16 +8,16 @@
 
 namespace app\log\controller;
 
-
+use app\common\controller\Base;
+use app\common\controller\searchForm;
 use app\common\model\AdminAuth;
 use app\common\model\AdminUser;
 use app\common\model\LogOperate;
-use think\Controller;
 
-class Operate extends Controller
+class Operate extends Base
 {
-    //TODO 列表
     /**
+     * TODO 列表
      * @param null $uid
      * @return \think\response\View
      */
@@ -31,16 +31,12 @@ class Operate extends Controller
         $admin_power=new AdminAuth();
         $assign['behavior']=$admin_power->getTopModule();
 
-        // 搜索默认值
-        $assign["start_t"]=lang('log_start_t');
-        $assign["end_t"]=lang('log_end_t');
-        $assign['n_search']=lang('log_n_search');
-        $assign['b_search']=lang('log_operate')['behavior'];
-
-
         // 如果取得搜索条件
         $w=[];
         $post=$this->request->get();
+        if(empty($uid)){
+            $search_name_field=['name'=>'name','type'=>'select','data'=>$assign['name'],'placeholder'=>lang('log_n_search')];
+        }
 		if(!empty($uid))
 		{
 			 $w[] = ['uid', '=', $uid];
@@ -49,52 +45,28 @@ class Operate extends Controller
             $w[]=['uid','=',$post['name']];
             $assign['n_search']= $assign['name'][$post['name']];
         }
-        $t=[];
-        if(!empty($post['start']))
-        {
-            $is_t=strtotime($post['start']);
-            if($is_t!=false)
-            {
-                $t['start']=$post['start'];
-            }
-        }
-        if(!empty($post['end']))
-        {
-            $is_t=strtotime($post['end']);
-            if($is_t!=false)
-            {
-                $t['end']=$post['end'];
-            }
-        }
 
-        if(!empty($t))
-        {
-            if(isset($t['start']) && isset($t['end']) && ($t['start']!=$t['end']))
-            {
-                $t_arr=[$t['start'],$t['end']];
-                $w[]=['t','between time',$t_arr];
-                $assign["start_t"]=$t['start'];
-                $assign["end_t"]=$t['end'];
-            }elseif (isset($t['start']))
-            {
-                $w[]=['t','>= time',$t['start']];
-                $assign["start_t"]=$t['start'];
-            }elseif (isset($t['end']))
-            {
-                $w[]=['t','<= time',$t['end']];
-                $assign["end_t"]=$t['end'];
-            }
+        // 时间区间查询
+        if(!empty($post['t'])){
+            $w[]=$this->dataRangeWhere($post['t']);
         }
-
+        // 行为查询
         if(!empty($post['behavior']) && (isset($assign['behavior'][$post['behavior']])))
         {
             $w[]=['behavior','=',$post['behavior']];
-            $assign['b_search']=$assign['behavior'][$post['behavior']];
         }
 
         // 查询数据
         $back_operate=new LogOperate();
         $assign['uid']=$uid;
+
+        $search_form=new searchForm();
+        $assign['search']=$search_form->fieldItem([
+            ['name'=>'t','type'=>'date-range'],
+            ['name'=>'behavior','type'=>'select','data'=>$assign['behavior'],'placeholder'=>lang('log_behavior_search')],
+            $search_name_field
+        ])->create();
+
         $assign['list']=$back_operate->getList($w);
         return view('common@/log_operate',$assign);
     }

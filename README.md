@@ -22,6 +22,11 @@ http://fontawesome.dashgame.com/
 页面布局框架： Bootstrap  v3.3.7   
 http://getbootstrap.com
 
+	
+修改源码部分,标记一下防止后期框架升级
+- layui 表格工具栏添加操作可选项 `operateToolbar`
+- ThinkPHP 分页添加参数  `paginate(config['additionalInfo'])`  参数
+
  
 数据库字段定义  
 

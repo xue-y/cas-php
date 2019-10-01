@@ -16,8 +16,6 @@ use Tree;
 
 class Index extends Controller
 {
-    public function test(){
-    }
     //TODO 后台系统主页
     public function main()
     {

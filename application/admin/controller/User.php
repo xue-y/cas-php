@@ -13,6 +13,7 @@
 namespace app\admin\controller;
 
 use app\common\controller\Base;
+use app\common\controller\Form;
 use app\common\model\AdminRole;
 use app\common\model\AdminUser;
 use app\admin\validate\AdminUser as VAdminUser;
@@ -124,6 +125,26 @@ class User extends Base
         $admin_user=new AdminUser();
         $admin_user_id=$admin_user->getFieldByRId($user_sys,'id');
         $this->delSysData($id,$admin_user_id,$admin_user);
+    }
+
+    //TODO ajax 执行更新单个字段
+    public function ajaxOperate()
+    {
+        $param=$this->request->param();
+        if(empty($param['id']) || (intval($param['id'])<1))
+        {
+            $this->error(lang('error_id'),null,$param);
+        }
+        $id=intval($param['id']);
+        $admin_user=new AdminUser();
+        $result=$admin_user->updateField($id,'is_enable',$param['is_enable']);
+        if($result==1)
+        {
+            $this->success(lang('is_enable_success'));
+        }else
+        {
+            $this->error(lang('is_enable_fail'));
+        }
     }
 
 }

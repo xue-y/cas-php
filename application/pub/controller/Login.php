@@ -80,7 +80,7 @@ class Login extends Base
           $this->error(lang('user_role_disable'));
        }
 
-	     // 判断是否锁屏
+	   // 判断是否锁屏
        action('back/LockScreen/setLock');
        $new_pass=encry($post['repass']);
        if($data['pass']!==$new_pass)
@@ -160,7 +160,7 @@ class Login extends Base
    public function out()
    {
        $id=think_crypt("id",null,session('token'),false);
-       outClearInfo($id);
+       out_clear_info($id);
        return redirect(get_cas_config('login_url'));
    }
 

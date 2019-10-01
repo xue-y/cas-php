@@ -1,23 +1,6 @@
 <!--Start row-->
 <div class="white-box">
-    <form method="get" action="{:url('index')}">
-         <div class="form-group">
-             <!-- 时间搜索无效 -->
-             {:action("common/Base/formItem",['template'=>'date-range','data'=>['name'=>'date','class'=>'search']])}
-             <!-- 用户搜索 -->
-             {empty name="uid"}
-             <select name="name" class="form-control search">
-                 <option value="" >{:lang('log_n_search')}</option>
-                 {foreach $name as $k=>$v }
-                 <option value="{$k}" {eq name="v" value="$n_search"} selected {/eq}>{$v}</option>
-                 {/foreach}
-             </select>
-             {/empty}
-             <input type="submit" class="btn btn-primary"  value="{:lang('search')}">
-             <input type="reset" class="btn btn-default"  value="{:lang('reset')}"><!-- 添加js事件 -->
-         </div>
-    </form>
-    <div class="clear"></div>
+    {:action("common/Base/includePage",['template'=>'search','data'=>$search])}
     <form method="post" action="{:url('delete')}">
         <table class="layui-hide" lay-filter="table" >
             <thead>
@@ -59,7 +42,6 @@
 		
 </div>
 <!--End row-->
-{include file="common@com_js" /}<!-- 公共-->
 <script>
     let operateToolbar=['delete'];
 </script>

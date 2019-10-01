@@ -1,0 +1,68 @@
+<!--底部插件-->
+{present name="all_icon"}
+<link href="/static/css/fontawesome-iconpicker.min.css" rel="stylesheet">
+<link href="/static/css/all-icon.css" rel="stylesheet">
+<script src="/static/awesome-icon/js/fontawesome-iconpicker2.js"></script>
+{/present}
+<script>
+    // 时间插件
+    if($('.laydate').length>0){
+        layui.use('laydate', function() {
+            var laydate = layui.laydate;
+
+            if($('#date').length>0){
+                laydate.render({
+                    elem: '#date'
+                });
+            }
+            if($('#time').length>0) {
+                laydate.render({
+                    elem: '#time',
+                    type: 'time'
+                });
+            }
+            if($('#time-range').length>0){
+                laydate.render({
+                    elem: '#time-range',
+                    type: 'time',
+                    range: true
+                });
+            }
+            if($('#date-range').length>0){
+                laydate.render({
+                    elem: '#date-range',
+                    range: true
+                });
+            }
+            // 2个输入框的时间选择器
+            if(($('#t_start').length>0) && ($('#t_end').length>0)){
+                laydate.render({
+                    elem: '#t_start',
+                });
+                laydate.render({
+                    elem: '#t_end',
+                });
+            }
+        });
+    }
+
+    // all-icon 选择器
+    if($('.icp-auto').length>0){
+        // 图标可以点击选中 icp-auto 操作图标元素
+        $('.icp-auto').iconpicker({
+            title: '请选择一个图标',
+            tab:true, //定义tab 选项 true(fa)  glyphicon fa  layui-icon
+            fullClassFormatter: function(val){
+                if(val.match(/fa-/)){
+                    return 'fa '+val;
+                }else if(val.match(/glyphicon-/)){
+                    return 'glyphicon '+val;
+                }else {
+                    return 'layui-icon '+val;
+                }
+            },
+            component: '.input-group-addon', // 图标存放容器
+            placement: 'bottomRight',  // 图标容器位置
+        });
+    }
+</script>

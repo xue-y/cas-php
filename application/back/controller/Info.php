@@ -106,10 +106,10 @@ class Info extends Base
         if($post['name']!==request()->user_name)
         {
             // 验证用户名是否重复
-            $is_name_unique=$admin_user->isNameUnique($post['name'],$id);
+            /*$is_name_unique=$admin_user->isNameUnique($post['name'],$id);
             if($is_name_unique>=1){
                 $this->error(lang('admin_user')['name_unique']);
-            }
+            }*/
             $data['name']=$post['name'];
         }
 
@@ -117,9 +117,10 @@ class Info extends Base
         {
            session_cache_limiter('private');
            $is_save=$admin_user->save($data,['id'=>$id]);
-           if($is_save==true)
+           if($is_save===true)
            {
-               $this->success(lang('edit_success')."---".lang('admin_user')['name_takeeffect']);
+               if(!empty($data['name']))update_web_name($post['name']);
+               $this->success(lang('edit_success'));
            }else
            {
                $this->error(lang('edit_fail'));

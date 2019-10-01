@@ -1,0 +1,15 @@
+{php}
+    if(empty($value))$value=''
+{/php}
+<select name="{$name}" class="form-control {$class|default=''}">
+    <option value="0" >{$placeholder|default=lang('select')}</option>
+    {foreach $data as $k=>$v }
+    {if($k==$value)}
+       <option value="{$k}" selected>{$v}</option>
+    {elseif !empty($disable_data) && is_array($disable_data) && in_array($k,$disable_data) /}
+        <option value="{$k}" disabled class="text-disable">{$v}</option>
+    {else /}
+        <option value="{$k}">{$v}</option>
+    {/if}
+    {/foreach}
+</select>

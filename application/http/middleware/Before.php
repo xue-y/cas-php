@@ -56,7 +56,7 @@ class Before
         if(empty(session('token')))
         {
             // 清除登录信息
-            outClearInfo();
+            out_clear_info();
             cookie('user_login_fail',USER_LOGIN_FAIL);
             return redirect(get_cas_config('login_url'));
         }
@@ -70,7 +70,7 @@ class Before
         if(empty($request->user_name) || empty($request->r_id) || empty($request->user_id))
         {
             // 清除登录信息
-            outClearInfo($request->user_id);
+            out_clear_info($request->user_id);
             cookie('user_login_fail',USER_LOGIN_FAIL);
             return redirect(get_cas_config('login_url'));
         }
@@ -88,7 +88,7 @@ class Before
             if(!empty($login_user) && ($login_user!=session('token')))
             {
                 // 清除登录信息
-                outClearInfo($request->user_id);
+                out_clear_info($request->user_id);
                 cookie('user_down_info',USER_DOWN_INFO);
                 return redirect(config('login_url'));
             }
@@ -119,23 +119,41 @@ class Before
             // 如果 用户访问当前地址 数据库中不存在
             if(empty($auth_info))
             {
-                return $this->errorUrl($request);
+                return $this->errorUrl();
             }
+
+            // 取得一条数据
+           if((count($auth_info)==1) && (isset($auth_info[""]))){
+               $auth_info_data=$auth_info[""];
+           }elseif ((count($auth_info)>1) && (isset($auth_info[http_build_query($request->route())]))){
+               $auth_info_data=$auth_info[http_build_query($request->route())];
+           }else{
+               return $this->errorUrl();
+           }
+
             // 判断用户是否有访问权限
             $auth_ids=explode(',',$a_id);
             //如果访问的不是基本权限，并且权限id不在角色权限集合中
-            if(($auth_info['is_auth']!=IS_AUTH) && (!in_array($auth_info['id'],$auth_ids)))
+            if(($auth_info_data['is_auth']!=IS_AUTH) && (!in_array($auth_info_data['id'],$auth_ids)))
             {
-                return $this->errorUrl($request);
+                return $this->errorUrl();
             }
            // 当前控制器
-           $postion_nav['c']=$auth_info['name'];
+           $postion_nav['c']=$auth_info_data['name'];
         }else{
            // 当前控制器
            $controller_w['module']=$current_m;
            $controller_w['controller']=$curren_c;
-           $controller_w['param']=http_build_query($request->route());
-           $postion_nav['c']=$admin_auth->getControllerName($controller_w);
+           //如果有禁用方法，超级管理员不受限制
+           $controller=$admin_auth->getControllerName($controller_w);
+           if(empty($controller)){
+               return $this->errorUrl();
+           }
+           if(count($controller)==1){
+               $postion_nav['c']=isset($controller[""])?$controller[""]:'';
+           }else{
+               $postion_nav['c']=isset($controller[http_build_query($request->route())])?$controller[http_build_query($request->route())]:'';
+           }
        }
         // 当前位置 当前模块
         $postion_nav['m']=$admin_auth->getModuleName($current_m);
@@ -144,7 +162,11 @@ class Before
         $postion_nav['url']=$curren_mc.'/'.config('default_action');
 
         // 当前方法
-        $postion_nav['a']=lang($request->action());
+        if(($request->action()=='save') || ($request->action()=='edit')){
+             $postion_nav['a']=empty($request->param('id'))?lang('add'):lang('save');
+        }else{
+            $postion_nav['a']=lang($request->action());  
+        }
         $request->postion_nav=$postion_nav;
         $request->view_tit=$postion_nav['m'].'_'.$postion_nav['c'].$postion_nav['a'];
 
@@ -153,7 +175,7 @@ class Before
     }
 
     /* 错误页面跳转*/
-    private function errorUrl($request)
+    private function errorUrl()
     {
         // 错误提示标识
         cookie('no_access_rights',1);
