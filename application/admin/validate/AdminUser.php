@@ -15,19 +15,6 @@ class AdminUser extends Validate
     protected $regex=['pass'=>'^[\w\.\@\-]{6,20}$'];
     protected $message =[
         '__token__'=>'form_token',
-        /*'name.require' =>'name_empty',
-        'name.length' =>'name',
-        'repass.regex' =>'pass',
-        'v_code.require' => 'v_code_empty',
-        'v_code.regex' => 'v_code',
-        'v_code.captcha'=>'captcha',
-        '__token__'=>'form_token',
-        'oldpass.regex' =>'pass',
-        'pass' =>'pass',
-        'pass.confirm'=>'admin_user_pass_confirm',
-        'r_id'=>'r_n_empty',
-        'reemail.require'=>'reemail_empty',
-        'reemail.email'=>'reemail',*/
     ];
 
     protected  $rule=[
@@ -72,5 +59,11 @@ class AdminUser extends Validate
     public function sceneInfoSendEmail(){
         return $this->only(['email'])
             ->append('email', 'require');
+    }
+
+    // 个人信息修改
+    public function sceneInfoSave(){
+        return $this->only(['__token__','name','pass','pass2'])
+            ->append('name', 'unique:admin_user,name');
     }
 }

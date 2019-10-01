@@ -78,7 +78,7 @@ class Info extends Base
         }
         // 验证数据
         $validate=new VAdminUser();
-        if (!$validate->scene('info_save')->check($post)) {
+        if (!$validate->scene('InfoSave')->check($post)) {
             $this->error($validate->getError());
         }
 
