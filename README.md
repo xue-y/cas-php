@@ -25,6 +25,7 @@ http://getbootstrap.com
 修改源码部分,标记一下防止后期框架升级
 - layui 表格工具栏添加操作可选项 `operateToolbar`
 - ThinkPHP 分页添加参数  `paginate(config['additionalInfo'])` 
+- bootstrapValidator [输入验证改为失去光标验证](https://blog.csdn.net/qq592304796/article/details/52475820)
  
 数据库字段定义  
 
@@ -78,6 +79,15 @@ layui 待修复问题
 待修复bug
 
 	登录、找回密码 验证码无法自动刷新
+	ThinkPHP 版本 5.1.28 LTS
+	ThinkPHP 框架不支持场景验证重写(https://github.com/top-think/think/issues/970)
+	ThinkPHP 以下验证格式无法通过验证,如有解决方法请回复 php.develop@qq.com
+	        'alphaDash'   => '/^[A-Za-z0-9\-\_]+$/',
+            'chs'         => '/^[\x{4e00}-\x{9fa5}]+$/u',
+            'chsAlpha'    => '/^[\x{4e00}-\x{9fa5}a-zA-Z]+$/u',
+            'chsAlphaNum' => '/^[\x{4e00}-\x{9fa5}a-zA-Z0-9]+$/u',
+            'chsDash'     => '/^[\x{4e00}-\x{9fa5}a-zA-Z0-9\_\-]+$/u',
+            'mobile'      => '/^1[3-9][0-9]\d{8}$/',
 
 待优化
 

@@ -3,7 +3,7 @@
     <div class="form-group">
         {foreach $field_data as $k=>$data}
             {switch $data.type}
-            {case date|time|date-range|time-range|select}
+            {case date|time|date_range|time_range|select}
             {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
             {/case}
             {default /}
@@ -26,9 +26,9 @@
     // 清空按钮
     $(function () {
         $("input[type='reset']").click(function(){
-            $(this).siblings('input,select').each(function(i,e){
+            $(this).prevAll("input,select").each(function(i,e){
                 if(e.tagName =='INPUT'){
-                    $("input[type!='submit'],input[type!='reset']").removeAttr('value');
+                    $("input[type!='submit']").removeAttr('value');
                 }else{
                     $(this).find('option:selected').removeAttr('selected');
                 }

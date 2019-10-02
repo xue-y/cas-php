@@ -76,14 +76,17 @@ class Info extends Base
         {
             $this->error(lang('error_page'));
         }
+        $id=request()->user_id;
+
         // 验证数据
         $validate=new VAdminUser();
-        if (!$validate->scene('InfoSave')->check($post)) {
+        $vali_data=$post;
+        $vali_data['id']=$id;
+        if (!$validate->scene('InfoSave')->check($vali_data)) {
             $this->error($validate->getError());
         }
-
         $admin_user=new AdminUser();
-        $id=request()->user_id;
+
         $data=[];
         // 修改密码
         if(!empty($post['pass_old']) && !empty($post['pass']))

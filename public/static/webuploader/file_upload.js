@@ -151,7 +151,7 @@
             swf: './Uploader.swf',
             chunked: false,
             chunkSize: 512 * 1024,
-            server: '/tp/public/static/webuploader/server/fileupload.php',
+            server: '/CasPHP/public/static/webuploader/server/fileupload.php',
             // runtimeOrder: 'flash',
 
              accept: {

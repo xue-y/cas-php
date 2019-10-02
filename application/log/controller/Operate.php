@@ -62,7 +62,7 @@ class Operate extends Base
 
         $search_form=new searchForm();
         $assign['search']=$search_form->fieldItem([
-            ['name'=>'t','type'=>'date-range'],
+            ['name'=>'t','type'=>'date_range'],
             ['name'=>'behavior','type'=>'select','data'=>$assign['behavior'],'placeholder'=>lang('log_behavior_search')],
             $search_name_field
         ])->create();

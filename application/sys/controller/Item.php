@@ -18,7 +18,7 @@ class Item extends Base
 {
     // 默认字段类型
     private $default_field_type='text';
-    private $field_type='text,number,email,url,textarea,date,date-range,time,time-range,img';
+    private $field_type='text,number,email,url,textarea,date,date_range,time,time_range,img';
 
     //TODO 配置项列表页面
     public function index()

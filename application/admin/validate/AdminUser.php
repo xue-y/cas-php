@@ -36,7 +36,6 @@ class AdminUser extends Validate
 
     protected $scene=[
         'login'           => ['name', '__token__', 'repass', 'v_code'], // 用户登录
-        'info_save'       => ['name'=>'require|unique:admin_user,name', '__token__', 'pass', 'pass2', 'oldpass'], // 个人信息
         'unlock'          => ['__token__', 'repass'],  // 解屏
         'pass_sendEmail'  => ['__token__','name','reemail','v_code'],  //找回密码验证邮箱
     ];
@@ -63,7 +62,7 @@ class AdminUser extends Validate
 
     // 个人信息修改
     public function sceneInfoSave(){
-        return $this->only(['__token__','name','pass','pass2'])
+        return $this->only(['__token__','name','pass','pass2','oldpass'])
             ->append('name', 'unique:admin_user,name');
     }
 }

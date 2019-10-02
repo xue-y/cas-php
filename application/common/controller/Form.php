@@ -15,7 +15,7 @@ use think\facade\Env;
 class Form extends Controller
 {
     // 后期完善表单字段
-    private $field_type="text,textarea,number,email,url,select,select-multiple,radio,checkbox,checkbox-multiple,date,date-range,dates-range,time,time-range,layui-img,webupload-img,layui-icon,all-icon,simple-editor,all-editor,select-city";
+    private $field_type="text,textarea,number,email,url,select,select_multiple,radio,checkbox,checkbox_multiple,date,date_range,dates_range,time,time_range,layui_img,webupload_img,layui_icon,all_icon,simple_editor,all_editor,select_city";
     // 默认字段类型
     private $default_field_type='text';
 
@@ -109,7 +109,7 @@ class Form extends Controller
      * 字段属性 一维示例
      * array(7) {
         ["name"] => string(1) "t"
-        ["type"] => string(10) "date-range" // 必填
+        ["type"] => string(10) "date_range" // 必填
         ["class"] => string(9) "aa search"
         ["placeholder"] => string(12) "时间区间"
         ["extra"] => string(18) "style="color:#eee""
@@ -140,7 +140,7 @@ class Form extends Controller
                  unset($field_item[$k]);
                  continue;
             };
-            if(($v['type']=='select') || ($v['type']=='select-multiple') || ($v['type']=='radio') || ($v['type']=='radio') || ($v['type']=='checkbox') || ($v['type']=='checkbox-multiple')){
+            if(($v['type']=='select') || ($v['type']=='select_multiple') || ($v['type']=='radio') || ($v['type']=='radio') || ($v['type']=='checkbox') || ($v['type']=='checkbox_multiple')){
                 if(empty($v['data'])){
                     unset($field_item[$k]);
                     continue;

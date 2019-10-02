@@ -16,7 +16,7 @@ class searchForm extends Controller
     // 变量赋值
     private $assign;
     // 搜索允许的字段类型
-    private $field_type=['text','email','number','select'];
+    private $field_type=['text','email','number','select','date','date_range','time','time_range'];
     // 默认字段类型
     private $default_field_type='text';
 
@@ -46,7 +46,7 @@ class searchForm extends Controller
      * 字段属性 一维示例
      * array(7) {
         ["name"] => string(1) "t"
-        ["type"] => string(10) "date-range" // 必填
+        ["type"] => string(10) "date_range" // 必填
         ["class"] => string(9) "aa search"
         ["placeholder"] => string(12) "时间区间"
         ["extra"] => string(18) "style="color:#eee""

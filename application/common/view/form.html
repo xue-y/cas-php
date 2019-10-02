@@ -34,12 +34,12 @@
             <label class="col-md-2 control-label">{$data.label|default=''}</label>
             <div class="col-md-5">
                 {switch $data.type}
-                {case date|time|date-range|time-range|select|select-multiple|radio|checkbox|checkbox-multiple}
+                {case date|time|date_range|time_range|select|select_multiple|radio|checkbox|checkbox_multiple}
                 {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
                 {/case}
-                {case all-icon}
+                {case all_icon}
                 {php} $all_icon=true;// 定义变量标识{/php}
-                {:action("common/Base/formItem",['template'=>'all-icon','data'=>$data])}
+                {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
                 {/case}
                 {default /}
                 {:action("common/Base/formItem",['template'=>'input','data'=>$data])}
@@ -54,7 +54,7 @@
         {/foreach} <!--表单字段结束-->
         <!--表单按钮开始-->
         {empty name='form.button_data'}
-            {include file="common@field/edit-btn" /}
+            {include file="common@field/edit_btn" /}
         {else /}
             {foreach $button_data as $k=>$data}
                 {notempty name="data"}

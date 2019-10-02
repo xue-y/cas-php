@@ -5050,7 +5050,7 @@ nav>.pagination{ margin: 0px;}
 	.table-responsive>.table-bordered {
 		border: 1px solid #ddd;
 	}
-	#date-range{ margin:0px 0px 5px; }
+	#date_range{ margin:0px 0px 5px; }
 }
 
 .form-group>label.col-md-2{text-align: right;}

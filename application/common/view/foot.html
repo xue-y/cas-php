@@ -1,7 +1,7 @@
 <!--底部插件-->
 {present name="all_icon"}
 <link href="/static/css/fontawesome-iconpicker.min.css" rel="stylesheet">
-<link href="/static/css/all-icon.css" rel="stylesheet">
+<link href="/static/css/all_icon.css" rel="stylesheet">
 <script src="/static/awesome-icon/js/fontawesome-iconpicker2.js"></script>
 {/present}
 <script>
@@ -21,16 +21,16 @@
                     type: 'time'
                 });
             }
-            if($('#time-range').length>0){
+            if($('#time_range').length>0){
                 laydate.render({
-                    elem: '#time-range',
+                    elem: '#time_range',
                     type: 'time',
                     range: true
                 });
             }
-            if($('#date-range').length>0){
+            if($('#date_range').length>0){
                 laydate.render({
-                    elem: '#date-range',
+                    elem: '#date_range',
                     range: true
                 });
             }
@@ -46,7 +46,7 @@
         });
     }
 
-    // all-icon 选择器
+    // all_icon 选择器
     if($('.icp-auto').length>0){
         // 图标可以点击选中 icp-auto 操作图标元素
         $('.icp-auto').iconpicker({

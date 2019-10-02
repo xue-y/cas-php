@@ -50,10 +50,10 @@ class Login extends Base
         // 搜索框框
         $search_form=new searchForm();
         $assign['search']=$search_form->fieldItem([
-            ['name'=>'t','type'=>'date-range'],
+            ['name'=>'t','type'=>'date_range'],
             $search_name_field
         ])->create();
-
+        
         return view('common@/log_login',$assign);
     }
 
