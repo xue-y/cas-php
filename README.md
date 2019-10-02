@@ -79,15 +79,8 @@ layui 待修复问题
 待修复bug
 
 	登录、找回密码 验证码无法自动刷新
-	ThinkPHP 版本 5.1.28 LTS
-	ThinkPHP 框架不支持场景验证重写(https://github.com/top-think/think/issues/970)
-	ThinkPHP 以下验证格式无法通过验证,如有解决方法请回复 php.develop@qq.com
-	        'alphaDash'   => '/^[A-Za-z0-9\-\_]+$/',
-            'chs'         => '/^[\x{4e00}-\x{9fa5}]+$/u',
-            'chsAlpha'    => '/^[\x{4e00}-\x{9fa5}a-zA-Z]+$/u',
-            'chsAlphaNum' => '/^[\x{4e00}-\x{9fa5}a-zA-Z0-9]+$/u',
-            'chsDash'     => '/^[\x{4e00}-\x{9fa5}a-zA-Z0-9\_\-]+$/u',
-            'mobile'      => '/^1[3-9][0-9]\d{8}$/',
+	ThinkPHP 框架不支持场景验证覆盖重写，版本 5.1.28 LTS，(https://github.com/top-think/think/issues/970)
+
 
 待优化
 

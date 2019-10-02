@@ -12,7 +12,6 @@ use think\Validate;
 class AdminUser extends Validate
 {
     // message 字段验证信息与 前端 jsonp 语言包变量名一致  默认登录
-    protected $regex=['pass'=>'^[\w\.\@\-]{6,20}$'];
     protected $message =[
         '__token__'=>'form_token',
     ];
@@ -20,13 +19,13 @@ class AdminUser extends Validate
     protected  $rule=[
         '__token__' => 'require|token',
         // 登录
-        'name'      => 'require|length:2,20',
-        'repass'    => 'require|regex:pass', // 确认必填密码
+        'name'      => 'require|length:1,20|chsDash',
+        'repass'    => 'require|regex:[\w\.\@\-]{6,20}', // 确认必填密码
         'v_code'    => 'require|regex:[\w]{5}|captcha',
         // 个人信息 name 
-        'oldpass'   => 'regex:pass',
-        'pass'      => 'regex:pass',
-        'pass2'     => 'confirm:pass|regex:pass',
+        'oldpass'   => 'regex:[\w\.\@\-]{6,20}',
+        'pass'      => 'regex:[\w\.\@\-]{6,20}',
+        'pass2'     => 'confirm:pass|regex:[\w\.\@\-]{6,20}',
         'email'     => 'email',
         // 添加修改用户
         'r_id'      => 'require|integer|egt:1',
