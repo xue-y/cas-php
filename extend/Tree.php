@@ -192,7 +192,7 @@ class Tree{
             // 系统内置不可点击禁用
             $is_sys='';
             if($v['is_sys']==IS_SYS){
-        		$tree.='<td title="'.lang('is_sys_disable').'"><div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch"><em>'.lang('is_enable_end').'</em><i></i></div></td>';
+        		$tree.='<td title="'.lang('is_sys_disable').'"><div class="layui-unselect layui-form-switch layui-form-onswitch"><em>'.lang('is_enable_end').'</em><i></i></div></td>';
                     
             }else{
 				$tree.='<td '.$is_sys.'>

@@ -24,7 +24,7 @@
         <td>{$v.describe}</td> 
         <td>
             {eq name="v.a_id" value="$Think.config.config.admin_auth"}
-            <div class="layui-unselect layui-form-switch layui-form-onswitch" lay-skin="_switch" title="{:lang('is_sys_disable')}"><em>{:lang('is_enable_end')}</em><i></i></div>
+            <div class="layui-unselect layui-form-switch layui-form-onswitch" title="{:lang('is_sys_disable')}"><em>{:lang('is_enable_end')}</em><i></i></div>
             {else /}
             <input type="checkbox" name="is_enable" value="{$v.id}" lay-skin="switch" lay-text="{:lang('is_enable_but')}" lay-filter="is_enable" {eq name="v.is_enable" value="$Think.IS_ENABLE"} checked {/eq}>
             {/eq}

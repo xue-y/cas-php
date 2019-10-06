@@ -147,7 +147,7 @@ class Before
            //如果有禁用方法，超级管理员不受限制
            $controller=$admin_auth->getControllerName($controller_w);
            if(empty($controller)){
-               return $this->errorUrl();
+               //return $this->errorUrl();
            }
            if(count($controller)==1){
                $postion_nav['c']=isset($controller[""])?$controller[""]:'';

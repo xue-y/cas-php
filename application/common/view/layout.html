@@ -115,29 +115,30 @@ function del(del_data,obj,app_debug){
 		}
 		return;
 	 }
+	 
 	 let url="{:url('delete')}";
 	 $.post(url,{id:del_data},function(data)
 	 {
 		 let index=layer.alert(data.msg,function(){
-			 if(app_debug){
+			if(app_debug){
 				 console.log(data)
-			 }
-			 if(data.code==1)
-			 {
+			}
+			if(data.code==1)
+			{
 				if(del_data instanceof Array)
 					window.location.reload();
 				else
 				  obj.del(); //删除对应行（tr）的DOM结构
-			  }
-			  layer.close(index); // 关闭当前窗口
-			});
-		 },'json').fail(function(xhr,status,error){
+			}
+			layer.close(index); // 关闭当前窗口
+		});
+	 },'json').fail(function(xhr,status,error){
 			  // 调试模式
 		  if(app_debug){
 				console.log(xhr);
 			}
 		 layer.alert(status+':'+error);
-	  });
+	 });
 }
 
 </script>
@@ -145,11 +146,5 @@ function del(del_data,obj,app_debug){
 	<!-- 表单页面 -->
 	{__CONTENT__}
 {/eq}
-<script type="text/javascript">
-	$(function(){ 
-	    // 去掉所有input的autocomplete, 显示指定的除外 
-	    $('input:not([autocomplete]),textarea:not([autocomplete]),select:not([autocomplete])').attr('autocomplete', 'off'); 
-	}); 
-</script>
 {include file="common@foot" /}
 </body></html>

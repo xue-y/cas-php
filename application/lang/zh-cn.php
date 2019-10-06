@@ -75,7 +75,7 @@ return [
     "delete"=>"删除",
     "deletes"=>"批量删除",
     "operation"=>"操作",
-    "ajaxoperate"=>"操作属性",
+    "ajaxoperate"=>"操作",
     "update_sort"=>"更新排序",
     "search"=>"搜索",
     "reset"=>"清空",

@@ -5,6 +5,9 @@
 <script src="/static/awesome-icon/js/fontawesome-iconpicker2.js"></script>
 {/present}
 <script>
+    // 去掉所有input的autocomplete, 显示指定的除外 
+    $('input:not([autocomplete]),textarea:not([autocomplete]),select:not([autocomplete])').attr('autocomplete', 'off'); 
+
     // 时间插件
     if($('.laydate').length>0){
         layui.use('laydate', function() {

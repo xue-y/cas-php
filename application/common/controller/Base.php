@@ -55,7 +55,7 @@ class Base extends Controller
                     $id=implode(',',$this->request->param('id'));
                 }
                 $id=': '.$id;
-                $operate_data['details']=$this->request->postion_nav['a'].$this->request->postion_nav['m'].$id;
+                $operate_data['details']=$this->request->postion_nav['a'].$this->request->postion_nav['c'].$id;
                 // 写入操作记录表
                  $log_operate=new LogOperate();
                  $is_save=$log_operate->allowField(true)->save($operate_data);
