@@ -86,6 +86,38 @@ layui 待修复问题
 
 	icon 图标选择器添加一个关闭按钮
 	auth 权限列表因未找到合适的插件（因为其中判断条件较多）使用的是layui纯静态表格
+	
+构建form表单  
 
+    `public function test(){
+        $form=new Form();
+        $data=['key1'=>'value1sdfsdfsd','key2'=>'value2','key3'=>'value3dsfsdf'];
+        $value='key1';
+        $href=['key1'=>'href1','key2'=>'href2'];
+        $data2=explode(',','asdfdsfdsfdsfdsfds,b,c,d,e,f,g');
+        $select_data=explode(',','1,2');
+        $disable_data=explode(',','5,6');
+        return $form->tabNav($data,$value,'','')->fieldItem([
+            ['name'=>'select_multiple','type'=>'select_multiple','data'=>$data2,'select_data'=>$select_data,'disable_data'=>$disable_data],
+            ['name'=>'radio','type'=>'radio','data'=>$data,'value'=>'key3'],
+            ['name'=>'checkbox','type'=>'checkbox','data'=>$data,'value'=>'key3'],
+            ['name'=>'checkbox_multiple','type'=>'checkbox_multiple','data'=>$data2,'select_data'=>$select_data,'disable_data'=>$disable_data],
+            ['data'=>'date','type'=>'date'],
+            ['data'=>'time','type'=>'time']
+        ])->create();
+    }`
+
+搜索表单构造器  
+
+	// 搜索框框
+	$search_form=new searchForm();
+	$search=$search_form->fieldItem([
+		['name'=>'t','type'=>'date_range'],
+		$search_name_field
+	])->create();
+	
+	模板中调用
+    {:action("common/Base/includePage",['template'=>'search','data'=>$search])}
+	
 ### ThinkPHP 框架
 请参阅 [ThinkPHP5 框架](https://github.com/top-think/think)。
