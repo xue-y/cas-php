@@ -83,7 +83,7 @@ class Tree{
 			} elseif (isset($newList[$value[$pid_field]]))
 			{
 			    // 从第二级开始
-			   $level_num=isset($newList[$value[$pid_field]][$level_field])?$newList[$value[$pid_field]][$level_field]+1:1;
+			   $level_num=isset($newList[$value[$pid_field]][$level_field])?$newList[$value[$pid_field]][$level_field]+1:2;
 			   $newList[$value[$index_field]][$level_field]=$level_num;
 			   $newList[$value[$index_field]][$name_level_field]=str_repeat($delimiter,$level_num);
                if(isset($value['module'])){
@@ -158,16 +158,18 @@ class Tree{
                 $display=' style="display:none" ';
             }
 
-            if(!empty($v[$child_field])){
-                $level_node.='<i class="fa fa-play expander" onclick="javascript:slide_node($(this));"></i>';
-            }
 
 			$tree.='<tr class="node-'.$v[$index_field].$class_node.'"'.$display.' data-id="'.$v[$index_field].'">';
-            $tree.='<td><span><input type="checkbox" name="id[]" lay-skin="primary" value="'.$v['id'].'" ></span></td>';
+            $tree.='<td><span  onclick="javascript:check_node($(this));"><input type="checkbox" name="id[]" lay-skin="primary" value="'.$v['id'].'" level="'.$v['level'].'" ></span></td>';
             if(config('app_debug')){
                 $tree.='<td>'.$v[$index_field].'</td>
                         <td class="layui-elip">'.$v[$level_field].$v['url'].'</td>';
             }
+
+            if(!empty($v[$child_field])){
+                $level_node.='<i class="fa fa-play expander" onclick="javascript:slide_node($(this));"></i>';
+            }
+
             $tree.='<td class="layui-elip">'.$level_node.$v[$level_field].$v['name'].'</td>
                     <td class="sort"><input class="form-control" name="sort['.$v[$index_field].']" value="'.$v['sort'].'"></td>';
 

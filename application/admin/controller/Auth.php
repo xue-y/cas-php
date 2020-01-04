@@ -48,11 +48,8 @@ class Auth extends Base
             $disabled=$id;
             $assign['data']=$data;
         }
-       
-        $where=[
-             ['is_auth','<>',IS_AUTH]
-        ];        
-        $auth_list=$admin_auth->getList($where);
+          
+        $auth_list=$admin_auth->getList();
         $tree=new Tree();
         $auth_list=$tree->getTree($auth_list);
         $assign['auth_list']=$tree->getTreeSelect($auth_list,$pid,$disabled,'id','name');
@@ -63,10 +60,9 @@ class Auth extends Base
     // TODO 执行添加/修改
     public function save()
     {
-        $admin_auth=new AdminAuth();
-
         // 获取数据并验证
         $data=request()->post();
+
         if(empty($data))
         {
             $this->error(lang('error_page'));
@@ -80,6 +76,7 @@ class Auth extends Base
             $this->error($validate->getError());
         }
    
+        $admin_auth=new AdminAuth();
         // 判断模块控制器是否唯一
         $is_unique=$admin_auth->checkUrlUnique($data);
         if($is_unique>0)
