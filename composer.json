@@ -5,7 +5,7 @@
 			"url": "https://packagist.phpcomposer.com"
 		}
 	},
-    "name": "xue-y/CasPHP",
+    "name": "xue-y/cas-php",
     "description": "Convenient and succinct PHP framework",
     "version": "1.0.4",
     "type": "project",

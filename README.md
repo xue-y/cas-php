@@ -1,5 +1,5 @@
 ### CasPHP
-便捷简明的 PHP 框架
+便捷简明的 PHP 框架,自适应后台管理界面   
 Convenient and succinct（便捷的 简明的;言简意赅的）
 
 核心框架：framework:      5.1.28  
