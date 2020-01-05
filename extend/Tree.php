@@ -72,7 +72,7 @@ class Tree{
 		$newList=array_column($list,null,$index_field);
 		
 		foreach ($newList as $value ) {
-			if ($pid == $value[$pid_field]) {
+			if ($pid === $value[$pid_field]) {
 			    // 顶级
 				$level_num=isset($value[$level_field])?$value[$level_field]:$level;
 				$newList[$value[$index_field]][$level_field]=$level_num;
@@ -82,17 +82,21 @@ class Tree{
 				$tree[] = &$newList[$value[$index_field]];
 			} elseif (isset($newList[$value[$pid_field]]))
 			{
-			    // 从第二级开始
-			   $level_num=isset($newList[$value[$pid_field]][$level_field])?$newList[$value[$pid_field]][$level_field]+1:2;
-			   $newList[$value[$index_field]][$level_field]=$level_num;
-			   $newList[$value[$index_field]][$name_level_field]=str_repeat($delimiter,$level_num);
+                // 从第二级开始  第一次进来都没有层级字段，需要赋值为1
+                if(!isset($newList[$value[$pid_field]][$level_field])){
+                    $newList[$value[$pid_field]][$level_field]=1;
+                }
+			    
+               $level_num=$newList[$value[$pid_field]][$level_field]+1;
+               $newList[$value[$index_field]][$level_field]=$level_num;
+               $newList[$value[$index_field]][$name_level_field]=str_repeat($delimiter,$level_num);
                if(isset($value['module'])){
                    parse_str($value['param'],$value['param']);
                    $action=empty($value['action'])?config('default_action'):$value['action'];
                    $newList[$value[$index_field]]['url']=$value['module'].'/'.$value['controller'].'/'.$action;
                }
 
-			   $newList[$value[$pid_field]][$child_field][] = &$newList[$value[$index_field]];
+               $newList[$value[$pid_field]][$child_field][] = &$newList[$value[$index_field]];   
 			}
 		}
 		// 如果顶级分类下没有一个下级，删除此分类，此步骤可以省略
@@ -101,7 +105,7 @@ class Tree{
 			if(!isset($v[$child_field]))
 				unset($tree[$k]);
 		}*/
-	    
+	    //dump($tree);
 	    return $tree;
 	}
 
