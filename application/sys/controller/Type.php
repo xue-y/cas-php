@@ -65,12 +65,12 @@ class Type extends Base
         $sys_type=new SysType();
 
         // 菜单
-        $curren_m=$this->request->module();// 当前模块名
         $admin_auth=new AdminAuth();
+        $curren_m=$this->request->module();// 当前模块名
         $auth_data['controller']='Item';
         $auth_data['action']='see';
         $auth_data['name']=$data['describe'];
-        $admin_auth['param']='t_id='.$sys_type->getNextId();
+        $auth_data['param']='t_id='.$sys_type->getNextId();
         //$admin_auth['param']='type='.$data['name'];
         $auth_data['is_menu']=$data['is_menu'];
 
@@ -152,17 +152,49 @@ class Type extends Base
         // 根据ID 取得 Aid
         $sys_type=new SysType();
         $a_id=$sys_type->getFieldById($id,'a_id');
+        // 菜单ID是 默认值 ，如果设置为菜单
+        if(empty($a_id) && $param['is_menu']==IS_MENU){
+           // 如果不存在菜单ID 添加数据
+            //取出当前数据
+            $id_data=$sys_type->find($id);
+            // 组装菜单数据
+            $curren_m=$this->request->module();// 当前模块名
+            $auth_data['controller']='Item';
+            $auth_data['action']='see';
+            $auth_data['name']=$id_data['describe'];
+            $auth_data['is_menu']=$param['is_menu'];
+            $auth_data['param']='t_id='.$sys_type->getNextId();
+            $auth_data['module']=$curren_m;
+            $admin_auth=new AdminAuth();
+            $auth_data['pid']=$admin_auth->getFieldByModule($curren_m,'id');
 
-        // 更新admin_anth
-        Db::startTrans();
-        $admin_auth=new AdminAuth();
-        $result=$admin_auth->updateField($a_id,'is_menu',$param['is_menu']);
-        if($result!=1)
-        {
-            Db::rollback();
-            $this->error(lang('is_menu_fail'));
+            Db::startTrans();
+            $admin_auth->allowField(true)->save($auth_data);
+            if(!$admin_auth->id){
+                Db::rollback();
+                $this->error(lang('is_menu_fail'));
+            }
+            $sys_data['is_menu']=$param['is_menu'];
+            $sys_data['a_id']=$admin_auth->id;
+            $result=$sys_type->allowField(true)->save($sys_data,['id'=>$id]);
+            $this->update_meun_alert($result);
+        }else{
+            // 更新admin_anth
+            Db::startTrans();
+            $admin_auth=new AdminAuth();
+            $result=$admin_auth->updateField($a_id,'is_menu',$param['is_menu']);
+            if($result!=1)
+            {
+                Db::rollback();
+                $this->error(lang('is_menu_fail'));
+            }
+            $result=$sys_type->updateField($id,'is_menu',$param['is_menu']);
+            $this->update_meun_alert($result);
         }
-        $result=$sys_type->updateField($id,'is_menu',$param['is_menu']);
+    }
+
+    // TODO 更新菜单信息提示
+    private function update_meun_alert($result){
         if($result==1)
         {
             Db::commit();

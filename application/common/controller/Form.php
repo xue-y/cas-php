@@ -15,7 +15,7 @@ use think\facade\Env;
 class Form extends Controller
 {
     // 后期完善表单字段
-    private $field_type="text,textarea,number,email,url,select,select_multiple,radio,checkbox,checkbox_multiple,date,date_range,dates_range,time,time_range,layui_img,webupload_img,layui_icon,all_icon,simple_editor,all_editor,select_city";
+    private $field_type="text,textarea,number,email,url,select,select_multiple,radio,checkbox,checkbox_multiple,date,date_range,dates_range,time,time_range,upload_img,upload_imgs,layui_icon,all_icon,simple_editor,all_editor,select_city";
     // 默认字段类型
     private $default_field_type='text';
 

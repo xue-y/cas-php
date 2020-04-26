@@ -19,7 +19,7 @@ $admin_role=[
 ];
 $admin_auth=[
     "url"=>"链接地址",
-    "name"=>"权限名称",
+    "name"=>"权限标识名名称",
     "pid"=>"上级",
     "module"=>"模块名称",
     "controller"=>"控制器名称",
@@ -33,6 +33,7 @@ $sys_type=[
     "name"=>"分类名称",
     "describe"=>"分类标识名",
     "is_menu"=>"是否为系统配置子菜单,0不是菜单,1菜单",
+    "a_id"=>"菜单ID"
 ];
 $sys_item=[
     "t_id"=>"配置项分类",

@@ -10,8 +10,8 @@
     // form_submit($('form'),"{:config('app_debug')}",true,true);
     // 判断是否ajax
     if("{:get_cas_config('ajax_submit')}"){
-        // 提交表单---不验证表单
-        $("form").on("submit",function(e){
+        // 提交表单---不验证表单submit
+        $("form").on("success.form.bv",function(e){
             e.preventDefault();
             ajax_request($(this),"{:config('app_debug')}",true,true)
         });

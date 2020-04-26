@@ -15,7 +15,7 @@ return [
     'useCurve'=>false,
     'useImgBg'=>false,
     'fontttf'=>'6.ttf',
-    'imageH'=>40,
+    'imageH'=>36,
     'imageW'=>100
 
 ];

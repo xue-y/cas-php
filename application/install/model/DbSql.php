@@ -36,8 +36,11 @@ class DbSql
 
      $this->sql[]="CREATE TABLE IF NOT EXISTS `{$prefix}admin_auth` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `controller` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['controller']."',
+  `module` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['module']."',
   `name` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['name']."',
-  `name` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['name']."',
+  `action` varchar(30) NOT NULL COMMENT '".lang('admin_auth')['action_info']."',
+  `param` varchar(50) NOT NULL COMMENT '".lang('admin_auth')['param']."',
   `pid` smallint(5) unsigned NOT NULL COMMENT '".lang('admin_auth')['pid']."',
   `icon` varchar(20) NOT NULL COMMENT '".lang('admin_auth')['icon']."'
   `sort` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('sort')."',
@@ -74,6 +77,7 @@ class DbSql
   `describe` varchar(20) NOT NULL COMMENT '".lang('sys_type')['describe']."',
   `is_menu` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('sys_type')['is_menu']."',
   `is_sys` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '".lang('is_sys')."',
+  `a_id` smallint(5) unsigned NOT NULL DEFAULT '0'  COMMENT '".lang('sys_type')['a_id']."',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET={$charset} COMMENT='".lang('menu_sys_stype')."' AUTO_INCREMENT=1 ;";
@@ -86,29 +90,30 @@ class DbSql
   `val` varchar(255) NOT NULL COMMENT '".lang('sys_sset')['val']."',
   `field` varchar(10) NOT NULL DEFAULT 'text' COMMENT '".lang('sys_sset')['field']."',
   `notes` varchar(100) DEFAULT NULL COMMENT '".lang('sys_sset')['notes']."',
+  `sort` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('sort')."',
   `is_sys` tinyint(1) NOT NULL DEFAULT '0' COMMENT '".lang('is_sys')."',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET={$charset} COMMENT='".lang('menu_sys_sset')."' AUTO_INCREMENT=1 ;";
 
-    $this->sql[]="INSERT INTO `{$prefix}admin_auth` (`id`, `name`, `name`, `pid`, `icon`, `sort`,  `is_menu`, `is_enable`,`is_sys`,`is_auth`) VALUES
-(1, 'admin', '".lang('menu_admin')."', 0, '', 0, 1, 1, 1, 0),
-(2, 'back', '".lang('menu_back')."', 0, 'icon-home', 0, 1, 1, 1, 1),
-(3, 'sys', '".lang('menu_sys')."', 0, 'icon-settings', 0, 1, 1, 1, 0),
-(4, 'log', '".lang('menu_log')."', 0, 'icon-calendar', 0, 1, 1, 1, 0),
-(5, 'admin/User', '".lang('menu_admin_user')."', 1, '', 0, 1, 1, 1, 0),
-(6, 'admin/Role', '".lang('menu_admin_role')."', 1, '', 0, 1, 1, 1, 0),
-(7, 'admin/Auth', '".lang('menu_admin_auth')."', 1, '', 0, 1, 1, 1, 0),
-(8, 'back/Index', '".lang('menu_back_index')."', 2, '', 0, 1, 1, 1, 1),
-(9, 'back/Info', '".lang('menu_back_info')."', 2, '', 0, 1, 1, 1, 1),
-(10, 'back/Login', '".lang('menu_log_login')."', 2, '', 0, 1, 1, 1, 1),
-(11, 'back/Operate', '".lang('menu_log_operate')."', 2, '', 0, 1, 1, 1, 1),
-(12, 'back/Lock', '".lang('menu_back_lock')."', 2, '', 0, 1, 1, 1, 1),
-(13, 'sys/Type', '".lang('menu_sys_type')."', 3, '', 0, 1, 1, 1, 0),
-(14, 'sys/System', '".lang('menu_sys_system')."', 3, '', 0, 1, 1, 1, 0),
-(15, 'sys/Email', '".lang('menu_sys_email')."', 3, '', 0, 1, 1, 1, 0),
-(16, 'sys/Upfile', '".lang('menu_sys_upfile')."', 3, '', 0, 1, 1, 1, 0),
-(17, 'log/Login', '".lang('menu_log_login')."', 4, '', 0, 1, 1, 1, 0),
-(18, 'log/Operate', '".lang('menu_log_operate')."', 4, '', 0, 1, 1, 1, 0);";
+    $this->sql[]="INSERT INTO `{$prefix}admin_auth` (`id`,`module`, `controller`, `name`, `pid`, `icon`, `sort`,  `is_menu`, `is_enable`,`is_sys`,`is_auth`) VALUES
+(1, 'admin','', '".lang('menu_admin')."', 0, '', 0, 1, 1, 1, 0),
+(2, 'back','', '".lang('menu_back')."', 0, 'icon-home', 0, 1, 1, 1, 1),
+(3, 'sys','', '".lang('menu_sys')."', 0, 'icon-settings', 0, 1, 1, 1, 0),
+(4, 'log','', '".lang('menu_log')."', 0, 'icon-calendar', 0, 1, 1, 1, 0),
+(5, 'admin', 'User','".lang('menu_admin_user')."', 1, '', 0, 1, 1, 1, 0),
+(6, 'admin','Role', '".lang('menu_admin_role')."', 1, '', 0, 1, 1, 1, 0),
+(7, 'admin','Auth', '".lang('menu_admin_auth')."', 1, '', 0, 1, 1, 1, 0),
+(8, 'back','Index', '".lang('menu_back_index')."', 2, '', 0, 1, 1, 1, 1),
+(9, 'back','Info', '".lang('menu_back_info')."', 2, '', 0, 1, 1, 1, 1),
+(10, 'back','Login', '".lang('menu_log_login')."', 2, '', 0, 1, 1, 1, 1),
+(11, 'back','Operate', '".lang('menu_log_operate')."', 2, '', 0, 1, 1, 1, 1),
+(12, 'back','Lock', '".lang('menu_back_lock')."', 2, '', 0, 1, 1, 1, 1),
+(13, 'sys','Type', '".lang('menu_sys_type')."', 3, '', 0, 1, 1, 1, 0),
+(14, 'sys','System', '".lang('menu_sys_system')."', 3, '', 0, 1, 1, 1, 0),
+(15, 'sys','Email', '".lang('menu_sys_email')."', 3, '', 0, 1, 1, 1, 0),
+(16, 'sys','Upfile', '".lang('menu_sys_upfile')."', 3, '', 0, 1, 1, 1, 0),
+(17, 'log','Login', '".lang('menu_log_login')."', 4, '', 0, 1, 1, 1, 0),
+(18, 'log','Operate', '".lang('menu_log_operate')."', 4, '', 0, 1, 1, 1, 0);";
 
 
   $admin_auth=get_cas_config('admin_auth');
@@ -117,9 +122,9 @@ class DbSql
 (1, '".lang('administrator')."', '".lang('all_permissions')."','".$admin_auth."',1);";
 
    $this->sql[]="INSERT INTO `{$prefix}sys_type` (`id`, `name`, `describe`, `is_menu`, `is_sys`) VALUES
-(1, 'system', '".lang('menu_sys_system')."', 1, 1),
-(2, 'email', '".lang('menu_sys_email')."', 1, 1),
-(3, 'upfile', '".lang('menu_sys_upfile')."', 1, 1);";
+(1, 'system', '".lang('menu_sys_system')."', 0, 1),
+(2, 'email', '".lang('menu_sys_email')."', 0, 1),
+(3, 'upfile', '".lang('menu_sys_upfile')."', 0, 1);";
 
     $this->sql[]="INSERT INTO `{$prefix}sys_sset`  (`id`, `t_id`, `name`, `describe`, `val`, `field`, `notes`, `is_sys`) VALUES
 (1, 1, 'user_only_sign', '', '0', '', '".lang('user_only_sign')."', 1),

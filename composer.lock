@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a55b53efdadf5636330a481fc7c3a4f",
+    "hash": "8ade3357deab8470a6727f4c65e5271d",
+    "content-hash": "739af538f7cf2f79777875741569a797",
     "packages": [
         {
             "name": "topthink/framework",
@@ -55,7 +56,7 @@
                 "orm",
                 "thinkphp"
             ],
-            "time": "2018-10-29T02:52:45+00:00"
+            "time": "2018-10-29 02:52:45"
         },
         {
             "name": "topthink/think-captcha",
@@ -94,7 +95,7 @@
                 }
             ],
             "description": "captcha package for thinkphp5",
-            "time": "2017-12-31T16:37:49+00:00"
+            "time": "2017-12-31 16:37:49"
         },
         {
             "name": "topthink/think-helper",
@@ -130,7 +131,7 @@
                 }
             ],
             "description": "The ThinkPHP5 Helper Package",
-            "time": "2017-04-05T07:15:37+00:00"
+            "time": "2017-04-05 07:15:37"
         },
         {
             "name": "topthink/think-installer",
@@ -171,7 +172,87 @@
                     "email": "448901948@qq.com"
                 }
             ],
-            "time": "2018-05-11T06:45:42+00:00"
+            "time": "2018-05-11 06:45:42"
+        },
+        {
+            "name": "workerman/gateway-worker",
+            "version": "v3.0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/GatewayWorker.git",
+                "reference": "d633fe52c792839a80ed2cfea7697bf705350d62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/walkor/GatewayWorker/zipball/d633fe52c792839a80ed2cfea7697bf705350d62",
+                "reference": "d633fe52c792839a80ed2cfea7697bf705350d62",
+                "shasum": ""
+            },
+            "require": {
+                "workerman/workerman": ">=3.5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GatewayWorker\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "homepage": "http://www.workerman.net",
+            "keywords": [
+                "communication",
+                "distributed"
+            ],
+            "time": "2020-03-09 12:03:30"
+        },
+        {
+            "name": "workerman/workerman",
+            "version": "v4.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/walkor/Workerman.git",
+                "reference": "88e518903d2f61d6cdfe1d381b40e03be2a9ef94"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/walkor/Workerman/zipball/88e518903d2f61d6cdfe1d381b40e03be2a9ef94",
+                "reference": "88e518903d2f61d6cdfe1d381b40e03be2a9ef94",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "suggest": {
+                "ext-event": "For better performance. "
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "walkor",
+                    "email": "walkor@workerman.net",
+                    "homepage": "http://www.workerman.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An asynchronous event driven PHP framework for easily building fast, scalable network applications.",
+            "homepage": "http://www.workerman.net",
+            "keywords": [
+                "asynchronous",
+                "event-loop"
+            ],
+            "time": "2020-04-20 02:20:21"
         }
     ],
     "packages-dev": [],

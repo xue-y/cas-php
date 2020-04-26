@@ -10,4 +10,5 @@
 // +----------------------------------------------------------------------
 // 定义路由
 
-Route::any('/back/Lock','back/LockScreen/index');
+Route::any('/back/Lock','back/LockScreen/index'); // 锁屏
+Route::get('captcha/[:id]', "\\think\\captcha\\CaptchaController@index"); // 验证码访问路径

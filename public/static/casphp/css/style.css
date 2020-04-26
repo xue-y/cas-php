@@ -4971,7 +4971,7 @@ input[type=checkbox]{ vertical-align: sub;}
 .has-error .form-control:focus{    border-color: #f05050 !important;}
 .has-success .form-control:focus{border-color: #05ae04 !important;}
 .v_code{ position: relative;}
-.v_code img{  position: absolute;top:0px; right: 0px;width: 100px; height: 40px; cursor:pointer;    z-index: 2;}
+.v_code img{  position: absolute;top:1px; right: 1px;width: 100px; height: 36px; cursor:pointer;    z-index: 2;}
 input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].btn-block{
 	height: 40px;
 	font-size: 2.6vh;
