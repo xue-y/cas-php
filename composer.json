@@ -21,9 +21,7 @@
         "php": ">=5.6.0",
         "topthink/framework": "5.1.*",
 		"topthink/think-helper":"*",
-        "topthink/think-captcha":"*",
-		"workerman/workerman": "^4.0",
-		"workerman/gateway-worker": "^3.0"
+        "topthink/think-captcha":"*"
     },
     "autoload": {
         "psr-4": {

@@ -18,8 +18,15 @@ use \GatewayWorker\BusinessWorker;
 use \Workerman\Autoloader;
 
 // 自动加载类
-require_once __DIR__ . '/../../vendor/autoload.php';
-
+require_once __DIR__ . '/../vendor/autoload.php';
+/**
+ * 与GatewayWorker建立websocket连接，域名和端口改为你实际的域名端口，
+ * 其中端口为Gateway端口，即start_gateway.php指定的端口。
+ * start_gateway.php 中需要指定websocket协议，像这样
+ * $gateway = new Gateway(websocket://0.0.0.0:7272);
+ * js部分：
+ * ws = new WebSocket("ws://your_domain.com:7272");
+ */
 // gateway 进程，这里使用Text协议，可以用telnet测试
 $gateway = new Gateway("tcp://0.0.0.0:8282");
 // gateway名称，status方便查看

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ade3357deab8470a6727f4c65e5271d",
-    "content-hash": "739af538f7cf2f79777875741569a797",
+    "hash": "21a1cafdff8a3eec53dcf11b8b1caa4d",
+    "content-hash": "c10989b53fe180123be30a76b9ad5414",
     "packages": [
         {
             "name": "topthink/framework",
@@ -210,16 +210,16 @@
         },
         {
             "name": "workerman/workerman",
-            "version": "v4.0.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/Workerman.git",
-                "reference": "88e518903d2f61d6cdfe1d381b40e03be2a9ef94"
+                "reference": "55711e689d85a41859bd36d47fca3f05ebc51881"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/Workerman/zipball/88e518903d2f61d6cdfe1d381b40e03be2a9ef94",
-                "reference": "88e518903d2f61d6cdfe1d381b40e03be2a9ef94",
+                "url": "https://api.github.com/repos/walkor/Workerman/zipball/55711e689d85a41859bd36d47fca3f05ebc51881",
+                "reference": "55711e689d85a41859bd36d47fca3f05ebc51881",
                 "shasum": ""
             },
             "require": {
@@ -252,12 +252,12 @@
                 "asynchronous",
                 "event-loop"
             ],
-            "time": "2020-04-20 02:20:21"
+            "time": "2020-04-23 07:34:12"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
