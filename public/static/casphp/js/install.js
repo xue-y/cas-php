@@ -27,12 +27,12 @@ $(document).ready(function(e) {
                 url:"install/Index/valiData",
                 data:$('form').serialize(),
                 success: function(data,status,xhr){
-                  //  data=data.replace(/\<\?php/g,"");
-                   console.log(status)
+                   data=data.replace(/\<\?php/g,"");
                     if(app_debug){
                        console.log(data);
                     }
-                    switch (data){
+                   data=JSON.parse(data);
+                    switch (data.data){
                         case 'db_exis':
                             table_status='db_exis';
                             $('#dbname').siblings('.help-block').eq(0).css({'display':'block'}).html("信息正确，已存在此数据库，连接成功");
@@ -77,6 +77,8 @@ $(document).ready(function(e) {
             });
         }
     });
+
+    // 提交表单
     $('.b_from').on('success.form.bv',function(e){
         e.preventDefault();
         var $form = $(e.target);
@@ -92,19 +94,21 @@ $(document).ready(function(e) {
                 },
                 success: function(data,status,xhr){
                     if(app_debug){
-                       console.log(data);
+                        console.log(data);
                     }
+                    data=data.replace(/\<\?php/g,"");
+                    data=JSON.parse(data);
+
                     // 加载 图片 消失
                     layer.closeAll('loading');
-                    if(typeof data=='string')
+                    if(data.code!=1)
                     {
-                        data=data.replace(/\<\?php/g,"");
-                        layer.alert(data, {icon: 5});
+                        layer.alert(data.msg, {icon: 5});
                         return false;
                     }else
                     {
                         layer.msg("安装成功进入系统", {icon: 6});
-                        let t=setTimeout(function(){window.location.href='/'+data.url;clearTimeout(t);},150)
+                        let t=setTimeout(function(){window.location.href='/'+data.data;clearTimeout(t);},150)
                     }
                 },
                 error: function(xhr,status,errorinfo){

@@ -5,8 +5,8 @@
         <h3 class="text-center">{$Request.param.view_tit}</h3>
         <form class="b_from m-t-30" action="{:url('install')}">
             <div class="form-group">
-                <p class="col-md-7 text-danger">
-                    {:lang('explain',['<br/>','<br/>','<br/>',get_cas_config('default_pass')])}
+                <p class="col-md-7 text-danger m-t-20">
+                    {:lang('explain',['<br/>','<br/>','<br/>'])}
                 </p>
                 <label class="control-label col-md-2" style="text-align: right">{$Think.lang.lang}：</label>
                 <div class="col-md-3">
@@ -60,13 +60,14 @@
                     <label for="utf8">UTF8</label>
                     <input type="radio" name="charset" id="gbk" value="gbk">
                     <label for="gbk">GBK</label>
-                    <p style="margin-left: -20px;">{$Think.lang.default_collation}： UTF8：utf8_general_ci ; GBK：gbk_chinese_ci</p>
+                    <p style="margin-left: 0px;">{$Think.lang.default_collation}： UTF8：utf8_general_ci ; GBK：gbk_chinese_ci</p>
                 </div>
             </div>
             <div class="form-group" id="name_v">
                 <label for="name" class="col-md-2 control-label">{$Think.lang.name}： <span class="red">*</span></label>
                 <div class="col-md-10">
                     <input type="text" class="form-control" id="name" name="name" placeholder="" value="admin" autocomplete="off">
+                    <i class="info">{:lang('default_pass',[get_cas_config('default_pass')])}</i>
                 </div>
             </div>
             <div class="form-group">

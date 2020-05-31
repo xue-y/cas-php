@@ -53,7 +53,20 @@ INSERT INTO `cas_admin_auth` VALUES
 (6,'Role','admin','管理员角色','','',1,'fa-circle-o',1,1,2,1,0),
 (7,'Auth','admin','权限管理','','',1,'fa-circle-o',1,1,3,1,0),
 (8,'Index','back','后台首页','','',2,'fa-home',1,1,1,1,1),
-(9,'Info','back','个人信息','','',2,'fa-circle-o',1,1,2,1,1),(10,'Login','back','登录记录','','',2,'fa-circle-o',1,1,3,1,1),(11,'Operate','back','操作记录','','',2,'fa-circle-o',1,1,4,1,1),(12,'Lock','back','锁屏','','',2,'fa-circle-o',1,1,5,1,1),(13,'Type','sys','配置分类','','',3,'fa-circle-o',1,1,1,1,0),(14,'Item','sys','系统设置','see','t_id=1',3,'fa-gears',1,1,3,1,0),(15,'Item','sys','邮箱设置','see','t_id=2',3,'fa-envelope-open-o',1,1,4,1,0),(16,'Item','sys','上传设置','see','t_id=3',3,'fa-cloud-upload',0,1,5,1,0),(17,'Login','log','登录记录','','',4,'fa-bookmark-o',1,1,0,1,0),(18,'Operate','log','操作记录','','',4,'fa-circle-o',1,1,0,1,0),(50,'Aa','aa','sdf','aa','',4,'fa-address-card-o',1,1,9,0,1),(59,'Item','sys','测试','see','t_id=12',3,'fa-circle-o',0,1,6,0,0),(61,'Item','sys','配置项管理','','',3,'fa-circle-o',1,1,2,0,0),(62,'Item','sys','配置项设置','see','',3,'fa-circle-o',1,1,1,0,0);
+(9,'Info','back','个人信息','','',2,'fa-circle-o',1,1,2,1,1),
+(10,'Login','back','登录记录','','',2,'fa-circle-o',1,1,3,1,1),
+(11,'Operate','back','操作记录','','',2,'fa-circle-o',1,1,4,1,1),
+(12,'Lock','back','锁屏','','',2,'fa-circle-o',1,1,5,1,1),
+(13,'Type','sys','配置分类','','',3,'fa-circle-o',1,1,1,1,0),
+(14,'Item','sys','系统设置','see','t_id=1',3,'fa-gears',1,1,3,1,0),
+(15,'Item','sys','邮箱设置','see','t_id=2',3,'fa-envelope-open-o',1,1,4,1,0),
+(16,'Item','sys','上传设置','see','t_id=3',3,'fa-cloud-upload',0,1,5,1,0),
+(17,'Login','log','登录记录','','',4,'fa-bookmark-o',1,1,0,1,0),
+(18,'Operate','log','操作记录','','',4,'fa-circle-o',1,1,0,1,0),
+(50,'Aa','aa','sdf','aa','',4,'fa-address-card-o',1,1,9,0,1),
+(59,'Item','sys','测试','see','t_id=12',3,'fa-circle-o',0,1,6,0,0),
+(61,'Item','sys','配置项管理','','',3,'fa-circle-o',1,1,2,0,0),
+(62,'Item','sys','配置项设置','see','',3,'fa-circle-o',1,1,1,0,0);
 /*!40000 ALTER TABLE `cas_admin_auth` ENABLE KEYS */;
 UNLOCK TABLES;
 

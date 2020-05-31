@@ -8,20 +8,20 @@
 
 namespace app\pub\controller;
 
-use app\Base;
-use Crypt\Think;
+use app\install\model\DbSql;
+use think\Controller;
 
-class Test extends Base
+class Test extends Controller
 {
 
     
     public function index(){
-      
-     return $this->fetch('/index');
+
+       $dbSql=new DbSql();
+       $sql=$dbSql->index('test_','utf8');
+       dump($sql);
     }
 
-    public function create(){
-    	return $this->fetch('/create');
-    }
+
 
 }

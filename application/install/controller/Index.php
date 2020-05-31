@@ -16,9 +16,7 @@ use think\facade\Request;
 use think\facade\Validate;
 
 
-class Index extends Controller{
-
-    private $pdo;
+class Index extends Controller {
 
     //TODO 进入安装页面
     public function index()
@@ -31,7 +29,9 @@ class Index extends Controller{
     {
         // 安装前数据信息验证
         $post=trim_str(input("post."));
-        return $this->vailAllData($post);
+        $pdo=$this->createPdo($post);
+        $info=$this->vailAllData($post["dbname"],$pdo);
+        $this->ajaxResult(0,'',$info);
     }
 
     //TODO  执行安装
@@ -40,22 +40,26 @@ class Index extends Controller{
         $post=trim_str(input("post."));
         if(!Request::isAjax() || empty($post)) // 非法请求
         {
-            exit("error");
+            $this->ajaxResult(0,'error');
         }
 
         //---------------------------------------------------检查环境
         if(version_compare(PHP_VERSION,'5.5.0','<'))
         {
-            exit("Current version of PHP".PHP_VERSION."less than5.5.0");
+            $this->ajaxResult(0,"Current version of PHP".PHP_VERSION."less than5.5.0");
         }
         // 需要开启的扩展
         $extension=["PDO","pdo_mysql","gd","mbstring","curl"];
+        $not_extension='';
         for($i=0;$i<count($extension);$i++)
         {
             if(!extension_loaded($extension[$i]))
             {
-                exit("Please open the PHP ".$extension[$i]." extension");
+                $not_extension.=$extension[$i];
             }
+        }
+        if(!empty($not_extension)){
+            $this->ajaxResult(0,"Please open the PHP ".$not_extension." extension");
         }
 
         //------------------------------------删除系统运行目录缓存
@@ -101,10 +105,11 @@ class Index extends Controller{
         //------------------------------------数据验证结束
 
         // 验证数据库连接
-        $state=$this->vailAllData($post,true);
+        $pdo=$this->createPdo($post);
+        $state=$this->vailAllData($post["dbname"],$pdo);
         if($state=="server_error")
         {
-            exit($state);
+            $this->ajaxResult(0,$state);
         }
 
         // 如果连接成功  写入配置文件
@@ -112,8 +117,9 @@ class Index extends Controller{
 
         if(!is_writable($c_f))
         {
-            exit("config file no writable");
+            $this->ajaxResult(0,"config file no writable");
         }
+
         $this->confFileWrite($c_f,$post);
 
         try{
@@ -121,7 +127,7 @@ class Index extends Controller{
           if($post["table"]==1) // 如果数据中存在表---清空
             {
                 $sql_table="show tables from {$post["dbname"]}";
-                $res=$this->pdo->prepare($sql_table);//准备查询语句
+                $res=$pdo->prepare($sql_table);//准备查询语句
                 $res->execute(); //函数是用于执行已经预处理过的语句，只是返回执行结果成功或失败需要配合prepare函数使用
                 $drop_table=$res->fetchAll(\PDO::FETCH_NUM);
                 $res->closeCursor();
@@ -134,18 +140,17 @@ class Index extends Controller{
                     }
                     $drop_table=implode("`,`",$drop_table_str);
                     $drop_sql="drop table `$drop_table`";
-                    $this->pdo->exec($drop_sql); // 无返回值
-                    if($this->pdo->errorCode()!='00000')
+                    $pdo->exec($drop_sql); // 无返回值
+                    if($pdo->errorCode()!='00000')
                     {
-                        dump($this->pdo->errorInfo());
-                        exit;
+                        $this->ajaxResult(0,$pdo->errorInfo());
                     }
                 }
             }
 
         // 如果数据库中存在表删除完成后在添加新数据
         $sql_table="show tables from {$post["dbname"]}";
-        $sth = $this->pdo->prepare($sql_table);
+        $sth = $pdo->prepare($sql_table);
         $sth->execute();
         $table_c=$sth->fetchAll(\PDO::FETCH_NUM);
         if(empty($table_c))
@@ -156,12 +161,12 @@ class Index extends Controller{
 
             foreach ($sql_con as $k=>$v)
             {
-                $this->pdo->exec($v);
+                $pdo->exec($v);
             }
 
             $admin_user_sql="INSERT INTO `{$post["prefix"]}admin_user` (`name`, `pass`,`r_id`) VALUES ('{$post['name']}', '{$post['pass']}',1);";
-            $this->pdo->exec($admin_user_sql);
-            $this->pdo=null; // 释放原来的资源
+            $pdo->exec($admin_user_sql);
+            $pdo=null; // 释放原来的资源
 
             // 创建路由文件
             $route=Env::get('route_path');
@@ -172,7 +177,7 @@ class Index extends Controller{
                 $first_chmod=substr($chmod,0,1);
                 if(intval($chmod)<666 && (!chmod($route,0666)))
                 {
-                   exit('route_path No write permission ');
+                    $this->ajaxResult(0,'route_path No write permission');
                 }
             }
 
@@ -184,59 +189,64 @@ class Index extends Controller{
 			// 判断文件是否写入
 			if(file_put_contents($install_route,$install_route_con) === false)
 			{
-				exit("write lock file fail,filename:".$install_route);
+                $this->ajaxResult(0,"write lock file fail,filename:".$install_route);
 			}
             // 文件权限更改为原来的
 			if($first_chmod!='')
             {
                 chmod($route,$first_chmod.$chmod);
             }
-			$json['status']='ok';
-            $json['url']=get_cas_config('login_url');
-            return $json;
+            $this->ajaxResult(1,'',get_cas_config('login_url'));
          }
 
         }catch (\Exception $e){
             $error=$e->getFile().PHP_EOL.$e->getLine().PHP_EOL.$e->getMessage();
-            exit($error);
-
+            $this->ajaxResult(0,$error);
         }
     }
 
     /**
      * 安装前验证所有数据信息
      * @param array $post 需要验证的提交数据
-     * @param bool $is_return 是否返回，默认为false 直接输出
+     * @param bool
      * @rerun Void
      * */
-    private function vailAllData($post)
+    private function vailAllData($dbname,$pdo)
     {
         //使用Db 总读取没有写入配置文件之前的原配置文件中的配置信息 访问模块是就已经加载了配置信息
         //使用pdo 判断数据库是否连接成功
         try{
-            $dsn = "mysql:host=".$post["host"].";port=".$post["port"].";dbname=".$post["dbname"];
-            $this->pdo = new \PDO($dsn,$post["dbuser"],$post["dbpass"]);
-            $this->pdo->query("SET NAMES {$post['charset']}");
+            $sql="show tables from {$dbname}";
 
-            $sql="show tables from {$post["dbname"]}";
-
-            $res=$this->pdo->prepare($sql);//准备查询语句
+            $res=$pdo->prepare($sql);//准备查询语句
             $res->execute(); //函数是用于执行已经预处理过的语句，只是返回执行结果成功或失败需要配合prepare函数使用
             $result=$res->fetchAll(\PDO::FETCH_NUM);
 
             if(!empty($result))// 数据中存在表
             {
-                return "table_data";
+               return "table_data";
             }else{   
                 // 可以使用  数据库
-               return "db_exis";
+              return "db_exis";
             }
         }catch (\Exception $e){
             // 连接数据库失败或没有数据库权限
-            return 'server_error';
+             return "server_error";
         }
+        $pdo=null;
+    }
 
-        $this->pdo=$dsn=null;
+    /**
+     * createPdo
+     * 创建PDO 对象
+     * @param $post
+     * @return \PDO
+     */
+    private function createPdo($post){
+        $dsn = "mysql:host=".$post["host"].";port=".$post["port"].";dbname=".$post["dbname"];
+        $pdo = new \PDO($dsn,$post["dbuser"],$post["dbpass"]);
+        $pdo->query("SET NAMES {$post['charset']}");
+        return $pdo;
     }
 	
 	//写入配置文件
@@ -296,9 +306,26 @@ class Index extends Controller{
 		// 写入配置文件
 		if(file_put_contents($filename, $config) === false)
 		{
-			exit("config file write error");// 写入配置文件失败
+		    $this->ajaxResult(0,"config file write error");// 写入配置文件失败
 		}
 	}
+
+
+    /**
+     * ajaxResult
+     * 返回ajax 请求的数据
+     * @param $code
+     * @param string $msg
+     * @param array $data
+     */
+	private function ajaxResult($code,$msg='',$data=[]){
+        $result=[
+            'code'=>$code,
+            'msg'=>$msg,
+            'data'=>$data
+        ];
+        exit(json_encode($result));
+    }
 
 }
 ?>

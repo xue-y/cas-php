@@ -1,2 +1,2 @@
 <?php
-    Route::any('install','install/index/index');
+            Route::any('install','install/index/index');

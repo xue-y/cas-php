@@ -31,7 +31,7 @@
         {/notempty}
         {foreach $form.field_data as $k=>$data}<!--表单字段开始-->
         <div class="form-group">
-            <label class="col-md-2 control-label">{$data.label|default=''}</label>
+            <label class="col-md-2 control-label text-muted">{$data.label|default=''}</label>
             <div class="col-md-5">
                 {switch $data.type}
                 {case date|time|date_range|time_range|select|select_multiple|radio|checkbox|checkbox_multiple}

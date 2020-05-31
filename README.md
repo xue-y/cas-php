@@ -21,9 +21,9 @@ http://fontawesome.dashgame.com/
 
 页面布局框架： Bootstrap  v3.3.7   
 http://getbootstrap.com
-
-Workerman
-文档: http://doc2.workerman.net/
+ 
+聊天插件库： Workerman 3.0.15    
+文档: http://doc2.workerman.net/   
 手册: http://www.workerman.net/gatewaydoc/
 
 修改源码部分,标记一下防止后期框架升级

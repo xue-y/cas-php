@@ -267,3 +267,4 @@ function rand_string($len=6,$type='',$addChars='') {
     }
     return $str;
 }
+
