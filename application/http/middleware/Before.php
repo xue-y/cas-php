@@ -144,22 +144,47 @@ class Before
            // 当前控制器
            $controller_w['module']=$current_m;
            $controller_w['controller']=$curren_c;
+		   $curren_a=$request->action();
+		   
+		   if($curren_a!='index'){
+			 // $controller_w['action']=$curren_a;
+		   }else{
+			  $controller_w['action']=''; 
+		   }
+		  
            //如果有禁用方法，超级管理员不受限制
            $controller=$admin_auth->getControllerName($controller_w);
+	
            if(empty($controller)){
                //return $this->errorUrl();
            }
-           if(count($controller)==1){
-               $postion_nav['c']=isset($controller[""])?$controller[""]:'';
-           }else{
+		   
+		    // 先走当前方法名参数, 然后走默认index
+			if(isset($controller[$curren_a])){
+				$postion_nav['c']=$controller[$curren_a]; 
+				$url_action=$curren_a;
+			}else{
+				$postion_nav['c']=isset($controller[""])?$controller[""]:'';
+				$url_action=config('default_action');
+			}
+			
+			// 如果配置url 参数
+			/*if(empty($postion_nav['c'])){
                $postion_nav['c']=isset($controller[http_build_query($request->route())])?$controller[http_build_query($request->route())]:'';
-           }
+			   echo $postion_nav['c'];
+			   if(empty($postion_nav['c'])){
+				  $postion_nav['c']=isset($controller[$curren_a])?$controller[$curren_a]:''; 
+			   }
+		    }*/
        }
+	 
         // 当前位置 当前模块
         $postion_nav['m']=$admin_auth->getModuleName($current_m);
 	    // 当前列表访问地址  当前控制器 模块名 ["controller"] => string(9) "User.test"  多层控制器
         $curren_mc=$current_m.'/'.str_replace('.','/',$curren_c);
-        $postion_nav['url']=$curren_mc.'/'.config('default_action');
+		
+		$postion_nav['url']=$curren_mc.'/'.$url_action;
+	
 
         // 当前方法
         if(($request->action()=='save') || ($request->action()=='edit')){

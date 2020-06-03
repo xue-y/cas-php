@@ -87,7 +87,7 @@ class DbSql
   `name` varchar(20) NOT NULL COMMENT '".lang('sys_item')['name']."',
   `describe` varchar(20) NOT NULL COMMENT '".lang('sys_item')['describe']."',
   `val` varchar(255) NOT NULL COMMENT '".lang('sys_item')['val']."',
-  `type` varchar(10) NOT NULL DEFAULT 'text' COMMENT '".lang('sys_item')['field']."',
+  `type` varchar(10) NOT NULL DEFAULT 'text' COMMENT '".lang('sys_item')['type']."',
   `notes` varchar(100) DEFAULT NULL COMMENT '".lang('sys_item')['notes']."',
   `sort` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('sort')."',
   `is_sys` tinyint(1) NOT NULL DEFAULT '0' COMMENT '".lang('is_sys')."',
@@ -112,7 +112,7 @@ class DbSql
 (15, 'Item', 'sys', '".lang('menu_sys_email')."', 'see', 't_id=2', 3, 'fa-envelope-open-o', 1, 1, 4, 1, 0),
 (16, 'Item', 'sys', '".lang('menu_sys_upfile')."', 'see', 't_id=3', 3, 'fa-cloud-upload', 0, 1, 5, 1, 0),
 (17, 'Item', 'sys', '".lang('menu_sys_item')."', '', '', 3, 'fa-circle-o', 1, 1, 2, 0, 0),
-(18, 'Item', 'sys', '".lang('menu_sys_sset')."', 'see', '', 3, 'fa-circle-o', 1, 1, 1, 0, 0),
+(18, 'Item', 'sys', '".lang('menu_sys_sset')."', 'see', 'see', 3, 'fa-circle-o', 1, 1, 1, 0, 0),
 (19, 'Login', 'log', '".lang('menu_log_login')."', '', '', 4, 'fa-bookmark-o', 1, 1, 0, 1, 0),
 (20, 'Operate', 'log', '".lang('menu_log_operate')."', '', '', 4, 'fa-circle-o', 1, 1, 0, 1, 0);";
 
@@ -129,7 +129,7 @@ class DbSql
 (2, 'email', '".lang('menu_sys_email')."', 0, 1),
 (3, 'upfile', '".lang('menu_sys_upfile')."', 0, 1);";
 
-    $this->sql[]="INSERT INTO `{$prefix}sys_item`  (`id`, `t_id`, `name`, `describe`, `val`, `field`, `notes`, `is_sys`) VALUES
+    $this->sql[]="INSERT INTO `{$prefix}sys_item`  (`id`, `t_id`, `name`, `describe`, `val`, `type`, `notes`, `is_sys`) VALUES
 (1, 1, 'user_only_sign', 'user_only_sign', '0', '', '".lang('user_only_sign')."', 1),
 (3, 1, 'pass_error_num', 'pass_error_num', '5', '', '".lang('pass_error_num')."', 1),
 (4, 1, 'lock_t', 'lock_t', '86400', '', '".lang('lock_t')."', 1),

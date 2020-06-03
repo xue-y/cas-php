@@ -18,7 +18,6 @@
             <tr>
                 <th lay-data="{field:'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th>
                 <th lay-data="{field:'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>
-                <th lay-data="{field:'t_id',width:120,}">{:lang('sys_item')['t_id']}</th>
                 <th lay-data="{field:'name'}">{:lang('sys_item')['name']}</th>
                 <th lay-data="{field:'describe'}">{:lang('sys_item')['describe']}</th>
                 <th lay-data="{field:'val'}">{:lang('sys_item')['val']}</th>
@@ -30,7 +29,6 @@
             <tr>
                 <td></td>
                 <td>{$v.id}</td>
-                <td>{$type[$v.t_id]|default=lang('not_type')}</td>
                 <td>{$v.name}</td>
                 <td>{$v.describe}</td>
                 <td>{$v.val}</td>

@@ -164,7 +164,8 @@ class AdminAuth extends Model
 
     // 根据访问的地址或控制器名称
     public function getControllerName($where){
-        return $this->where($where)->column('name','param');
+		//id
+       return $this->where($where)->column('name','param');
     }
 
     /**

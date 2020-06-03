@@ -31,6 +31,9 @@
                <div class="col-md-5">
                    <input type="text" class="form-control" name="describe" value="{$data.describe}"  />
                </div>
+			   <div class="text-muted col-md-5">
+                   <i class="fa fa-info-circle color-info1"></i> {:lang('sys_item')['describe_info']}
+               </div>
            </div>
            <div class="form-group">
                <label class="col-md-2  control-label">{:lang('sys_item')['val']}</label>
@@ -41,8 +44,8 @@
                    <i class="fa fa-info-circle color-info1"></i> {:lang('sys_item')['val_info']}
                </div>
            </div>
-           <div class="form-group">{$data.type}
-               <label class="col-md-2  control-label">{:lang('sys_item')['field']}</label>
+           <div class="form-group">
+               <label class="col-md-2  control-label">{:lang('sys_item')['type']}</label>
                <div class="col-md-5">
                    <select name="type" class="form-control">
                        <option value="text">-- {:lang('item_field_select')} --</option>

@@ -40,10 +40,11 @@ $sys_item=[
     "t_id_info"=>"配置项分类ID",
     "name"=>"配置项名称",
     "describe"=>"配置项标识名",
+	"describe_info"=>"名称必填，2--20个字符之间",
     "notes"=>"配置项说明",
     "val"=>"配置项值",
     "val_info"=>"配置项值;多个值中间用英文逗号分隔",
-    "field"=>"表单字段类型",
+    "type"=>"表单字段类型",
 ];
 $log_login=[  
     "uid"=>"登录用户ID",
