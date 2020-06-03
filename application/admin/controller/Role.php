@@ -100,6 +100,8 @@ class Role extends Base
         $role_sys=0;
         $admin_auth=new AdminAuth();
         $auth_list=$admin_auth->geAuthList();
+		
+		
         if($a_id!==get_cas_config('admin_auth')){
             $role_sys=1;
             $select=explode(',',$a_id);
@@ -108,6 +110,7 @@ class Role extends Base
         }
         $tree=new Tree();
         $auth_list=$tree->getTree($auth_list);
+	
         $data['id']=$id;
         $data['role_sys']=$role_sys;
         $data['auth_list']=$tree->getTreeTableSelect($auth_list,$select,$disable);

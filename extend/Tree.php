@@ -53,6 +53,8 @@ class Tree{
 		return $tree;
 	}
 
+
+
 	
 	/**
 	 * @todo   getTree 			创建嵌套树形数组,指定父级下所有的子节点
@@ -61,7 +63,7 @@ class Tree{
 	 * @param  integer $level       层级
 	 * @param  string  $index_field 数组索引字段名
 	 * @param  string  $pid_field   父节点字段名
-     * @param  string  $name_level_field   层级名称字段
+     * @param  string  $name_level_field   层级分隔符
      * @param  string  $level_field   层级字段名
 	 * @param  string  $child_field 子节点字段名
 	 * @return array         		成功返回数组
@@ -69,46 +71,48 @@ class Tree{
 	public function getTree($list, $pid = 0,$level=0,$index_field = 'id', $pid_field = 'pid', $name_level_field = 'name_level',$level_field='level', $child_field = "items")
 	{
 		$delimiter ="|—";
-		$newList=array_column($list,null,$index_field);
+		// 子级分配层级是父级未分配层级，导致层级错误
+		// 按ID 排序
+		$id_sort=array_column($list,$index_field);
+		array_multisort($id_sort,SORT_ASC,$list);
+		// 按 PID 排序
+		$last_names = array_column($list,$pid_field);
+		array_multisort($last_names,SORT_ASC,$list);
 		
+		$newList = array_column($list,null,$index_field);
+
 		foreach ($newList as $value ) {
-			if ($pid === $value[$pid_field]) {
-			    // 顶级
-				$level_num=isset($value[$level_field])?$value[$level_field]:$level;
-				$newList[$value[$index_field]][$level_field]=$level_num;
+			
+			if($pid==$value[$pid_field]){
+				// 顶级
+				$newList[$value[$index_field]][$level_field]=0;
 				$newList[$value[$index_field]][$name_level_field]='';
-				if(isset($value['module']))
-				    $newList[$value[$index_field]]['url']=$value['module'];
+				if(isset($value['module'])){
+					$newList[$value[$index_field]]['url']=$value['module'];
+				}
 				$tree[] = &$newList[$value[$index_field]];
-			} elseif (isset($newList[$value[$pid_field]]))
-			{
-                // 从第二级开始  第一次进来都没有层级字段，需要赋值为1
-                if(!isset($newList[$value[$pid_field]][$level_field])){
-                    $newList[$value[$pid_field]][$level_field]=1;
-                }
-			    
-               $level_num=$newList[$value[$pid_field]][$level_field]+1;
-               $newList[$value[$index_field]][$level_field]=$level_num;
-               $newList[$value[$index_field]][$name_level_field]=str_repeat($delimiter,$level_num);
-               if(isset($value['module'])){
+			}elseif(isset($newList[$value[$pid_field]])){
+				//$level_num=$newList[$value[$pid_field]][$level_field]+1;
+				if(isset($newList[$value[$pid_field]][$level_field])){
+					$level_num=$newList[$value[$pid_field]][$level_field]+1;
+				}else{
+					// 查找父级
+					$level_num=$newList[$value[$index_field]][$level_field]=1;
+				}
+				
+                $newList[$value[$index_field]][$level_field]=$level_num;
+                $newList[$value[$index_field]][$name_level_field]=str_repeat($delimiter,$level_num);
+                if(isset($value['module'])){
                    parse_str($value['param'],$value['param']);
                    $action=empty($value['action'])?config('default_action'):$value['action'];
                    $newList[$value[$index_field]]['url']=$value['module'].'/'.$value['controller'].'/'.$action;
                }
-
-               $newList[$value[$pid_field]][$child_field][] = &$newList[$value[$index_field]];   
+				$newList[$value[$pid_field]][$child_field][] = &$newList[$value[$index_field]];   
 			}
 		}
-		// 如果顶级分类下没有一个下级，删除此分类，此步骤可以省略
-		/*foreach ($tree as $k=>$v)
-		{
-			if(!isset($v[$child_field]))
-				unset($tree[$k]);
-		}*/
-	    //dump($tree);
-	    return $tree;
+		
+		return $tree;
 	}
-
 
 	/**
 	 * @todo   getTreeSelect 		下拉框树形结构,选中禁止单个
@@ -121,7 +125,7 @@ class Tree{
 	 * @param  string $child_field     	子节点字段名
 	 * @return string                	html下拉框
 	 */
-	public function getTreeSelect($list,$select='',$disabled='',$index_field = 'id', $name_field = 'name',$level_field='name_level', $child_field = "items")
+	public function getTreeSelect($list,$select='',$disabled='',$index_field = 'id', $name_field = 'name',$level_field='name_level',$child_field = "items")
 	{
 		static $tree='';
 		foreach($list as $k=>$v){
@@ -236,11 +240,12 @@ class Tree{
      */
     public function getTreeTableSelect($list,$select=[],$disabled=[],$index_field = 'id',$level_field='name_level', $child_field = "items")
     {
+	
         static $tree='';
         $nbs='&nbsp; &nbsp; ';
         $checkbox=$disableded='';
         foreach($list as $k=>$v){
-
+			if(!isset($v[$index_field]))  continue;;
             if((!empty($disabled)) && (in_array($v[$index_field],$disabled))){
                 $disableded=' disabled="true" ';
             }else{

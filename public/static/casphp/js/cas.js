@@ -80,9 +80,10 @@ function slide_node(obj){
         obj.addClass('rotate-90').removeClass('rotate-0');
     }
     let class_name='child-of-node-'+id;
-    console.log(id);
+    console.log(class_name);
     $('tbody>tr.'+class_name).each(function(){
-        $(this).stop(true).slideToggle(100)
+        $(this).stop(true).slideToggle(100);
+		
     });
 }
 
