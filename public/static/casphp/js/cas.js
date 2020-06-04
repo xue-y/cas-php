@@ -67,10 +67,11 @@ function check_all(){
     });
 }
 
-/* *
+/**
   * slide_node 折叠菜单
   * @param objec obj 当前操作对象
-  * */
+  **/
+/** 
 function slide_node(obj){
 
     let id=obj.closest('tr').attr('data-id');
@@ -80,28 +81,71 @@ function slide_node(obj){
         obj.addClass('rotate-90').removeClass('rotate-0');
     }
     let class_name='child-of-node-'+id;
-    console.log(class_name);
+  
     $('tbody>tr.'+class_name).each(function(){
         $(this).stop(true).slideToggle(100);
 		
     });
 }
+**/
+/**
+  * slide_node 折叠菜单
+  * @param objec obj 当前操作对象
+  **/
+function slide_node(obj){
+	let obj_parent=obj.closest('tr');
+	let level_bottom=obj_parent.attr('data-level');
+	let num = obj_parent.index();// 取得第几个
+	let but=true;
+	if(obj.hasClass('rotate-90')){
+        obj.removeClass('rotate-90').addClass('rotate-0');
+		but=false;
+    }else{
+        obj.addClass('rotate-90').removeClass('rotate-0');
+    }
+	 // 选中元素
+	let obj_siblings=obj.closest('tr').nextAll();
+	obj_siblings.each(function(i,e){
+		
+		
+		let le=$(this).attr('data-level');
+		if (le == level_bottom){
+			return false;
+		}else if(le > level_bottom){
+			// 判断展开还是关闭
+			if(but){
+				// 执行展开, 展开只展开一级
+				if((le-1)==level_bottom){
+					$(this).stop(true).slideDown(100);
+				}
+			}else{
+				// 执行折叠，折叠所有子集
+				$(this).stop(true).slideUp(100);
+				if($(this).find('i.expander').hasClass('rotate-90')){
+					$(this).find('i.expander').removeClass('rotate-90').addClass('rotate-0');
+				}
+			}
+		}
+	});
+}
 
-/* *
+/**
   * check_node 选中节点 子级父级互相选中
   * @param objec obj 当前操作对象
   * */
 function check_node(obj) {
     //console.log(event.target.tagName);
-    let _this_obj = obj.closest('tbody');
+    let obj_parent = obj.closest('tbody');
     let num = obj.closest('tr').index();// 取得第几个
-    let chk = _this_obj.find("span>input[type='checkbox']");
-    let count = _this_obj.find('tr').length;
-    let level_top = level_bottom = chk.eq(num).attr('level');
+    let chk = obj_parent.find("span>input[type='checkbox']");
+	let obj_level = obj_parent.find('tr');
+    let count = obj_parent.find('tr').length;
+	
+    let level_top = level_bottom = obj.closest('tr').attr('data-level');//chk.eq(num).attr('level');
 
     // 选中父级
     for (let i = num; i >= 0; i--) {
-        let le = chk.eq(i).attr('level');
+        let le = obj_level.eq(i).attr('data-level');
         if (le < level_top) {
             chk.eq(i).siblings('.layui-form-checkbox').addClass('layui-form-checked');
             chk.eq(i).prop("checked", true);
@@ -110,7 +154,7 @@ function check_node(obj) {
     }
     // 选中子级
     for (var j = num + 1; j < count; j++) {
-        var le = chk.eq(j).attr('level');
+        var le = obj_level.eq(j).attr('data-level');
         if (chk.eq(num).prop("checked")) {
             if (le > level_bottom) {
                 chk.eq(j).siblings('.layui-form-checkbox').addClass('layui-form-checked');

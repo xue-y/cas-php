@@ -72,9 +72,7 @@ class Tree{
 	{
 		$delimiter ="|—";
 		// 子级分配层级是父级未分配层级，导致层级错误
-		// 按ID 排序
-		$id_sort=array_column($list,$index_field);
-		array_multisort($id_sort,SORT_ASC,$list);
+
 		// 按 PID 排序
 		$last_names = array_column($list,$pid_field);
 		array_multisort($last_names,SORT_ASC,$list);
@@ -160,15 +158,15 @@ class Tree{
             $level_node=str_repeat($nbsp,$v['level']);
 
             if($v['pid']<1){
-                $class_node=$display='';
+                $display='';
             }else{
-                $class_node=' child-of-node-'.$v['pid'];
+               
                 $display=' style="display:none" ';
             }
 
 
-			$tree.='<tr class="node-'.$v[$index_field].$class_node.'"'.$display.' data-id="'.$v[$index_field].'">';
-            $tree.='<td><span  onclick="javascript:check_node($(this));"><input type="checkbox" name="id[]" lay-skin="primary" value="'.$v['id'].'" level="'.$v['level'].'" ></span></td>';
+			$tree.='<tr '.$display.' data-level="'.$v['level'].'">';
+            $tree.='<td><span  onclick="javascript:check_node($(this));"><input type="checkbox" name="id[]" lay-skin="primary" value="'.$v['id'].'" ></span></td>';
             if(config('app_debug')){
                 $tree.='<td>'.$v[$index_field].'</td>
                         <td class="layui-elip">'.$v[$level_field].$v['url'].'</td>';
@@ -259,9 +257,8 @@ class Tree{
             $level_node=str_repeat($nbs,$v['level']);
 
             if($v['pid']<1){
-                $class_node=$display='';
+                $display='';
             }else{
-                $class_node=' child-of-node-'.$v['pid'];
                 $display=' style="display:none" ';
             }
 
@@ -269,9 +266,9 @@ class Tree{
                 $level_node.='<i class="fa fa-play expander" onclick="javascript:slide_node($(this));"></i>';
             }
 
-            $tree.='<tr class="node-'.$v[$index_field].$class_node.'"'.$display.' data-id="'.$v[$index_field].'">';
+            $tree.='<tr '.$display.' data-level="'.$v['level'].'">';
 
-            $tree.='<td>'.$level_node.$v[$level_field].'<span onclick="javascript:check_node($(this));"><input type="checkbox" name="id[]" level="'.$v['level'].'" lay-skin="primary" value="'.$v[$index_field].'" '.$disableded.$checkbox.'></span> ';
+            $tree.='<td>'.$level_node.$v[$level_field].'<span onclick="javascript:check_node($(this));"><input type="checkbox" name="id[]" lay-skin="primary" value="'.$v[$index_field].'" '.$disableded.$checkbox.'></span> ';
 
             $tree.= $v['name'].'</td></tr>'.PHP_EOL;
             if(isset($v[$child_field]) && is_array($v[$child_field])){
