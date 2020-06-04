@@ -7,7 +7,7 @@
 	},
     "name": "xue-y/cas-php",
     "description": "Convenient and succinct PHP framework",
-    "version": "1.0.5-dev",
+    "version": "1.0.6-dev",
     "type": "project",
     "license": "Apache-2.0",
     "minimum-stability":"dev",
