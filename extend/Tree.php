@@ -12,7 +12,7 @@ class Tree{
 	 * @param  string $child_field  子节点字段名
 	 * @return array          		 成功返回数组
 	 */
-	public function getLayuiTreeArr($list,$select=[],$disabled=[],$index_field = 'id', $pid_field = 'pid', $child_field = "children")
+	/*public function getLayuiTreeArr($list,$select=[],$disabled=[],$index_field = 'id', $pid_field = 'pid', $child_field = "children")
 	{
 		$tree = [];
 		$list = array_column($list, null, $index_field);
@@ -51,7 +51,7 @@ class Tree{
 			}
 		}
 		return $tree;
-	}
+	}*/
 
 
 
@@ -74,9 +74,9 @@ class Tree{
 		// 子级分配层级是父级未分配层级，导致层级错误
 
 		// 按 PID 排序
-		$last_names = array_column($list,$pid_field);
-		array_multisort($last_names,SORT_ASC,$list);
-		
+		/*$last_names = array_column($list,$pid_field);
+		array_multisort($last_names,SORT_ASC,$list);*/
+
 		$newList = array_column($list,null,$index_field);
 
 		foreach ($newList as $value ) {
@@ -139,10 +139,8 @@ class Tree{
 
 	/**
 	 * @todo   getTreeTable         树形结构表格，默认选项是根据layui静态表格定义
-     * @desc  展开下级时要根据层级循环次数 --- 弊端，父级选中子级也是 ---- 弊端
+     * @desc  展开下级时要根据层级循环次数 --- 弊端
 	 * @param  array  $list             嵌套树形数组
-	 * @param  array  $select           默认选中ID
-	 * @param  array  $disabled         禁止选中ID
 	 * @param  string $index_field      索引字段名
 	 * @param  string $level_field 		 层级标识字段名
 	 * @param  string $child_field      子节点字段名
@@ -160,7 +158,6 @@ class Tree{
             if($v['pid']<1){
                 $display='';
             }else{
-               
                 $display=' style="display:none" ';
             }
 

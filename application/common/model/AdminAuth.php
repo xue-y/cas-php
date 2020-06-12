@@ -13,7 +13,7 @@ use think\Model;
 class AdminAuth extends Model
 {
     private $menu_field='id,name,module,controller,action,param,pid,icon';
-    private $menu_sort='sort asc,id asc';
+    private $menu_sort='pid asc,sort asc'; //子级分配层级是父级未分配层级，导致层级错误,必须pid 排序
     /**
      * getMenu  menu
      * 取得权限,这里只取 2 层 --- 后台系统左菜单

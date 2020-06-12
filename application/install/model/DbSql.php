@@ -116,9 +116,6 @@ class DbSql
 (19, 'Login', 'log', '".lang('menu_log_login')."', '', '', 4, 'fa-bookmark-o', 1, 1, 0, 1, 0),
 (20, 'Operate', 'log', '".lang('menu_log_operate')."', '', '', 4, 'fa-circle-o', 1, 1, 0, 1, 0);";
 
-
-
-
   $admin_auth=get_cas_config('admin_auth');
 
    $this->sql[]="INSERT INTO `{$prefix}admin_role`  (`id`, `name`, `describe`, `a_id`, `is_enable`) VALUES
