@@ -61,7 +61,7 @@ class SysItem extends Model
      */
     public function getTypeItemData($t_id)
     {
-        return $this->field('id,name,`describe` as label,`val` as value,type,notes')->whereTId($t_id)->order('sort asc,id asc')->select()->toArray();
+        return $this->field('id,name,`describe` as label,`val` as value,field_type,notes')->whereTId($t_id)->order('sort asc,id asc')->select()->toArray();
     }
 
     // 设置配置项数据

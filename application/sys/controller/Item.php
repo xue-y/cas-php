@@ -44,7 +44,7 @@ class Item extends Base
         $this->assign([
             'type'=>$sys_type->column('describe','id'),
             't_id'=>$t_id,
-            'field'=>$field_type
+            'field_type'=>$field_type
         ]);
         if(!empty($id)){
             $sys_item=new SysItem();

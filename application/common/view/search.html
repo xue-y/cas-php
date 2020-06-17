@@ -2,9 +2,9 @@
 <form method="{$method|default='get'}" action="{$action|default=''}" {$extra|default=''}>
     <div class="form-group">
         {foreach $field_data as $k=>$data}
-            {switch $data.type}
+            {switch $data.field_type}
             {case date|time|date_range|time_range|select}
-            {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
+            {:action("common/Base/formItem",['template'=>$data.field_type,'data'=>$data])}
             {/case}
             {default /}
             {:action("common/Base/formItem",['template'=>'input','class'=>'search','data'=>$data])}

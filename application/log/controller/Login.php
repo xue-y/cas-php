@@ -26,9 +26,10 @@ class Login extends Base
        // 如果取得搜索条件
         $w=[];
         $search_name_field=[];
+		
         $post=$this->request->get();
         if(empty($uid)){
-            $search_name_field=['name'=>'name','type'=>'select','data'=>$assign['name'],'placeholder'=>lang('log_n_search')];
+            $search_name_field=['name'=>'name','field_type'=>'select','data'=>$assign['name'],'placeholder'=>lang('log_n_search')];
         }
 		if(!empty($uid))
 		{
@@ -51,7 +52,7 @@ class Login extends Base
         // 搜索框框
         $search_form=new searchForm();
         $assign['search']=$search_form->fieldItem([
-            ['name'=>'t','type'=>'date_range'],
+            ['name'=>'t','field_type'=>'date_range'],
             $search_name_field
         ])->create();
         

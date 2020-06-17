@@ -44,7 +44,7 @@ $sys_item=[
     "notes"=>"配置项说明",
     "val"=>"配置项值",
     "val_info"=>"配置项值;多个值中间用英文逗号分隔,日期格式：YYYY-mm-dd，日期区间格式YYYY-mm-dd - YYYY-mm-dd，时间格式：HH:mm:ss,时间区间HH:mm:ss - HH:mm:ss",
-    "type"=>"表单字段类型",
+    "field_type"=>"表单字段类型",
 ];
 $log_login=[  
     "uid"=>"登录用户ID",

@@ -45,11 +45,11 @@
                </div>
            </div>
            <div class="form-group">
-               <label class="col-md-2  control-label">{:lang('sys_item')['type']}</label>
+               <label class="col-md-2  control-label">{:lang('sys_item')['field_type']}</label>
                <div class="col-md-5">
                    <select name="type" class="form-control">
                        <option value="text">-- {:lang('item_field_select')} --</option>
-                       {foreach $field as $v}
+                       {foreach $field_type as $v}
                        <option value="{$v}" {eq name="v" value="$data.type"} selected{/eq}>{$v}</option>
                        {/foreach}
                    </select>

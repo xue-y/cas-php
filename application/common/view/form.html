@@ -33,13 +33,13 @@
         <div class="form-group">
             <label class="col-md-2 control-label text-muted">{$data.label|default=''}</label>
             <div class="col-md-5">
-                {switch $data.type}
+                {switch $data.field_type}
                 {case date|time|date_range|time_range|select|select_multiple|radio|checkbox|checkbox_multiple}
-                {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
+                {:action("common/Base/formItem",['template'=>$data.field_type,'data'=>$data])}
                 {/case}
                 {case all_icon}
                 {php} $all_icon=true;// 定义变量标识{/php}
-                {:action("common/Base/formItem",['template'=>$data.type,'data'=>$data])}
+                {:action("common/Base/formItem",['template'=>$data.field_type,'data'=>$data])}
                 {/case}
                 {default /}
                 {:action("common/Base/formItem",['template'=>'input','data'=>$data])}

@@ -87,7 +87,7 @@ class DbSql
   `name` varchar(20) NOT NULL COMMENT '".lang('sys_item')['name']."',
   `describe` varchar(20) NOT NULL COMMENT '".lang('sys_item')['describe']."',
   `val` varchar(255) NOT NULL COMMENT '".lang('sys_item')['val']."',
-  `type` varchar(10) NOT NULL DEFAULT 'text' COMMENT '".lang('sys_item')['type']."',
+  `field_type` varchar(10) NOT NULL DEFAULT 'text' COMMENT '".lang('sys_item')['field_type']."',
   `notes` varchar(100) DEFAULT NULL COMMENT '".lang('sys_item')['notes']."',
   `sort` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT '".lang('sort')."',
   `is_sys` tinyint(1) NOT NULL DEFAULT '0' COMMENT '".lang('is_sys')."',
@@ -126,7 +126,7 @@ class DbSql
 (2, 'email', '".lang('menu_sys_email')."', 0, 1),
 (3, 'upfile', '".lang('menu_sys_upfile')."', 0, 1);";
 
-    $this->sql[]="INSERT INTO `{$prefix}sys_item`  (`id`, `t_id`, `name`, `describe`, `val`, `type`, `notes`, `is_sys`) VALUES
+    $this->sql[]="INSERT INTO `{$prefix}sys_item`  (`id`, `t_id`, `name`, `describe`, `val`, `field_type`, `notes`, `is_sys`) VALUES
 (1, 1, 'user_only_sign', 'user_only_sign', '0', '', '".lang('user_only_sign')."', 1),
 (3, 1, 'pass_error_num', 'pass_error_num', '5', '', '".lang('pass_error_num')."', 1),
 (4, 1, 'lock_t', 'lock_t', '86400', '', '".lang('lock_t')."', 1),

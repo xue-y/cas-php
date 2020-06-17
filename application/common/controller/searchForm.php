@@ -60,6 +60,7 @@ class searchForm extends Controller
             $this->assign['field_data']=$field_item;
             return $this;
         }
+		
         foreach ($field_item as $k=>$v)
         {
             if(empty($v)){
