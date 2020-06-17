@@ -1,4 +1,6 @@
-/** layui-v2.5.4 MIT License By https://www.layui.com */
+/** layui-v2.5.4 MIT License By https://www.layui.com 
+ 更改表格工具栏样式布局
+*/
 ;
 layui.define(["laytpl", "laypage", "layer", "form", "util"],
 function(e) {
@@ -188,7 +190,7 @@ function(e) {
             })
         })
     },
-   /* I.prototype.renderToolbar = function() {
+    I.prototype.renderToolbar = function() {
         var e = this,
         a = e.config,
         l = ['<div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div>', '<div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div>', '<div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>'],
@@ -238,7 +240,7 @@ function(e) {
             i && d.push('<div class="layui-inline" title="' + i.title + '" lay-event="' + i.layEvent + '"><i class="layui-icon ' + i.icon + '"></i></div>')
         }),
         e.layTool.find(".layui-table-tool-self").html(d.join(""))
-    },*/
+    },
     I.prototype.setParentCol = function(e, t) {
         var i = this,
         a = i.config,

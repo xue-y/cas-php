@@ -8,22 +8,38 @@
 </style>
 {__CONTENT__}
 <script src="{:get_cas_config('cas_js')}cas.js"></script>
+<!--<script type="text/html" id="toolbarDemo">
+	<div class="layui-btn-container">
+		<div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div>
+		<div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+	</div>
+</script>-->
+<script type="text/html" id="toolbar">
+	<div class="layui-btn-container">
+		<div class="layui-btn layui-btn-sm" lay-event="add">{:lang('add')}</div>
+		<div class="layui-btn layui-btn-sm" lay-event="delete">{:lang('delete')}</div>
+	</div>
+</script>
 <script>
-	if(typeof operateToolbar == 'undefined'){
-	    operateToolbar=['add','delete']; //'update',
-	}
-	if(typeof toolbar == 'undefined'){
-	    toolbar=true;  // 工具栏按钮
-	}
-
+    /*if(typeof operateToolbar == 'undefined'){
+        operateToolbar=['add','delete']; //'update',
+    }
+    if(typeof toolbar == 'undefined'){
+        toolbar=true;  // 工具栏按钮
+    }*/
     layui.use(['table','layer','form'], function(){
 	  let table = layui.table;
 	  let layer= layui.layer;
 	  table.init('table', { //转化静态表格
-		  toolbar:toolbar,
+		  toolbar:'#toolbar',
 		  page:false,//不分页
-		  operateToolbar:operateToolbar,
 	  });
+	  // 图标式工具栏
+      /*table.init('table', { //转化静态表格
+            toolbar:true,
+            page:false,//不分页
+            operateToolbar:operateToolbar,
+        });*/
 
 	  let form=layui.form;
 	  // 是否开始debug

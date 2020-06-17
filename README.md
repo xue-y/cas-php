@@ -27,7 +27,6 @@ http://getbootstrap.com
 手册: http://www.workerman.net/gatewaydoc/
 
 修改源码部分,标记一下防止后期框架升级
-- layui 表格工具栏添加操作可选项 `operateToolbar`
 - ThinkPHP 分页添加参数  `paginate(config['additionalInfo'])` 
 - bootstrapValidator [输入验证改为失去光标验证](https://blog.csdn.net/qq592304796/article/details/52475820)
  

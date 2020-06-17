@@ -48,6 +48,7 @@ $(document).ready(function(e) {
                             //怎么控制layui弹出层第二次调用宽度减少问题
                             layer.confirm('数据库存在数据，请问确定删除吗？', {
                                 offset: '100px',
+                                area:'300px',
                                 btn: ['确定','取消'] //按钮
                             }, function(){
                                 $('.table_data').val(1);

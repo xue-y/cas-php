@@ -13,30 +13,34 @@
         layui.use('laydate', function() {
             var laydate = layui.laydate;
 
-            if($('#date').length>0){
+            lay('.date').each(function() {
                 laydate.render({
-                    elem: '#date'
+                    elem : this,
                 });
-            }
-            if($('#time').length>0) {
+            });
+
+            lay('.time').each(function() {
                 laydate.render({
-                    elem: '#time',
+                    elem : this,
                     type: 'time'
                 });
-            }
-            if($('#time_range').length>0){
+            });
+
+            lay('.time_range').each(function() {
                 laydate.render({
-                    elem: '#time_range',
+                    elem : this,
                     type: 'time',
                     range: true
                 });
-            }
-            if($('#date_range').length>0){
+            });
+
+            lay('.date_range').each(function() {
                 laydate.render({
-                    elem: '#date_range',
+                    elem : this,
                     range: true
                 });
-            }
+            });
+
             // 2个输入框的时间选择器
             if(($('#t_start').length>0) && ($('#t_end').length>0)){
                 laydate.render({

@@ -12,7 +12,7 @@
         <th lay-data="{field:'name', width:150}">{:lang('admin_role')['name']}</th>
         <th lay-data="{field:'describe'}">{:lang('admin_role')['describe']}</th>
         <th lay-data="{field:'is_enable',width:110, unresize: true}">{:lang('is_enable_text')}</th>
-        <th lay-data="{field:'operate',fixed:'right',width:200}">{:lang('operation')}</th>
+        <th lay-data="{field:'operate',fixed:'right',width:120}">{:lang('operation')}</th>
       </tr>
     </thead>
     <tbody>
@@ -30,7 +30,7 @@
             {/eq}
         </td>
         <td>
-            <a lay-event="auth" href="{:url('auth',['id'=>$v.id])}">{:lang('auth_set')}</a>
+            <a lay-event="auth" href="{:url('auth',['id'=>$v.id])}"><i class="fa fa-key text-info"></i></a>
             <a lay-event="edit" href="{:url('edit',['id'=>$v.id])}" ><i class="fa fa-edit text-warning"></i></a>
             <!-- d.undefined (a_id) layui只能取到赋值td的数据-->
             {neq name="v.a_id" value="$Think.config.config.admin_auth"}

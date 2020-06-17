@@ -4444,7 +4444,7 @@ ul.unstyled, ol.unstyled {
 
 .text-muted {
     color: #7B7777  !important;
-	line-height: 40px;
+	/*line-height: 40px;*/
 }
 
 .text-primary {
