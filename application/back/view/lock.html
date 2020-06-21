@@ -11,13 +11,13 @@
     <div class="container">
         <div class="row">
             <div class="login-wrapper">
-                <div class="login-inner">
+                <div class="login-inner" style="width:400px">
                     <h2 class="header-title text-center">{$name}{:lang('unlock_tips')}</h2>
                     <form class="b_from" method="post" action="{:url('unlock')}">
                         {:token()}
                         <div class="form-group m-t-20">
                             <label class="m-b-20">{$Think.lang.unlock_screen}</label>
-                            <div class="col-md-12 add-m-lr-15">
+                            <div class="col-md-12" style="padding: 0px;" >
                                 <input type="password" class="form-control"  autocomplete="off" placeholder="" name="repass">
                             </div>
                         </div>
@@ -48,11 +48,7 @@
 <script src="{:get_cas_config('cas_js')}validators.js"></script>
 <script>
     if("{:get_cas_config('ajax_submit')}") {
-          // 弹层
-          layui.use('layer', function(){
-              let layer = layui.layer;
-          });
           form_submit($('form'),"{:config('app_debug')}",true);
     }
 </script>
-</body></html>
+</body>

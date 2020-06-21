@@ -10,7 +10,7 @@
 namespace app\log\controller;
 
 use app\common\controller\Base;
-use app\common\controller\searchForm;
+use app\common\controller\SearchForm;
 use app\common\model\AdminAuth;
 use app\common\model\AdminUser;
 use app\common\model\LogOperate;
@@ -63,7 +63,7 @@ class Operate extends Base
         $back_operate=new LogOperate();
         $assign['uid']=$uid;
 
-        $search_form=new searchForm();
+        $search_form=new SearchForm();
         $assign['search']=$search_form->fieldItem([
             ['name'=>'t','field_type'=>'date_range'],
             ['name'=>'behavior','field_type'=>'select','data'=>$assign['behavior'],'placeholder'=>lang('log_behavior_search')],

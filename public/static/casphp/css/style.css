@@ -147,17 +147,17 @@ hr {
 	margin-bottom: 50px;
 }
 
-.left-side .searchform {
+.left-side .searchForm {
 	display: none;
 }
 
- .left-side .searchform::after {
+ .left-side .searchForm::after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.left-side .searchform input {
+.left-side .searchForm input {
 	padding: 10px;
 	width: 90%;
 	margin: 0 0 20px 12px;
@@ -483,7 +483,7 @@ h5.left-nav-title {
 	color: #141313;
 }
 
-.searchform input {
+.searchForm input {
 	box-shadow: none;
 	float: left;
 	font-size: 14px;
@@ -493,7 +493,7 @@ h5.left-nav-title {
 	width: 220px;
 }
 
-.searchform input:focus {
+.searchForm input:focus {
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -944,7 +944,7 @@ h5.left-nav-title {
 }
 
 .header-title {
-	font-size: 4vh;
+	font-size: 2vw;
     font-weight: 600;
 	padding-bottom: 20px;
     letter-spacing: 1px;

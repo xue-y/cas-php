@@ -12,3 +12,4 @@
 
 Route::any('/back/Lock','back/LockScreen/index'); // 锁屏
 Route::get('captcha/[:id]', "\\think\\captcha\\CaptchaController@index"); // 验证码访问路径
+//Route::any('plugin/[:_plugin]/[:_controller]/[:_action]', "\\app\\controller\\PluginController@index");// 插件

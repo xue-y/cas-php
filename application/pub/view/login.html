@@ -57,9 +57,9 @@
 <script src="{:get_cas_config('cas_js')}validators.js"></script>
 <script>
     // 弹层
-    layui.use('layer', function () {
+    /*layui.use('layer', function () {
         let layer = layui.layer;
-    });
+    })*/;
     // 登录失败
     let user_login_fail = "{notempty name='user_login_fail'}{$user_login_fail}{else /}{/notempty}";
     if (user_login_fail && (user_login_fail != '')) {

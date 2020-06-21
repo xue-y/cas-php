@@ -16,7 +16,11 @@ namespace think;
 require __DIR__ . '/../thinkphp/base.php';
 
 // 支持事先使用静态方法设置Request对象和Config对象
+// 定义扩展库目录
 define('EXTEND_PATH', __DIR__ .'/../extend/');
+
+// 定义插件目录
+define('PLUGINS_PATH', __DIR__ . '/plugins/');
 
 // 执行应用并响应
 Container::get('app')->run()->send();

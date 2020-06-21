@@ -1,3 +1,23 @@
+<!--加载样式-->
+{notempty name="form.field_data"}
+    {foreach $form.field_type as $k=>$v}
+        {switch $k}
+        {case lay_icon}
+        <link href='/static/css/lay_icon.css' rel='stylesheet'>
+        {/case}
+        {case all_icon}
+        <link href='/static/css/fontawesome-iconpicker.min.css' rel='stylesheet'>
+        <link href='/static/css/all_icon.css' rel='stylesheet'>
+        <script src='/static/awesome-icon/js/fontawesome-iconpicker2.js'></script>
+        {/case}
+        {case editor}
+        <link rel="stylesheet" href="/static/kindeditor/themes/default/default.css" />
+        <script charset="utf-8" src="/static/kindeditor/kindeditor-all.js"></script>
+        <script charset="utf-8" src="/static/kindeditor/lang/zh-CN.js"></script>
+        {/case}
+        {/switch}
+    {/foreach}
+{/notempty}
 <div class="row">
     <div class="white-box">
     {notempty name="tab_nav.data"}
@@ -20,7 +40,7 @@
     </div>
     {/notempty}
     {notempty name="form.field_data"}
-    <form method="{$method|default='get'}" action="{$action|default=''}" {$form_extra|default=''}>
+    <form method="{$method|default='get'}" class="b_from" action="{$action|default=''}" {$form_extra|default=''}>
         {present name='token'}
             {:token($token)}
         {/present}
@@ -34,11 +54,7 @@
             <label class="col-md-2 control-label text-muted">{$data.label|default=''}</label>
             <div class="col-md-5">
                 {switch $data.field_type}
-                {case date|time|date_range|time_range|select|select_multiple|radio|checkbox|checkbox_multiple}
-                {:action("common/Base/formItem",['template'=>$data.field_type,'data'=>$data])}
-                {/case}
-                {case all_icon}
-                {php} $all_icon=true;// 定义变量标识{/php}
+                {case date|time|date_range|time_range|select|select_multiple|radio|checkbox|checkbox_multiple|lay_icon|all_icon|simple_editor|all_editor}
                 {:action("common/Base/formItem",['template'=>$data.field_type,'data'=>$data])}
                 {/case}
                 {default /}

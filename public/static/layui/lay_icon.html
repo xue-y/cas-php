@@ -195,7 +195,7 @@
         <div class="layui-form-item">
             <label  class="layui-form-label">选择图标</label>
             <div class="layui-input-block">
-                <input type="text" id="iconPicker" lay-filter="iconPicker" class="layui-input">
+                <input type="text" id="iconPicker" lay-filter="iconPicker" class="lay-icon layui-input">
             </div>
         </div>
     </div>
@@ -211,7 +211,7 @@
             
             iconPicker.render({
                 // 选择器，推荐使用input
-                elem: '#iconPicker',
+                elem: '.lay-icon',
                 // 标题
                 title:true,
                 // 数据类型：fontClass/unicode，推荐使用fontClass

@@ -86,7 +86,7 @@
    });
    
 
-   /*searchform_reposition();*/
+   /*SearchForm_reposition();*/
 
    jQuery(window).resize(function(){
 

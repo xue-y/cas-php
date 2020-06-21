@@ -41,11 +41,12 @@ class Item extends Base
         $id=input('param.id/d');
         $sys_type=new SysType();
         $field_type=explode(',',$this->field_type);
-        $this->assign([
-            'type'=>$sys_type->column('describe','id'),
-            't_id'=>$t_id,
-            'field_type'=>$field_type
-        ]);
+        $type=$sys_type->column('describe','id');
+
+        $this->assign('type',$type);
+        $this->assign('t_id',$t_id);
+        $this->assign('field_type',$field_type);
+
         if(!empty($id)){
             $sys_item=new SysItem();
             $data=$sys_item->find($id);
@@ -161,7 +162,7 @@ class Item extends Base
         unset($data['__token__']);
         $is_save=$sys_item->setItemData($data,$t_id);
         if($is_save>=1) {
-            $this->success(lang('update_success'),url('index',['t_id'=>$t_id]));
+            $this->success(lang('update_success'),url('see',['t_id'=>$t_id]));
         }else {
             $this->error(lang('update_fail'));
         }

@@ -1,3 +1,7 @@
+// 弹层
+layui.use('layer', function(){
+    let layer = layui.layer;
+});
 //功能：根据用户输入的Email跳转到相应的电子邮箱首页
 function gotoEmail(mail) {
     $t = mail.split('@')[1];
@@ -277,7 +281,7 @@ function form_submit(form,app_debug,jump,success_msg){
     //success.form.bv
     form.on('success.form.bv', function (e) {
         e.preventDefault();
-        ajax_request(form,app_debug,jump,success_msg)
+        ajax_request(form,app_debug,jump,success_msg);
         return false;
     });
 }

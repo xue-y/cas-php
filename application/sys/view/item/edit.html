@@ -50,7 +50,7 @@
                    <select name="type" class="form-control">
                        <option value="text">-- {:lang('item_field_select')} --</option>
                        {foreach $field_type as $v}
-                       <option value="{$v}" {eq name="v" value="$data.type"} selected{/eq}>{$v}</option>
+                       <option value="{$v}" {eq name="v" value="$data.t_id"} selected{/eq}>{$v}</option>
                        {/foreach}
                    </select>
                </div>
@@ -74,4 +74,3 @@
        </form>
    </div>
 </div>
-{include file="common@vail_form" /}

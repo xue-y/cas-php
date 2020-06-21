@@ -11,7 +11,7 @@ namespace app\common\controller;
 
 use think\Controller;
 
-class searchForm extends Controller
+class SearchForm extends Controller
 {
     // 变量赋值
     private $assign;

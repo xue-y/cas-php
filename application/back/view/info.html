@@ -56,11 +56,6 @@
 {include file="common@vaildator" /}
 <script src="{:get_cas_config('cas_js')}validators.js"></script>
 <script>
-    // 弹层
-    layui.use('layer', function(){
-        let layer = layui.layer;
-    });
-
     // 发送邮件处理
     $("input[name='email']").blur(function () {
         $('.email').attr('disabled',false);

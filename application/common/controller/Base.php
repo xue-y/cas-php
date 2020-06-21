@@ -14,7 +14,7 @@ use think\Controller;
 
 class Base extends Controller
 {
-    private $t_range=' - ';
+    protected $t_range=' - ';
 
     protected function error($msg = '', $url = null, $data = '', $wait = 3, array $header = [])
     {
@@ -69,7 +69,7 @@ class Base extends Controller
         exit;
     }
 
-    // 删除带有系统不可删除的数据
+    // 过滤(系统不可删除)删除的数据
     protected function delSysData($id,$sys_id,$module)
     {
         if(!is_array($id) && ($id==$sys_id))
@@ -175,5 +175,4 @@ class Base extends Controller
         }
         return $w;
     }
-
 }

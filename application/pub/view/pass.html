@@ -43,10 +43,6 @@
 {include file="common@vaildator" /}<!--表单验证插件-->
 <script src="{:get_cas_config('cas_js')}validators.js"></script>
 <script>
-  // 弹层
-  layui.use('layer', function(){
-      let layer = layui.layer;
-  });
   // 点击切换 验证码图片
   $(".v_code img").click(function () {
       let src=$(this).attr("src");

@@ -66,10 +66,6 @@ layui 待修复问题
 	1、弹窗第一次与第二次不一样大小
 	2、静态表格无法重载
 	3、表格右上方工具栏无法实现再次点击消失信息框
-
-使用 ajax/直接跳转 提交的方法  
-
-	登录、锁屏、重置密码、个人信息、删除、添加、修改
 	
 直接使用 ajax 提交的方法：
 
@@ -117,7 +113,7 @@ layui 待修复问题
 搜索表单构造器  
 
 	// 搜索框框
-	$search_form=new searchForm();
+	$search_form=new SearchForm();
 	$search=$search_form->fieldItem([
 		['name'=>'t','type'=>'date_range'],
 		$search_name_field
@@ -125,6 +121,19 @@ layui 待修复问题
 	
 	模板中调用
     {:action("common/Base/includePage",['template'=>'search','data'=>$search])}
+
+页面布局
+
+	head头部
+	nav导航
+	模板布局
+		layout模板布局
+			列表页面
+			添加/修改页面
+				vail_form 数据处理验证
+					 vaildator验证插件
+			plugin 底部插件
+		base_layout 基本布局
 	
 ### ThinkPHP 框架
 请参阅 [ThinkPHP5 框架](https://github.com/top-think/think)。

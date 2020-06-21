@@ -3,17 +3,10 @@
 {eq name="$Request.action" value="index"}
 <!-- 列表页面 -->
 <style type="text/css">
-.btn{padding: 8px 13px;vertical-align:top;}
+.btn{padding: 8px 13px;vertical-align:top;border-radius: 0px}
 .search{width:200px;display:inline;height:38px;}
 </style>
 {__CONTENT__}
-<script src="{:get_cas_config('cas_js')}cas.js"></script>
-<!--<script type="text/html" id="toolbarDemo">
-	<div class="layui-btn-container">
-		<div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div>
-		<div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
-	</div>
-</script>-->
 <script type="text/html" id="toolbar">
 	<div class="layui-btn-container">
 		<div class="layui-btn layui-btn-sm" lay-event="add">{:lang('add')}</div>
@@ -21,25 +14,13 @@
 	</div>
 </script>
 <script>
-    /*if(typeof operateToolbar == 'undefined'){
-        operateToolbar=['add','delete']; //'update',
-    }
-    if(typeof toolbar == 'undefined'){
-        toolbar=true;  // 工具栏按钮
-    }*/
     layui.use(['table','layer','form'], function(){
-	  let table = layui.table;
-	  let layer= layui.layer;
-	  table.init('table', { //转化静态表格
-		  toolbar:'#toolbar',
+	  var table = layui.table;
+	  var layer= layui.layer;
+	  table.init('table', {
+          toolbar:'#toolbar',
 		  page:false,//不分页
 	  });
-	  // 图标式工具栏
-      /*table.init('table', { //转化静态表格
-            toolbar:true,
-            page:false,//不分页
-            operateToolbar:operateToolbar,
-        });*/
 
 	  let form=layui.form;
 	  // 是否开始debug
@@ -108,59 +89,59 @@
 	  });
   });
 
-/**
- * 执行删除操作
- * @param  string|array  del_data 要删除的id
- * @param  object        obj      要删除的对象,批量删除为false
- */
-function del(del_data,obj,app_debug){
-	// 这里判断是否使用ajax
-	 let ajax_submit="{:get_cas_config('ajax_submit')}";
-	 if(!ajax_submit){
-		if(obj){
-			// 删除单个
-			let url="{:url('delete',['id'=>'data-id'])}";
-			url=url.replace('data-id',del_data);
-			window.location.href=url;
-		}else{
-		  // 批量删除
-		  $(".layui-table-body input[name='layTableCheckbox']:checked").each(function(i,e){
-			  	$(this).attr('name','id[]');
-		  });
-		  $('form').submit();
-		}
-		return;
-	 }
-	 
-	 let url="{:url('delete')}";
-	 $.post(url,{id:del_data},function(data)
-	 {
-		 let index=layer.alert(data.msg,function(){
-			if(app_debug){
-				 console.log(data)
+	/**
+	 * 执行删除操作
+	 * @param  string|array  del_data 要删除的id
+	 * @param  object        obj      要删除的对象,批量删除为false
+	 */
+	function del(del_data,obj,app_debug){
+		// 这里判断是否使用ajax
+		 let ajax_submit="{:get_cas_config('ajax_submit')}";
+		 if(!ajax_submit){
+			if(obj){
+				// 删除单个
+				let url="{:url('delete',['id'=>'data-id'])}";
+				url=url.replace('data-id',del_data);
+				window.location.href=url;
+			}else{
+			  // 批量删除
+			  $(".layui-table-body input[name='layTableCheckbox']:checked").each(function(i,e){
+					$(this).attr('name','id[]');
+			  });
+			  $('form').submit();
 			}
-			if(data.code==1)
-			{
-				if(del_data instanceof Array)
-					window.location.reload();
-				else
-				  obj.del(); //删除对应行（tr）的DOM结构
-			}
-			layer.close(index); // 关闭当前窗口
-		});
-	 },'json').fail(function(xhr,status,error){
-			  // 调试模式
-		  if(app_debug){
-				console.log(xhr);
-			}
-		 layer.alert(status+':'+error);
-	 });
-}
+			return;
+		 }
 
+		 let url="{:url('delete')}";
+		 $.post(url,{id:del_data},function(data)
+		 {
+			 let index=layer.alert(data.msg,function(){
+				if(app_debug){
+					 console.log(data)
+				}
+				if(data.code==1)
+				{
+					if(del_data instanceof Array)
+						window.location.reload();
+					else
+					  obj.del(); //删除对应行（tr）的DOM结构
+				}
+				layer.close(index); // 关闭当前窗口
+			});
+		 },'json').fail(function(xhr,status,error){
+				  // 调试模式
+			  if(app_debug){
+					console.log(xhr);
+				}
+			 layer.alert(status+':'+error);
+		 });
+	}
 </script>
 {else/}
 	<!-- 表单页面 -->
 	{__CONTENT__}
+	{include file="common@vail_form" /}
 {/eq}
-{include file="common@foot" /}
+{include file="common@plugin" /}
 </body></html>

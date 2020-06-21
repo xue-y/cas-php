@@ -4,9 +4,101 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "21a1cafdff8a3eec53dcf11b8b1caa4d",
-    "content-hash": "c10989b53fe180123be30a76b9ad5414",
+    "hash": "f2d83e1afeb9833053d309f3d0556bc8",
+    "content-hash": "5b9f94d1a0683233b320494cf1a5673c",
     "packages": [
+        {
+            "name": "aliyuncs/oss-sdk-php",
+            "version": "v2.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aliyun/aliyun-oss-php-sdk.git",
+                "reference": "053d7ba9e798e4c09b9c5c1edab153d25ea9643a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aliyun/aliyun-oss-php-sdk/zipball/053d7ba9e798e4c09b9c5c1edab153d25ea9643a",
+                "reference": "053d7ba9e798e4c09b9c5c1edab153d25ea9643a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OSS\\": "src/OSS"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aliyuncs",
+                    "homepage": "http://www.aliyun.com"
+                }
+            ],
+            "description": "Aliyun OSS SDK for PHP",
+            "homepage": "http://www.aliyun.com/product/oss/",
+            "time": "2019-11-15 11:05:42"
+        },
+        {
+            "name": "qiniu/php-sdk",
+            "version": "v7.2.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qiniu/php-sdk.git",
+                "reference": "d89987163f560ebf9dfa5bb25de9bd9b1a3b2bd8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/d89987163f560ebf9dfa5bb25de9bd9b1a3b2bd8",
+                "reference": "d89987163f560ebf9dfa5bb25de9bd9b1a3b2bd8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Qiniu\\": "src/Qiniu"
+                },
+                "files": [
+                    "src/Qiniu/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Qiniu",
+                    "email": "sdk@qiniu.com",
+                    "homepage": "http://www.qiniu.com"
+                }
+            ],
+            "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
+            "homepage": "http://developer.qiniu.com/",
+            "keywords": [
+                "cloud",
+                "qiniu",
+                "sdk",
+                "storage"
+            ],
+            "time": "2019-10-28 10:23:23"
+        },
         {
             "name": "topthink/framework",
             "version": "v5.1.28",
@@ -214,12 +306,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/walkor/Workerman.git",
-                "reference": "55711e689d85a41859bd36d47fca3f05ebc51881"
+                "reference": "14964ed1f3655e10f8bd0bd45e78fb75104fc9cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/walkor/Workerman/zipball/55711e689d85a41859bd36d47fca3f05ebc51881",
-                "reference": "55711e689d85a41859bd36d47fca3f05ebc51881",
+                "url": "https://api.github.com/repos/walkor/Workerman/zipball/14964ed1f3655e10f8bd0bd45e78fb75104fc9cf",
+                "reference": "14964ed1f3655e10f8bd0bd45e78fb75104fc9cf",
                 "shasum": ""
             },
             "require": {
@@ -252,13 +344,53 @@
                 "asynchronous",
                 "event-loop"
             ],
-            "time": "2020-04-23 07:34:12"
+            "time": "2020-06-12 16:21:56"
+        },
+        {
+            "name": "xue-y/upload-file",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xue-y/upload-file.git",
+                "reference": "253b98d75ee2ddec22ebe786d370deea6ce59020"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xue-y/upload-file/zipball/253b98d75ee2ddec22ebe786d370deea6ce59020",
+                "reference": "253b98d75ee2ddec22ebe786d370deea6ce59020",
+                "shasum": ""
+            },
+            "require": {
+                "aliyuncs/oss-sdk-php": "~2.0",
+                "php": ">=5.5.0",
+                "qiniu/php-sdk": "~7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "upload\\file\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "xue-y",
+                    "email": "php.develop@qq.com"
+                }
+            ],
+            "description": "webuploader 上传本地,阿里云,七牛云",
+            "time": "2020-06-20 11:02:07"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "xue-y/upload-file": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

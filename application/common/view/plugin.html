@@ -1,9 +1,4 @@
 <!--底部插件-->
-{present name="all_icon"}
-<link href="/static/css/fontawesome-iconpicker.min.css" rel="stylesheet">
-<link href="/static/css/all_icon.css" rel="stylesheet">
-<script src="/static/awesome-icon/js/fontawesome-iconpicker2.js"></script>
-{/present}
 <script>
     // 去掉所有input的autocomplete, 显示指定的除外 
     $('input:not([autocomplete]),textarea:not([autocomplete]),select:not([autocomplete])').attr('autocomplete', 'off'); 
@@ -42,14 +37,14 @@
             });
 
             // 2个输入框的时间选择器
-            if(($('#t_start').length>0) && ($('#t_end').length>0)){
+           /* if(($('#t_start').length>0) && ($('#t_end').length>0)){
                 laydate.render({
                     elem: '#t_start',
                 });
                 laydate.render({
                     elem: '#t_end',
                 });
-            }
+            }*/
         });
     }
 
@@ -70,6 +65,39 @@
             },
             component: '.input-group-addon', // 图标存放容器
             placement: 'bottomRight',  // 图标容器位置
+        });
+    }
+
+    // lay 字体图标
+    if($('.lay-icon').length>0){
+        layui.config({
+            base: '/static/layui/lay/' // 相对于当前文件的目录
+        }).extend({
+            iconPicker: '/modules/iconPicker'
+        }).use(['iconPicker'], function () {
+            var iconPicker = layui.iconPicker,
+                form = layui.form;
+
+            $('.lay-icon').each(function (i,e) {
+                iconPicker.render({
+                    // 选择器，推荐使用input
+                    elem: $(this),
+                    // 标题
+                    title:true,
+                    // 数据类型：fontClass/unicode，推荐使用fontClass
+                    type: 'fontClass',
+                    // 是否开启搜索：true/false
+                    search: true,
+                    // 是否开启分页
+                    page: true,
+                    // 每页显示数量，默认12
+                    limit: 30,
+                    // 点击回调
+                    click: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
         });
     }
 </script>

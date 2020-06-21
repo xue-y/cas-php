@@ -267,3 +267,84 @@ function rand_string($len=6,$type='',$addChars='') {
     }
     return $str;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ * 生成访问插件的url
+ * @param string $url    url格式：插件名://控制器名/方法
+ * @param array  $param  参数
+ * @param bool   $domain 是否显示域名 或者直接传入域名
+ * @return string
+ */
+function get_plugin_url($url, $param = [], $domain = false)
+{
+    $url              = parse_url($url);
+    $case_insensitive = true;
+    $plugin           = $case_insensitive ? Loader::parseName($url['scheme']) : $url['scheme'];
+    $controller       = $case_insensitive ? Loader::parseName($url['host']) : $url['host'];
+    $action           = trim($case_insensitive ? strtolower($url['path']) : $url['path'], '/');
+
+    /* 解析URL带的参数 */
+    if (isset($url['query'])) {
+        parse_str($url['query'], $query);
+        $param = array_merge($query, $param);
+    }
+
+    /* 基础参数 */
+    $params = [
+        '_plugin'     => $plugin,
+        '_controller' => $controller,
+        '_action'     => $action,
+    ];
+    $params = array_merge($params, $param); //添加额外参数
+
+    return url('\\cmf\\controller\\PluginHome@index', $params, true, $domain);
+}
+
+
+/**
+ * 获取插件类的类名
+ * @param string $name 插件名
+ * @return string
+ */
+function get_plugin_class($name)
+{
+    $name      = ucwords($name);
+    $pluginDir = get_parse_name($name);
+    $class     = "plugins\\{$pluginDir}\\{$name}Plugin";
+    return $class;
+}
+
+/**
+ * 获取插件类的配置
+ * @param string $name 插件名
+ * @return array
+ */
+function get_plugin_config($name)
+{
+    $class = get_plugin_class($name);
+    if (class_exists($class)) {
+        $plugin = new $class();
+        return $plugin->getConfig();
+    } else {
+        return [];
+    }
+}
+
+/**
+ * 字符串命名风格转换
+ * type 0 将Java风格转换为C的风格 1 将C风格转换为Java的风格
+ * @param string  $name    字符串
+ * @param integer $type    转换类型
+ * @param bool    $ucfirst 首字母是否大写（驼峰规则）
+ * @return string
+ */
+function get_parse_name($name, $type = 0, $ucfirst = true)
+{
+    return Loader::parseName($name, $type, $ucfirst);
+}
+
+
+function hook($hook,$params=array()){
+    \think\facade\Hook::listen($hook,$params);        //监听一个钩子
+}

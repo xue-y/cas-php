@@ -4,7 +4,7 @@
         <div class="text-danger col-md-offset-1 col-md-5 m-b-20">
             <p>{:lang('pass_empty_info')}</p>
         </div>
-        <form class="b_from" method="post" action="{:url('save')}">
+        <form class="b_from"  method="post" action="{:url('save')}">
             <input type="hidden" name="id" value="{$data.id|default=0}">
             {:token()}
             <div class="form-group">
@@ -41,4 +41,3 @@
         </form>
     </div>
 </div>
-{include file="common@vail_form" /}

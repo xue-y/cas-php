@@ -1,17 +1,20 @@
 <!-- 表单验证插件 -->
 {include file="common@vaildator" /}
+<!--表单验证-->
 <script type="text/javascript">
-    // 弹层
-    layui.use('layer', function(){
-        let layer = layui.layer;
+    // 前端验证完提交表单
+    $('.b_from').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
     });
-    // 前端验证
-    // 表单验证完提交表单
-    // form_submit($('form'),"{:config('app_debug')}",true,true);
     // 判断是否ajax
     if("{:get_cas_config('ajax_submit')}"){
         // 提交表单---验证表单submit
-        $("form").on("success.form.bv",function(e){
+        $(".b_from").on("success.form.bv",function(e){
             e.preventDefault();
             ajax_request($(this),"{:config('app_debug')}",true,true)
         });

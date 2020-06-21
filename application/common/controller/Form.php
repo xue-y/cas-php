@@ -12,10 +12,10 @@ namespace app\common\controller;
 use think\Controller;
 use think\facade\Env;
 
-class Form extends Controller
+class Form extends Base
 {
     // 后期完善表单字段
-    private $field_type="text,textarea,number,email,url,select,select_multiple,radio,checkbox,checkbox_multiple,date,date_range,dates_range,time,time_range,upload_img,upload_imgs,layui_icon,all_icon,simple_editor,all_editor,select_city";
+    private $field_type="text,textarea,number,email,url,select,select_multiple,radio,checkbox,checkbox_multiple,date,date_range,dates_range,time,time_range,upload_file,upload_files,lay_icon,all_icon,simple_editor,all_editor,select_city";
     // 默认字段类型
     private $default_field_type='text';
 
@@ -112,7 +112,8 @@ class Form extends Controller
         ["type"] => string(10) "date_range" // 必填
         ["class"] => string(9) "aa search"
         ["placeholder"] => string(12) "时间区间"
-        ["extra"] => string(18) "style="color:#eee""
+        ["extra"] => string(18) "style=color:#eee"
+        ["style"] => string(18) "width:100px;height:20px" // 备用属性，目前字段中没有添加
         ["value"] => string(10) "2019-10-10"
         ["data"] => array(0) {     // 数组数据
         }
@@ -134,13 +135,13 @@ class Form extends Controller
                 unset($field_item[$k]);
                 continue;
             }
-            if(empty($v['type'])){
-                $v['type']=$this->default_field_type;
-            }else if(!in_array($v['type'],$this->field_type)){
+            if(empty($v['field_type'])){
+                $v['field_type']=$this->default_field_type;
+            }else if(!in_array($v['field_type'],$this->field_type)){
                  unset($field_item[$k]);
                  continue;
             };
-            if(($v['type']=='select') || ($v['type']=='select_multiple') || ($v['type']=='radio') || ($v['type']=='radio') || ($v['type']=='checkbox') || ($v['type']=='checkbox_multiple')){
+            if(($v['field_type']=='select') || ($v['field_type']=='select_multiple') || ($v['field_type']=='radio') || ($v['field_type']=='radio') || ($v['field_type']=='checkbox') || ($v['field_type']=='checkbox_multiple')){
                 if(empty($v['data'])){
                     unset($field_item[$k]);
                     continue;
@@ -148,6 +149,17 @@ class Form extends Controller
                 $field_item[$k]['placeholder']=empty($v['placeholder'])?lang('select'):$v['placeholder'];
             }
         }
+
+        $field_type=[];// 特殊字段样式处理
+        foreach ($field_item as $k=>$v){
+            if($v['field_type']=='simple_editor' || $v['field_type']=='all_editor'){
+                $field_type['editor']=1;
+            }else{
+                $field_type[$v['field_type']]=1;
+            }
+        }
+
+        $this->assign['form']['field_type']=$field_type;// 特殊字段样式处理
         $this->assign['form']['field_data']=$field_item;
         return $this;
     }

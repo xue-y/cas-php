@@ -17,7 +17,7 @@ return [
     'demo'     => [
         '__file__'   => ['common.php'],
         '__dir__'    => ['behavior', 'controller', 'model', 'view'],
-        'controller' => ['Index', 'Test', 'UserType'],
+        'controller' => ['Index', 'Upfile', 'UserType'],
         'model'      => ['User', 'UserType'],
         'view'       => ['index/index'],
     ],

@@ -1,0 +1,26 @@
+<script>
+    /*
+     'extra'=>['w'=>400,'h'=>150]
+      @url:http://kindeditor.net/demo.php
+      */
+    var simple_editor,
+        simple_editor_w="{$extra.w|default='600'}",
+        simple_editor_h="{$extra.h|default='200'}";
+    KindEditor.ready(function(K) {
+        simple_editor = K.create('textarea[name="{$name|default="simple_editor"}"]', {
+            resizeType : 1,
+            allowPreviewEmoticons : false,
+            allowImageUpload : true,  // 上传本地图标
+           // allowImageRemote:false,  上传网络图标
+            minWidth:simple_editor_w,
+            minHeight:simple_editor_h,
+            bodyClass:'simple_editor',
+            uploadJson :"{:url('plugin/UpFile/editorFile')}",
+            items : [
+                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image', 'link']
+        });
+    });
+</script>
+<textarea name="{$name|default='simple_editor'}">{$value}</textarea>

@@ -1,3 +1,6 @@
+<link href='/static/css/fontawesome-iconpicker.min.css' rel='stylesheet'>
+<link href='/static/css/all_icon.css' rel='stylesheet'>
+<script src='/static/awesome-icon/js/fontawesome-iconpicker2.js'></script>
 <!--Start row-->
 <div class="row">
    <div class="white-box">
@@ -57,7 +60,6 @@
                         if(!isset($data['icon'])){
                             $data['icon']='';
                         }
-                        $all_icon=true; // 定义变量标识
                    {/php}
                    {:action("common/Base/formItem",['template'=>'all_icon','data'=>['name'=>'icon','value'=>$data['icon']]])}
                </div>
@@ -94,4 +96,3 @@
    </div>
 </div>
 <!-- end row -->
-{include file="common@vail_form" /}

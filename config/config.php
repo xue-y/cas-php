@@ -44,7 +44,7 @@ return [
     //tp 每页数据条数10
     'list_rows'=>10,
     // 不需要登录可访问的模块
-    'pub_module'=>['pub','error'],
+    'pub_module'=>['pub','error','plugin'],
     // 记录操作的模块
     'operate_module'=>['admin'],
     // 记录操作的方法

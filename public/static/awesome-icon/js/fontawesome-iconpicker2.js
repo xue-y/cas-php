@@ -431,9 +431,9 @@
             }
             var  tabHtml=
                     "<ul class=\"nav nav-tabs\">\n" +
-                        "<li "+fa_active+"><a href=\"#\">fa</a></li>\n" +
-                        "<li "+glyphicon_active+"><a href=\"#\">glyphicon</a></li>\n" +
-                        "<li "+layui_active+"><a href=\"#\">layui-icon</a></li>\n" +
+                        "<li "+fa_active+"><a href=\"javascript:void(0)\">fa</a></li>\n" +
+                        "<li "+glyphicon_active+"><a href=\"javascript:void(0)\">glyphicon</a></li>\n" +
+                        "<li "+layui_active+"><a href=\"javascript:void(0)\">layui-icon</a></li>\n" +
                     "</ul>";
 
             this.popover.find(".popover-content").append(tabHtml);
