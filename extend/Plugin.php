@@ -16,7 +16,6 @@ use think\Db;
 use think\View;
 use think\facade\Config;
 
-
 /**
  * 插件类   自定义插件继承当前类
  */

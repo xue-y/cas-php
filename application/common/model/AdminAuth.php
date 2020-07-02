@@ -26,13 +26,17 @@ class AdminAuth extends Model
         $where['is_enable']=IS_ENABLE;
         if(!empty($a_id))
         {
-            $where['id']=['in',$a_id];
-            $menu=$this->getComMenu()+$this->where($where)->field($this->menu_field)->order($this->menu_sort)->select()->toArray();
+           $menu=$this->getComMenu();
+           // 查询的数据是对象
+           $temp_arr=$this->where($where)->whereIn('id',$a_id)->field($this->menu_field)->order($this->menu_sort)->select();
+           if(!empty($temp_arr)){
+               $menu=array_merge($menu,$temp_arr);
+           }
         }else
         {
-            $menu=$this->where($where)->field($this->menu_field)->order($this->menu_sort)->select()->toArray();
+            $menu=$this->where($where)->field($this->menu_field)->order($this->menu_sort)->select();
         }
-        return $menu;
+       return $menu;
     }
 
     /**
@@ -45,7 +49,7 @@ class AdminAuth extends Model
         $where['is_menu']=IS_MENU;
         $where['is_enable']=IS_ENABLE;
         $where['is_auth']=IS_AUTH;
-        return $this->where($where)->field($this->menu_field)->order($this->menu_sort)->select()->toArray();
+        return $this->where($where)->field($this->menu_field)->order($this->menu_sort)->select();
     }
 
     /**
@@ -60,7 +64,8 @@ class AdminAuth extends Model
         $where['is_enable']=IS_ENABLE;
         $where['module']=$module;
         $where['controller']=$controller;
-        return $this->where($where)->column('id,name,is_auth','param');
+        $where['param']='';
+        return $this->where($where)->field('id,name,is_auth,param')->find();
     }
 
     /**
@@ -81,15 +86,15 @@ class AdminAuth extends Model
     public function getList($where=[],$except_field='icon')
     {
         if(empty($where)){
-            return $this->field($except_field,true)->order($this->menu_sort)->select()->toArray();
+            return $this->field($except_field,true)->order($this->menu_sort)->select();
         }else{
-            return $this->field($except_field,true)->order($this->menu_sort)->where($where)->select()->toArray();
+            return $this->field($except_field,true)->order($this->menu_sort)->where($where)->select();
         }
     }
 
     // 权限分配
     public function geAuthList(){
-        return $this->field('id,pid,name')->where('is_auth','<>',IS_AUTH)->order($this->menu_sort)->select()->toArray();
+        return $this->field('id,pid,name')->where('is_auth','<>',IS_AUTH)->order($this->menu_sort)->select();
     }
 
     // 控制器
@@ -162,10 +167,9 @@ class AdminAuth extends Model
         return $this->where($where)->value('name');
     }
 
-    // 根据访问的地址或控制器名称
+    // 取得以参数为 key 的控制器名称
     public function getControllerName($where){
-		//id
-       return $this->where($where)->column('name','param');
+       return $this->where($where)->value('name');
     }
 
     /**

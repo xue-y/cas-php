@@ -11,6 +11,13 @@ define('IS_SYS',1);
 define('IS_AUTH',1);
 define('USER_LOGIN_FAIL',1);
 define('USER_DOWN_INFO',1);
+define('FAIL',0);
+define('SUCEESS',1);
+define('NO_EXPIRE',0);//未过期
+define('EXPIRE',1);// 已过期
+define('CRONTAB_NO_EXEC',0);// 未执行
+define('CRONTAB_IS_EXEC',1); // 已执行
+define('CRONTAB_EXEC',1);// 执行任务
 return [
     //自定义样式路径常量
     'com_img'   => '/static/img/',

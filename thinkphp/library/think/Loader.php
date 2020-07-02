@@ -198,6 +198,7 @@ class Loader
                 return $file;
             }
         }
+
         return self::$classMap[$class] = false;
     }
 

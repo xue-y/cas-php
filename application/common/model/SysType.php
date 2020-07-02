@@ -28,13 +28,4 @@ class SysType extends Model
         $where['id']=$id;
         return $this->where($where)->setField($field,$value);
     }
-
-    public function getNextId(){
-        $table=config('database.prefix').'sys_type';
-        $database=config('database.database');
-        $sql="SELECT AUTO_INCREMENT FROM information_schema.`tables` WHERE table_name='{$table}' AND table_schema='{$database}'";
-        $result=$this->query($sql);
-        return $result[0]["AUTO_INCREMENT"];
-    }
-
 }

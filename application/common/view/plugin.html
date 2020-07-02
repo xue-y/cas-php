@@ -1,9 +1,20 @@
 <!--底部插件-->
+<style>
+#icon_class_vali.has-error .control-label
+{color: #333 !important;}
+#icon_class_vali.has-error .form-control{border-color: #c5bebe; !important;}
+#icon_class_vali.has-error .input-group-addon {
+    color: #333 !important;
+    background-color: #eee;
+    border-color:#c5bebe !important;
+}
+#icon_class_vali input:focus{border-color:#66afe9 !important;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}
+</style>
 <script>
     // 去掉所有input的autocomplete, 显示指定的除外 
     $('input:not([autocomplete]),textarea:not([autocomplete]),select:not([autocomplete])').attr('autocomplete', 'off'); 
 
-    // 时间插件
+    // 时间插件 layui中窗口过小导致日期控件显示不出来（一闪而过）问题解决
     if($('.laydate').length>0){
         layui.use('laydate', function() {
             var laydate = layui.laydate;
@@ -11,13 +22,15 @@
             lay('.date').each(function() {
                 laydate.render({
                     elem : this,
+					trigger: 'click' //采用click弹出
                 });
             });
 
             lay('.time').each(function() {
                 laydate.render({
                     elem : this,
-                    type: 'time'
+                    type: 'time',
+					trigger: 'click' //采用click弹出
                 });
             });
 
@@ -25,14 +38,16 @@
                 laydate.render({
                     elem : this,
                     type: 'time',
-                    range: true
+                    range: true,
+					trigger: 'click' //采用click弹出
                 });
             });
 
             lay('.date_range').each(function() {
                 laydate.render({
                     elem : this,
-                    range: true
+                    range: true,
+					trigger: 'click' //采用click弹出
                 });
             });
 
@@ -48,24 +63,39 @@
         });
     }
 
-    // all_icon 选择器
+    // all_icon 选择器--- 一个页面只有一个
     if($('.icp-auto').length>0){
+		$('#icon_class_vali').removeClass('has-error');
+	
         // 图标可以点击选中 icp-auto 操作图标元素
+		var icon;
         $('.icp-auto').iconpicker({
             title: '请选择一个图标',
             tab:true, //定义tab 选项 true(fa)  glyphicon fa  layui-icon
             fullClassFormatter: function(val){
-                if(val.match(/fa-/)){
-                    return 'fa '+val;
-                }else if(val.match(/glyphicon-/)){
-                    return 'glyphicon '+val;
+                if(val.match(/^fa-/)){
+					icon='fa '+val;   
+                }else if(val.match(/^glyphicon-/)){
+					icon='glyphicon '+val;
                 }else {
-                    return 'layui-icon '+val;
+					icon='layui-icon '+val;
                 }
+				return icon;
             },
             component: '.input-group-addon', // 图标存放容器
             placement: 'bottomRight',  // 图标容器位置
         });
+		
+		var val=$('.icp-auto').val(),i_class;
+		if(val.match(/^fa-/)){
+			i_class='fa '+val;   
+		}else if(val.match(/^glyphicon-/)){
+			i_class='glyphicon '+val;
+		}else {
+			i_class='layui-icon '+val;
+		}
+		$('.input-group-addon').find('i').attr('class',i_class);
+		
     }
 
     // lay 字体图标

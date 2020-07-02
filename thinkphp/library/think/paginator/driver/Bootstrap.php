@@ -117,33 +117,14 @@ class Bootstrap extends Paginator
                     $this->getNextButton()
                 );
             } else {
-                if($this->additionalInfo){
-                    return sprintf(
-                        '<ul class="pagination">%s %s %s %s</ul>',
-                        $this->getPreviousButton(),
-                        $this->getLinks(),
-                        $this->getNextButton(),
-                        $this->additionalInfo()
-                    );
-                }else{
-                    return sprintf(
-                        '<ul class="pagination">%s %s %s</ul>',
-                        $this->getPreviousButton(),
-                        $this->getLinks(),
-                        $this->getNextButton()
-                    );
-                }
-               
+                return sprintf(
+                    '<ul class="pagination">%s %s %s</ul>',
+                    $this->getPreviousButton(),
+                    $this->getLinks(),
+                    $this->getNextButton()
+                );
             }
         }
-    }
-
-    /**
-     * 分页额外信息
-     * @return [type] [description]
-     */
-    public function additionalInfo(){
-        return '<li><a>'.$this->total.'/'.$this->listRows.'</a></li>';   
     }
 
     /**

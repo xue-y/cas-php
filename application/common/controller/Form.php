@@ -117,6 +117,7 @@ class Form extends Base
         ["value"] => string(10) "2019-10-10"
         ["data"] => array(0) {     // 数组数据
         }
+        ["default_value"]=>string(2)"aa"
         ["select_data"]=array(0){   // 选中的数据
         }
         ["disable_data"]=array(0){  // 禁止选中的数据
@@ -134,6 +135,9 @@ class Form extends Base
             if(empty($v)){
                 unset($field_item[$k]);
                 continue;
+            }
+            if(!isset($v['value']) && isset($v['default_value'])){
+                $field_item[$k]['value']=$v['default_value'];
             }
             if(empty($v['field_type'])){
                 $v['field_type']=$this->default_field_type;

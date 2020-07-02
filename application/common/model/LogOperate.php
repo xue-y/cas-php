@@ -12,11 +12,6 @@ use think\Model;
 
 class LogOperate extends Model
 {
-    /*protected $autoWriteTimestamp = true;
-    // 关闭自动写入update_time字段
-    protected $updateTime = false;
-    protected $createTime = 't';*/
-
     public function getList($w=null)
     {
         $list_rows=config('list_rows');

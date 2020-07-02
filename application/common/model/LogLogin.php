@@ -12,14 +12,8 @@ use think\Model;
 
 class LogLogin extends Model
 {
-
-    /*protected $autoWriteTimestamp = true;
-    // 关闭自动写入update_time字段
-    protected $updateTime = false;
-    protected $createTime = 't';*/
-
     /**
-     * 查看登录记录
+     * getList 查看登录记录
      * @param $uid 指定用户id
      * @param $w 过滤条件
      * @return array
@@ -35,9 +29,10 @@ class LogLogin extends Model
     }
 
     /**
-     * TODO 根据id 删除记录
+     * del  根据id 删除记录
      * @param $uid 指定用户id
-     * @param $ids 删除的id
+     * @param $ids array 删除的id
+     * @return bool
      * */
     public function del($ids,$uid=null)
     {

@@ -36,27 +36,27 @@ class Operate extends Base
         $w=[];
 		$search_name_field=[];
 		
-        $post=$this->request->get();
+        $get=$this->request->get();
         if(empty($uid)){
             $search_name_field=['name'=>'name','field_type'=>'select','data'=>$assign['name'],'placeholder'=>lang('log_n_search')];
         }
 		if(!empty($uid))
 		{
 			 $w[] = ['uid', '=', $uid];
-		}elseif(!empty($post['name']) && (isset($assign['name'][$post['name']])))
+		}elseif(!empty($get['name']) && (isset($assign['name'][$get['name']])))
         {
-            $w[]=['uid','=',$post['name']];
-            $assign['n_search']= $assign['name'][$post['name']];
+            $w[]=['uid','=',$get['name']];
+            $assign['n_search']= $assign['name'][$get['name']];
         }
 
         // 时间区间查询
-        if(!empty($post['t'])){
-            $w[]=$this->dataRangeWhere($post['t']);
+        if(!empty($get['t'])){
+            $w[]=$this->dataRangeWhere($get['t']);
         }
         // 行为查询
-        if(!empty($post['behavior']) && (isset($assign['behavior'][$post['behavior']])))
+        if(!empty($get['behavior']) && (isset($assign['behavior'][$get['behavior']])))
         {
-            $w[]=['behavior','=',$post['behavior']];
+            $w[]=['behavior','=',$get['behavior']];
         }
 
         // 查询数据
@@ -77,19 +77,7 @@ class Operate extends Base
     //TODO 删除
     public function delete($uid=null)
     {
-        $id=input('param.id');
-        if(empty($id))
-        {
-            $this->error(lang('error_id'));
-        }
-
-        if(is_array($id)){
-            $id=array_unique(array_filter($id));
-            if(empty($id)){
-                $this->error(lang('error_id'));
-            }  
-        }
-
+        $id=$this->filterId();
         $log_operate=new LogOperate();
         $is_del=$log_operate->id_del($id,$uid);
 

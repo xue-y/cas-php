@@ -11,9 +11,9 @@
         <script src='/static/awesome-icon/js/fontawesome-iconpicker2.js'></script>
         {/case}
         {case editor}
-        <link rel="stylesheet" href="/static/kindeditor/themes/default/default.css" />
-        <script charset="utf-8" src="/static/kindeditor/kindeditor-all.js"></script>
-        <script charset="utf-8" src="/static/kindeditor/lang/zh-CN.js"></script>
+        <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.js"> </script>
+        <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
         {/case}
         {/switch}
     {/foreach}
@@ -86,3 +86,4 @@
     </div>
 </div>
 {$extra_html|default=''}
+{/* include file="common@plugin" / */}

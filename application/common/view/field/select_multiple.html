@@ -2,7 +2,7 @@
     if(empty($value))$value=''
 {/php}
 <select name="{$name}" class="form-control {$class|default=''}">
-    <option value="0" >{$placeholder|default=lang('select')}</option>
+    <option value="">{$placeholder|default=lang('select')}</option>
     {foreach $data as $k=>$v }
     {if($k==$value)}
        <option value="{$k}" selected>{$v}</option>

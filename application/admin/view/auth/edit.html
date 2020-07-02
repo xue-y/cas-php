@@ -53,7 +53,16 @@
                    <i class="fa fa-info-circle color-info1"></i> {:lang('admin_auth')['param_info']}
                </div>
            </div>
-           <div class="form-group">
+           <div class="form-group" >
+               <label class="col-md-2  control-label">{:lang('admin_auth')['relation']} </label>
+               <div class="col-md-5">
+                   <input type="text" class="form-control" name="relation" value="{$data.relation|default=''}"/>
+               </div>
+               <div class="text-muted col-md-5">
+                   <i class="fa fa-info-circle color-info1"></i> {:lang('admin_auth')['relation_info']}
+               </div>
+           </div>
+           <div class="form-group" id="icon_class_vali">
                <label class="col-md-2 control-label">{$data.lable|default=lang('admin_auth')['icon']} </label>
                <div class="col-md-5">
                    {php}

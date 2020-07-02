@@ -1,6 +1,6 @@
 <select name="{$name}" class="form-control {$class|default=''}">
-    <option value="0" >{$placeholder|default=lang('select')}</option>
+    <option value="">{$placeholder|default=lang('select')}</option>
     {foreach $data as $k=>$v }
-    <option value="{$k}" {eq name="k" value="$value|default=''"} selected {/eq}>{$v}</option>
+    <option value="{$k}" {eq name="k" value="$value|default='-11111'"} selected {/eq}>{$v}</option>
     {/foreach}
 </select>

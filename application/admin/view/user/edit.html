@@ -2,7 +2,12 @@
 <div class="row">
     <div class="white-box">
         <div class="text-danger col-md-offset-1 col-md-5 m-b-20">
+            <!--判断是修改还是添加-->
+            {empty name="data.id"}
+            {:lang('user_pass',[get_cas_config('default_pass')])}
+            {else /}
             <p>{:lang('pass_empty_info')}</p>
+            {/empty}
         </div>
         <form class="b_from"  method="post" action="{:url('save')}">
             <input type="hidden" name="id" value="{$data.id|default=0}">
@@ -10,25 +15,25 @@
             <div class="form-group">
                 <label class="col-md-2 ">{:lang('admin_user')['name']} <span class="red">*</span></label>
                 <div class="col-md-5">
-                    <input type="text" class="form-control" name="name" value="{$data.name|default=''}"  />
+                    <input type="text" class="form-control" name="name" value="{$data.name|default=''}" required minlength="2" maxlength="20" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 ">{:lang('pass')} </label>
                 <div class="col-md-5">
-                    <input type="password" class="form-control" name="pass"  autocomplete="off" />
+                    <input type="password" class="form-control" name="pass"  autocomplete="off" pattern="[\w\.\@\-]{6,20}"  data-bv-regexp-message="用户密码6-20数组、英文、下划线、中划线、@、." id="pass" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 ">{:lang('pass2_text')}</label>
                 <div class="col-md-5">
-                    <input type="password" class="form-control" name="pass2" autocomplete="off" />
+                    <input type="password" class="form-control" name="pass2" autocomplete="off"  pattern="[\w\.\@\-]{6,20}"  data-bv-regexp-message="用户密码6-20数组、英文、下划线、中划线、@、." />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 ">{:lang('tit_admin_role')} <span class="red">*</span></label>
                 <div class="col-md-5">
-                    <select name="r_id" class="form-control">
+                    <select name="r_id" class="form-control" required min="1">
                         <option selected value="0">{:lang('role_select')}</option>
                         {foreach $role as $k=>$v }
                         <option value="{$k}" {eq name="k" value="$data.r_id|default=0"} selected {/eq}>{$v}</option>

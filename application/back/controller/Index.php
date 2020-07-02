@@ -24,8 +24,9 @@ class Index extends Controller
        $admin_role=new AdminRole();
 
        // 根据不同权限显示不同的左菜单
-       //dump($this->request->r_id);
+
        $a_id=$admin_role->getFieldById(input('param.r_id'),'a_id');
+
        if(empty($a_id))
        {
            $left_menu=$admin_auth->getComMenu();
@@ -36,7 +37,6 @@ class Index extends Controller
        {
            $left_menu=$admin_auth->getMenu($a_id);
        }
-
        $tree=new Tree();
        $assign['menu']=$menu=$tree->getTree($left_menu);
        $assign['name']=$this->request->user_name;

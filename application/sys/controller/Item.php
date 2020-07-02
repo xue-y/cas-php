@@ -9,7 +9,6 @@
 namespace app\sys\controller;
 
 use app\common\controller\Base;
-use app\common\controller\Form;
 use app\common\model\SysItem;
 use app\common\model\SysType;
 use think\facade\Validate;
@@ -68,10 +67,10 @@ class Item extends Base
         $validate = Validate::make([
             '__token__'=>'require|token',
             't_id'=>'require|number|egt:1',
-            'name' => 'require|unique:sys_item,t_id^name|regex:[a-zA-Z\_\-]{2,20}',
+            'name' => 'require|unique:sys_item,t_id^name|regex:[a-zA-Z\_\-]{2,50}',
             'describe' => 'require|length:2,20',
             'val' => 'max:255',
-            'type'=> 'require|length:2,20',
+            'field_type'=> 'require|length:2,20',
             'notes'=>'max:100',
             'sort'=>'number'
         ]);
@@ -80,7 +79,7 @@ class Item extends Base
         }
         // 字段处理
         if(isset($data['is_sys']))unset($data['is_sys']);
-        if(empty($data['field']))$data['field']=$this->default_field_type;
+        if(empty($data['field_type']))$data['field_type']=$this->default_field_type;
         // 处理数据
         $sys_item=new SysItem();
         if(empty($data['id'])){
@@ -124,47 +123,6 @@ class Item extends Base
             $this->success(lang('del_success'),url('index',['t_id'=>$t_id]));
         }else {
             $this->error(lang('del_fail'));
-        }
-    }
-
-    // TODO 查看/设置配置项数据
-    public function see()
-    {
-        $t_id=input('param.t_id/d',1);
-        $sys_item=new SysItem();
-        $list=$sys_item->getTypeItemData($t_id);
-
-        $sys_type=new SysType();
-        // 构建表单
-        $form=new Form();
-        return $form->tabNav(
-            $sys_type->column('describe','id'),$t_id,'','','t_id'
-         )->method('post')->action(url('seeSave'))->token()->hiddenItem([
-             ['name'=>'t_id','value'=>$t_id]
-        ])->fieldItem($list)->create();
-
-    }
-
-    //TODO 设置配置项数据
-    public function seeSave(){
-        $data=request()->post();
-        // 验证数据
-        $validate = Validate::make([
-            '__token__'=>'require|token',
-            't_id'=>'require|number|egt:1'
-        ]);
-        if (!$validate->check($data)) {
-            $this->error($validate->getError());
-        }
-        $sys_item=new SysItem();
-        $t_id=$data['t_id'];
-        unset($data['t_id']);
-        unset($data['__token__']);
-        $is_save=$sys_item->setItemData($data,$t_id);
-        if($is_save>=1) {
-            $this->success(lang('update_success'),url('see',['t_id'=>$t_id]));
-        }else {
-            $this->error(lang('update_fail'));
         }
     }
 }

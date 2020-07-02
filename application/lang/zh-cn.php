@@ -27,7 +27,9 @@ $admin_auth=[
     "action"=>"访问方法",
     "action_info"=>"默认访问方法,为空默认访问配置文件中的默认方法",
     "param"=>"访问参数",
-    "param_info"=>"访问参数url字符串形式"
+    "param_info"=>"访问参数url字符串形式",
+    "relation"=>"关联数据表",
+    "relation_info"=>"不包含表前缀"
 ];
 $sys_type=[
     "name"=>"分类名称",
@@ -59,7 +61,44 @@ $log_operate=[
     "details"=>"操作详情",
 ];
 
+$log_queue=[
+
+];
+
 $back_index=[];
+
+$tool_crontab=[
+    "name"=>"任务名称",
+    "action"=>"执行方法名",
+    "action_info"=>"/module/controller/action",
+    "crontab"=>"执行周期",
+    "crontab_info"=>"crontab格式",
+    "next_time"=>"下次执行时间",
+    "exec_time"=>"最后执行时间",
+    "exec_status"=>"最后执行结果",
+    "exec_count"=>"已执行次数",
+    "task_status"=>"最后任务状态",
+    "exec_expire"=>"过期是否执行",
+    "exec"=>"执行",
+    "no_exec"=>"不执行",
+	"expire"=>"已过期",
+    "no_expire"=>"未过期",
+    "name_vail"=>"任务名不得为空,2-20个字符",
+    "action_vail"=>"执行任务方法名必填,5-50个字符,大小写字母、下划线、.、/",
+    "crontab_vail"=>"执行任务时间必填,5-50个字符",
+    "crontab_format_error"=>"crontab格式错误",
+    "get_next_time"=>"获取下次时间失败",
+    "fail_count"=>"执行次数",
+    "count_info"=>"任务失败尝试执行次数",
+];
+//任务执行
+$crontab_exec=[
+    "now_crontab_no_complete"=>"当前还有任务未执行完成",
+    "create_lock_file_fail"=>"执行定时任务创建锁文件失败",
+    "update_crontab_status_fail"=>"更新当前任务转态失败",
+    "write_log_fail"=>"记录任务日志失败",
+    "create_complete_del_fail"=>"任务执行完成删除任务锁文件失败"
+];
 /*
 "warning"=>"警告！",
 "show"=>"显示",
@@ -89,6 +128,11 @@ return [
     "confirm"=>"确认",
     'fail'=>'失败',
     'success'=>'成功',
+    'normal'=>'正常',
+    'abnormal'=>'异常',
+    "exec"=>"已执行",
+    "noexec"=>"未执行",
+    "expire"=>"过期",
     'select'=>'请选择',
     'select_data_empty'=>'select 字段数据不的为空',
     'select_empty'=>'请选择要操作的数据',
@@ -111,6 +155,8 @@ return [
     "sys_item"=>$sys_item,
     "log_login"=>$log_login,
     "log_operate"=>$log_operate,
+    "tool_crontab"=>$tool_crontab,
+    "crontab_exec"=>$crontab_exec,
     // 错误
     "error_page"=>"页面错误或过期",
     "error_param"=>"参数错误",
@@ -189,6 +235,14 @@ return [
     "email_expire"=>"邮件已失效，请重新绑定激活",
     "email_send_c"=>"今日发送邮件已达到最大限度 %d 次，请 %d 小时后在继续操作",
     "email_alter_info"=>"如果收件箱没有收到邮件请稍后查看或查看垃圾箱",
+    "queue"=>"消息队列",
+    "queue_write_log_error"=>"记录消息列队日志",
+    "queue_send_fail"=>"发送队列失败",
+    "queue_name"=>"消息队列名称",
+    "queue_action"=>"执行队列方法名",
+    "task_exec_stauts"=>"执行状态",
+    "is_abnormal"=>"是否异常",
+	"is_expire"=>"是否过期",
     // 添加判断
     "is_enable_text"=>"是否启用",
     "is_menu_text"=>"是否为菜单",
@@ -203,15 +257,15 @@ return [
     "is_enable_but"=>"已启用|已禁用",
     "is_menu_success"=>"更新菜单成功",
     "is_menu_fail"=>"更新菜单失败",
-    "is_enable_success"=>"更新启用成功",
-    "is_enable_fail"=>"更新启用失败",
+    "is_enable_success"=>"更新启用/禁用成功",
+    "is_enable_fail"=>"更新启用/禁用失败",
     "is_yes"=>"是",
     "is_no"=>"否",
     "is_enable"=>"启用",
     "is_disable"=>"禁用",
     "is_enable_end"=>"已启用",
      // back_index
-    "login_user_info"=>"此账号 %s 在其他设备终端登录，如果不是本人，请修改密码 查看",
+    "login_user_info"=>"此账号 %s 在其他设备终端登录，如果不是本人，请修改密码查看",
     "login_out"=>"退出登录", 
     // 图片上传
     "img_up_empty"=>"您没有上传图片文件",

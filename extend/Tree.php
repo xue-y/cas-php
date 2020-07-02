@@ -1,60 +1,10 @@
 <?php
+/**
+ * Class Tree
+ *  树形数组嵌套
+ */
 
 class Tree{
-
-	/**
-	 * @todo   createTreeArr 	 创建嵌套树形数组
-	 * @param  [type] $list         要创建的数组
-     * @param  array  $select       默认选中
-     * @param  array  $disabled     默认禁止选中
-	 * @param  string $index_field  数组索引字段名
-	 * @param  string $pid_field    父节点字段名
-	 * @param  string $child_field  子节点字段名
-	 * @return array          		 成功返回数组
-	 */
-	/*public function getLayuiTreeArr($list,$select=[],$disabled=[],$index_field = 'id', $pid_field = 'pid', $child_field = "children")
-	{
-		$tree = [];
-		$list = array_column($list, null, $index_field);
-		foreach ($list as $v) {
-			if (isset($list[$v[$pid_field]])) {
-                $list[$v[$index_field]]['field']=$index_field.'[]';
-                if(!empty($select) && in_array($v[$index_field],$select)){
-                    $checked=true;
-                }else{
-                    $checked=false;
-                }
-                if(!empty($disabled) && in_array($v[$index_field],$disabled)){
-                    $disabled=true;
-                }else{
-                    $disabled=false;
-                }
-                $list[$v[$index_field]]['checked']=$checked;
-                $list[$v[$index_field]]['disabled']=$disabled;
-				$list[$v[$pid_field]][$child_field][] = &$list[$v[$index_field]];
-			} else {
-			    // 顶级
-                $list[$v[$index_field]]['field']=$index_field.'[]';
-                if(!empty($select) && in_array($v[$index_field],$select)){
-                    $checked=true;
-                }else{
-                    $checked=false;
-                }
-                if(!empty($disabled) && in_array($v[$index_field],$disabled)){
-                    $disabled=true;
-                }else{
-                    $disabled=false;
-                }
-                $list[$v[$index_field]]['checked']=$checked;
-                $list[$v[$index_field]]['disabled']=$disabled;
-				$tree[] =& $list[$v[$index_field]];
-			}
-		}
-		return $tree;
-	}*/
-
-
-
 	
 	/**
 	 * @todo   getTree 			创建嵌套树形数组,指定父级下所有的子节点
@@ -76,8 +26,7 @@ class Tree{
 		// 按 PID 排序
 		/*$last_names = array_column($list,$pid_field);
 		array_multisort($last_names,SORT_ASC,$list);*/
-
-		$newList = array_column($list,null,$index_field);
+		$newList = array_column($list->toArray(),null,$index_field);
 
 		foreach ($newList as $value ) {
 			
@@ -90,7 +39,6 @@ class Tree{
 				}
 				$tree[] = &$newList[$value[$index_field]];
 			}elseif(isset($newList[$value[$pid_field]])){
-				//$level_num=$newList[$value[$pid_field]][$level_field]+1;
 				if(isset($newList[$value[$pid_field]][$level_field])){
 					$level_num=$newList[$value[$pid_field]][$level_field]+1;
 				}else{
@@ -152,17 +100,14 @@ class Tree{
 		$nbsp='&nbsp; &nbsp; ';
 		
 		foreach($list as $k=>$v){
-
             $level_node=str_repeat($nbsp,$v['level']);
-
             if($v['pid']<1){
                 $display='';
             }else{
                 $display=' style="display:none" ';
             }
 
-
-			$tree.='<tr '.$display.' data-level="'.$v['level'].'">';
+			$tree.='<tr '.$display.' data-level="'.$v['level'].'" data-id="'.$v[$index_field].'" >';
             $tree.='<td><span  onclick="javascript:check_node($(this));"><input type="checkbox" name="id[]" lay-skin="primary" value="'.$v['id'].'" ></span></td>';
             if(config('app_debug')){
                 $tree.='<td>'.$v[$index_field].'</td>
@@ -189,7 +134,6 @@ class Tree{
                 //$is_enable_but='open';
                 $checked="checked='checked'";
             }else{
-                
                 //$is_enable_but='close';
                 $checked="";
             }
@@ -235,7 +179,6 @@ class Tree{
      */
     public function getTreeTableSelect($list,$select=[],$disabled=[],$index_field = 'id',$level_field='name_level', $child_field = "items")
     {
-	
         static $tree='';
         $nbs='&nbsp; &nbsp; ';
         $checkbox=$disableded='';

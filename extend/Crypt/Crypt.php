@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Crypt;
 /**
  * Crypt 加密实现类

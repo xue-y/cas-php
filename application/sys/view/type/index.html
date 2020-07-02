@@ -23,7 +23,7 @@
                     <input type="checkbox" name="is_menu" value="{$v.id}" lay-skin="switch"  lay-text="{:lang('is_menu_but')}" lay-filter="is_menu" {eq name="v.is_menu" value="$Think.IS_MENU" } checked {/eq}>
                 </td>
                 <td>
-                    <a href="{:url('Item/see',['t_id'=>$v.id])}" title="{:lang('type_see_item')}"><i class="fa fa-eye text-success"></i></a>
+                    <a href="{:url('Set/index',['t_id'=>$v.id])}" title="{:lang('type_see_item')}"><i class="fa fa-eye text-success"></i></a>
                     <a href="{:url('edit',['id'=>$v.id])}"><i class="fa fa-edit text-warning"></i></a>
                     {neq name="v.is_sys" value="$Think.IS_SYS"}
                     <a lay-event="del" href="#"><i class="fa fa-trash-o text-danger"></i></a>

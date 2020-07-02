@@ -1,0 +1,164 @@
+<div class="row">
+    <div class="white-box">
+         <form class="b_from" method="post" action="{:url('save')}">
+             {:token()}
+             <input type="hidden" name="id" value="{$data.id|default=''}">
+             <div class="form-group">
+                <label class="col-md-2 control-label">
+                   {:lang('tool_crontab')['name']} <span class="red">*</span>
+                </label>
+                 <div class="col-md-5">
+                     <input type="text" class="form-control" value="{$data.name|default=''}" name="name">
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label class="col-md-2 control-label">
+                     {:lang('tool_crontab')['action']} <span class="red">*</span>
+                 </label>
+                 <div class="col-md-5">
+                     <input type="text" class="form-control" value="{$data.action|default=''}" name="action">
+                 </div>
+                 <div class="text-muted col-md-5">
+                     <i class="fa fa-info-circle color-info1"></i> {:lang('tool_crontab')['action_info']}
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label class="col-md-2 control-label">
+                     {:lang('tool_crontab')['crontab']} <span class="red">*</span>
+                 </label>
+                 <div class="col-md-5">
+                     <input type="text" class="form-control" value="{$data.crontab|default='*  *  *  *  *'}" name="crontab">
+                    <pre  style="padding:10px"><code>*  *  *  *  *
+-  -  -  -  -
+|  |  |  |  +--- day of week (0 - 7)(Sunday=0 or 7)
+|  |  |  +-------- month (1 - 12)
+|  |  +------------- day of month (1 - 31)
+|  +------------------ hour (0 - 23)
++----------------------- min (0 - 59)</code></pre>
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label class="col-md-2 control-label">
+                     {:lang('tool_crontab')['next_time']}</span>
+                 </label>
+                 <div class="col-md-5">
+                     <p  class="form-control next-time" style="line-height: 25px;">{$data.next_time|default=''}</p>
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label class="col-md-2 control-label">
+                     {:lang('tool_crontab')['fail_count']}
+                 </label>
+                 <div class="col-md-5">
+                     <input type="number" class="form-control" value="{$data.count|default=''}" name="fail_count" min="0" max="10">
+                 </div>
+                 <div class="text-muted col-md-5">
+                     <i class="fa fa-info-circle color-info1"></i> {:lang('tool_crontab')['count_info']}
+                 </div>
+             </div>
+			 <div class="form-group">
+                 <label class="col-md-2 control-label">
+                     {:lang('sort')}
+                 </label>
+                 <div class="col-md-5">
+                     <input type="number" class="form-control" value="{$data.count|default=''}" name="sort" min="0" max="10000">
+                 </div>
+             </div>
+             <div class="form-group">
+                 <label class="col-md-2 control-label">
+                     {:lang('tool_crontab')['exec_expire']}</span>
+                 </label>
+                 <div class="col-md-5">
+                     {:action("common/Base/includePage",['template'=>'field/radio','data'=>$exec_expire])}
+                 </div>
+             </div>
+             {include file="common@field/enable" /}
+             {include file="common@field/edit_btn" /}
+        </form>
+    </div>
+</div>
+<script>
+    $('.b_from').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        /*submitHandler: function (validator, form, submitButton) {
+            // 表单提交成功时会调用此方法
+            // validator: 表单验证实例对象
+            // form  jq对象  指定表单对象
+            // submitButton  jq对象  指定提交按钮的对象
+        },*/
+        fields: {
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: "{:lang('tool_crontab')['name_vail']}"
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 20,
+                        message: "{:lang('tool_crontab')['name_vail']}"
+                    }
+                }
+            },//title
+            action:{
+                validators: {
+                    notEmpty: {
+                        message: "{:lang('tool_crontab')['action_vail']}"
+                    },
+                    stringLength: {
+                        min: 5,
+                        max: 50,
+                        message: "{:lang('tool_crontab')['action_vail']}"
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z_\.\\/]+$/,
+                        message: "{:lang('tool_crontab')['action_vail']}"
+                    },
+                }
+            },// action
+            crontab:{
+                validators: {
+                    notEmpty: {
+                        message: "{:lang('tool_crontab')['crontab_vail']}"
+                    },
+                    stringLength: {
+                        min: 5,
+                        max: 50,
+                        message: "{:lang('tool_crontab')['crontab_vail']}"
+                    },
+                    threshold: 5,//有2字符以上才发送ajax请求
+                    remote: {
+                        type: 'POST',
+                        url: "{:url('ajaxCheckCrontabFormat')}",
+                        message: "{:lang('tool_crontab')['crontab_format_error']}",
+                    }
+                },
+            }, // crontab
+        }
+    });
+
+    // ajax 验证 获取下一次执行时间
+    $("input[name='crontab']").eq(0).blur(function(){
+        var _this=$(this);
+        var t=setTimeout(function(){
+            var get_next_time=_this.next('i').eq(0).hasClass('glyphicon-ok');
+            if(get_next_time){
+                $.getJSON("{:url('getNextExecDate')}",{'crontab':_this.val()},function(data){
+                    if(data){
+                        $('.next-time').text(data).removeAttr('style');
+                        $('.next-time').closest('.form-group').remove('has-error');
+                    }else{
+                        $('.next-time').closest('.form-group').addClass('has-error');
+                        $('.next-time').text("{:lang('tool_crontab')['get_next_time']}").css('color','#f05050');
+                    }
+                })
+            }
+            clearTimeout(t);
+        },500);
+    });
+
+</script>

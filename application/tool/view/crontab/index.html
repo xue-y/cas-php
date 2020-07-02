@@ -1,0 +1,65 @@
+<!-- Start responsive Table-->
+<div class="white-box">
+    {:action("common/Base/includePage",['template'=>'search','data'=>$search])}
+    <form method="post" action="{:url('delete')}">
+        <table class="layui-hide" lay-filter="table">
+            <thead>
+            <tr>
+                <th lay-data="{field:'LAY_CHECKED',type: 'checkbox', fixed: 'left'}"></th>
+                <th lay-data="{field:'id', title: 'ID', width:80,  sort: true, fixed: 'left'}">ID</th>
+                <th lay-data="{field:'name'}">{:lang('tool_crontab')['name']}</th>
+                <th lay-data="{field:'exec_count'}">{:lang('tool_crontab')['exec_count']}</th>
+                <th lay-data="{field:'exec_time'}">{:lang('tool_crontab')['exec_time']}</th>
+                <th lay-data="{field:'exec_status'}">{:lang('tool_crontab')['exec_status']}</th>
+                <th lay-data="{field:'task_status',width:120}">{:lang('tool_crontab')['task_status']}</th>
+				<th lay-data="{field:'expire',width:120}">{:lang('is_expire')}</th>
+                <th lay-data="{field:'next_time'}">{:lang('tool_crontab')['next_time']}</th>
+                <th lay-data="{field:'is_enable',width:110,}">{:lang('is_enable_text')}</th>
+                <th lay-data="{field:'operate',fixed:'right',width:90}">{:lang('operation')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $list as $k=>$v }
+            <tr>
+                <td></td>
+                <td>{$v.id}</td>
+                <td>{$v.name}</td>
+                <td>{$v.exec_count}</td>
+                <td>{$v.exec_time}</td>
+                <td>
+					{eq name="v.exec_status" value="$Think.const.SUCEESS"}
+                    <span class="text_p layui-bg-blue">{:lang('success')}</span>
+                    {else /}
+                    <span class="text_p layui-bg-red">{:lang('fail')}</span>
+                    {/eq}
+                </td>
+                <td>
+                    {eq name="v.task_status" value="$Think.const.CRONTAB_IS_EXEC"}
+                    <span class="text_p layui-bg-green">{:lang('exec')}</span>
+                    {else /}
+                    <span class="text_p layui-bg-gray">{:lang('noexec')}</span>
+                    {/eq}
+                </td>
+				<td>
+                    {eq name="v.task_status" value="$Think.const.EXPIRE"}
+                    <span class="text_p layui-bg-orange">{:lang('tool_crontab')['expire']}</span>
+                    {else /}
+                    <span class="text_p layui-bg-blue">{:lang('tool_crontab')['no_expire']}</span>
+                    {/eq}
+                </td>
+                <td>{$v.next_time}</td>
+                <td>
+                    <input type="checkbox" name="is_enable" value="{$v.id}" lay-skin="switch"  lay-text="{:lang('is_enable_but')}" lay-filter="is_enable" {eq name="v.is_enable" value="$Think.IS_ENABLE" } checked {/eq}>
+                </td>
+                <td>
+                    <a href="{:url('edit',['id'=>$v.id])}"><i class="fa fa-edit text-warning"></i></a>
+                    <a lay-event="del" href="#"><i class="fa fa-trash-o text-danger"></i></a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </form>
+</div>
+<!-- End responsive Table-->
+<!--End main content -->

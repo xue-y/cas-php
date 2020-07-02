@@ -7,9 +7,9 @@
         <input type="radio" name="is_menu"  value="0"  {eq name="data.is_menu" value="0"}checked{/eq}>
         <label >{:lang('is_no')}</label>
         {else /}
-        <input type="radio" name="is_menu"  value="{$Think.IS_MENU}" checked>
+        <input type="radio" name="is_menu"  value="{$Think.IS_MENU}" >
         <label>{:lang('is_yes')}</label>
-        <input type="radio" name="is_menu"  value="0" >
+        <input type="radio" name="is_menu"  value="0"  checked>
         <label >{:lang('is_no')}</label>
         {/present}
     </div>

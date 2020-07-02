@@ -1,5 +1,3 @@
-<!-- 表单验证插件 -->
-{include file="common@vaildator" /}
 <!--表单验证-->
 <script type="text/javascript">
     // 前端验证完提交表单
@@ -18,5 +16,9 @@
             e.preventDefault();
             ajax_request($(this),"{:config('app_debug')}",true,true)
         });
+		/*$(".b_from").on("submit",function(e){
+            e.preventDefault();
+            ajax_request($(this),"{:config('app_debug')}",true,true)
+        });*/
     } 
 </script>

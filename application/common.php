@@ -343,8 +343,38 @@ function get_parse_name($name, $type = 0, $ucfirst = true)
 {
     return Loader::parseName($name, $type, $ucfirst);
 }
+//-----------------------------------------------------------------------
 
-
+/**
+ * hook
+ * @param string $hook 钩子名称
+ * @param array $params 参数
+ */
 function hook($hook,$params=array()){
     \think\facade\Hook::listen($hook,$params);        //监听一个钩子
 }
+
+/**
+ * send_mail 发送邮件
+ * @param $mail string 发送邮箱地址
+ * @param $mail_tit string 发送邮件标题
+ * @param $mail_con string 发送邮件内容
+ * @return bool
+ */
+function send_mail($mail,$mail_tit,$mail_con){
+    $sys_sset=new \app\common\model\SysItem();
+    $smtp_config=$sys_sset->getTypeSettings(2,'name','val');
+    $smtp_server = $smtp_config["smtp_server"];//SMTP服务器
+    $smtp_server_port =intval($smtp_config["smtp_server_port"]);//SMTP服务器端口
+    $smtp_user_email = $smtp_config["smtp_user_email"];//SMTP服务器的用户邮箱
+    $smtp_email_to =$mail;//发送给谁
+    $smtp_user = $smtp_config["smtp_user_email"];
+    //SMTP服务器的用户帐号(或填写new2008oh@126.com，这项有些邮箱需要完整的)
+    $smtp_pass = $smtp_config ["smtp_pass"];//SMTP服务器的用户密码*/
+    $mail_type = "HTML";//邮件格式（HTML/TXT）,TXT为文本邮件
+    $smtp = new Smtp($smtp_server,$smtp_server_port,true,$smtp_user,$smtp_pass);
+   // $smtp->debug = true;//是否显示发送的调试信息,true 显示错误，false 不显示
+    $state = $smtp->sendmail($smtp_email_to, $smtp_user_email, $mail_tit, $mail_con, $mail_type);
+    return $state;
+}
+

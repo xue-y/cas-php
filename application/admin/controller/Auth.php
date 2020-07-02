@@ -12,6 +12,7 @@ namespace app\admin\controller;
 use app\common\controller\Base;
 use app\common\model\AdminAuth;
 use app\admin\validate\AdminAuth as VAdminAuth;
+use think\Db;
 use Tree;
 
 class Auth extends Base
@@ -48,7 +49,11 @@ class Auth extends Base
             $disabled=$id;
             $assign['data']=$data;
         }
-          
+
+        /*$table_all = Db::query("show tables");
+        $d = config('database.database');
+        $s = 'Tables_in_' . $d;*/
+       // $assign['relation']=
         $auth_list=$admin_auth->getList();
         $tree=new Tree();
         $auth_list=$tree->getTree($auth_list);
@@ -83,27 +88,56 @@ class Auth extends Base
         {
             $this->error(lang('auth_url_unique'));
         }
-
+		
         if(empty($data["id"]))
         {
             if(isset($data["id"]))unset($data["id"]);
             $is_save=$admin_auth->allowField(true)->save($data);
             $msg_fail=lang('add_fail');
             $msg_success=lang('add_success');
-
+            if($is_save)
+            {
+                $this->success($msg_success,url('index'));
+            }else
+            {
+                $this->error($msg_fail);
+            }
         }else
         {
-            $is_save=$admin_auth->allowField(true)->save($data,['id'=>$data["id"]]);
             $msg_fail=lang('edit_fail');
             $msg_success=lang('edit_success');
-        }
+            // 取得原数据
+            $old_data=$admin_auth->field('is_menu,relation')->find($data["id"]);
 
-        if($is_save!==true)
-        {
-            $this->error($msg_fail);
-        }else
-        {
-            $this->success($msg_success,url('index'));
+            // 如果更新了菜单并且存在关联表,
+            Db::startTrans();
+            if(($old_data['is_menu']!=$data['is_menu']) && !empty($old_data['relation']) && ($old_data['relation']==$data['relation'])){
+                $is_update=Db::name($old_data['relation'])->where('a_id','=',$data["id"])->setField('is_menu',$data['is_menu']);
+                if(!$is_update){
+                    Db::rollback();
+                    $this->error($msg_fail);
+                }
+            }
+
+            // 如果取消了关联,菜单更新了 relation
+            if(!empty($old_data['relation']) && ($old_data['relation']!=$data['relation'])){
+                $relation_updata['is_menu']=0;
+                $relation_updata['a_id']=0;
+                $is_update=Db::name($old_data['relation'])->where('a_id','=',$data["id"])->update($relation_updata);
+                if(!$is_update){
+                    Db::rollback();
+                    $this->error($msg_fail);
+                }
+            }
+
+            $is_save=$admin_auth->allowField(true)->save($data,['id'=>$data["id"]]);
+            if($is_save){
+                Db::commit();
+                $this->success($msg_success,url('index'));
+            }else{
+                Db::rollback();
+                $this->error($msg_fail);
+            }
         }
     }
 
@@ -155,11 +189,26 @@ class Auth extends Base
         }
         $id=intval($param['id']);
         $admin_auth=new AdminAuth();
+        Db::startTrans();
         switch ($param)
         {
             case isset($param['is_menu']):
-                $result=$admin_auth->updateField($id,'is_menu',$param['is_menu']);
                 $type='is_menu';
+                $result=$admin_auth->updateField($id,'is_menu',$param['is_menu']);
+                if(!$result){
+                    Db::rollback();
+                    $this->error(lang($type.'_fail'));
+                }
+                // 如果当前菜单关联其他模型同步处理
+                $relation=$admin_auth->where('id','=',$id)->value('relation');
+                if(!empty($relation)){
+                    // 这个地方使用 db 助手函数执行失败
+                    $is_update=Db::name($relation)->where('a_id','=',$id)->setField('is_menu',$param['is_menu']);
+                    if(!$is_update){
+                        Db::rollback();
+                        $this->error(lang($type.'_fail'));
+                    }
+                }
                 break;
             case isset($param['is_enable']):
                 $result=$admin_auth->updateField($id,'is_enable',$param['is_enable']);
@@ -168,13 +217,16 @@ class Auth extends Base
             default:
                 $this->error(lang('error_param'));
         }
-        if($result==1)
+        if($result)
         {
+            Db::commit();
             $this->success(lang($type.'_success'));
         }else
         {
+            Db::rollback();
             $this->error(lang($type.'_fail'));
         }
     }
+
 
 }

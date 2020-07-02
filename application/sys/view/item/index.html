@@ -21,6 +21,7 @@
                 <th lay-data="{field:'name'}">{:lang('sys_item')['name']}</th>
                 <th lay-data="{field:'describe'}">{:lang('sys_item')['describe']}</th>
                 <th lay-data="{field:'val'}">{:lang('sys_item')['val']}</th>
+                <th lay-data="{field:'field_type'}">{:lang('sys_item')['field_type']}</th>
                 <th lay-data="{field:'operate',fixed:'right',width:100}">{:lang('operation')}</th>
             </tr>
             </thead>
@@ -32,8 +33,9 @@
                 <td>{$v.name}</td>
                 <td>{$v.describe}</td>
                 <td>{$v.val}</td>
+                <td>{$v.field_type}</td>
                 <td>
-                    <a href="{:url('edit',['id'=>$v.id])}"><i class="fa fa-edit text-warning"></i></a>
+                    <a href="{:url('edit',['id'=>$v.id,'t_id'=>$t_id])}"><i class="fa fa-edit text-warning"></i></a>
                     {neq name="v.is_sys" value="$Think.IS_SYS"}
                     <a lay-event="del" href="#"><i class="fa fa-trash-o text-danger"></i></a>
                     {/neq}

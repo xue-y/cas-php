@@ -300,9 +300,7 @@ function ajax_request(form,app_debug,jump,success_msg){
             if (app_debug) {
                 console.log(data);
             }
-            if (data.code == 1) {
-                // 或者1 跳转到后台首页 ,2 是原历史记录页面
-                //  window.location.href=window.history.back(-1);
+            if (data.code == 1) { // 成功
                 if((jump==true) && data.url){
                     if(success_msg){
                         layer.alert(data.msg,function(){

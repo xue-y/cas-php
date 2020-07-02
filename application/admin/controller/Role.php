@@ -153,7 +153,7 @@ class Role extends Base
         if(empty($id))
         {
             $this->error(lang('error_id'));
-        }
+        };
         // 移除系统内置角色
         $admin_role=new AdminRole();
         $admin_role_id=$admin_role->getFieldByAId(get_cas_config('admin_auth'),'id');
@@ -171,7 +171,7 @@ class Role extends Base
         $id=intval($param['id']);
         $admin_role=new AdminRole();
         $result=$admin_role->updateField($id,'is_enable',$param['is_enable']);
-        if($result==1)
+        if($result)
         {
             $this->success(lang('is_enable_success'));
         }else

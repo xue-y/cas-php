@@ -11,6 +11,8 @@ namespace app\common\controller;
 
 use app\common\model\LogOperate;
 use think\Controller;
+use think\exception\HttpResponseException;
+use think\Response;
 
 class Base extends Controller
 {
@@ -52,9 +54,9 @@ class Base extends Controller
                 //详情：方法名+控制器名称：数据id,多个用英文逗号隔开
                 $id=$this->request->param('id');
                 if(!empty($id) && is_array($id)){
-                    $id=implode(',',$this->request->param('id'));
+                    $id=': '.implode(',',$this->request->param('id'));
                 }
-                $id=': '.$id;
+                if(empty($id))$id='';
                 $operate_data['details']=$this->request->postion_nav['a'].$this->request->postion_nav['c'].$id;
                 // 写入操作记录表
                  $log_operate=new LogOperate();
@@ -67,6 +69,26 @@ class Base extends Controller
         }
         parent::success($msg, $url,  $this->request->param('id'), $wait = 5,$header);
         exit;
+    }
+
+    /**
+     * ajaxResult ajax 返回数据
+     * @param $code
+     * @param string $msg
+     * @param null $data
+     */
+    protected function ajaxResult($code,$msg='',$data=null){
+        $result = [
+            'code' => $code,
+            'msg'  => $msg,
+            'data' => $data,
+        ];
+        $type                                   = $this->getResponseType();
+        $header['Access-Control-Allow-Origin']  = '*';
+        $header['Access-Control-Allow-Headers'] = 'X-Requested-With,Content-Type,XX-Device-Type,XX-Token,XX-Api-Version,XX-Wxapp-AppId';
+        $header['Access-Control-Allow-Methods'] = 'GET,POST,PATCH,PUT,DELETE,OPTIONS';
+        $response                               = Response::create($result, $type)->header($header);
+        throw new HttpResponseException($response);
     }
 
     // 过滤(系统不可删除)删除的数据
@@ -108,19 +130,29 @@ class Base extends Controller
         }
     }
 
-    // 过滤ID
+    /**
+     * filterId 过滤ID
+     * @return mixed|string
+     */
     protected function filterId()
     {
         $id=input('param.id');
-        if(empty($id))
-        {
+        if(empty($id)){
             $this->error(lang('error_id'));
         }
-        if(is_array($id))
-        {
-            $id=implode(",",array_unique(array_filter($id)));
+        if(!is_array($id)){
+            $id=explode(',',$id);
         }
-        return $id;
+
+;       if(count($id)>1){
+            $id=array_unique(array_filter($id));
+            if(!empty($id)){
+                return $id;
+            }
+        }else if((count($id)==1) && !empty($id[0])){
+            return $id[0];
+        }
+        $this->error(lang('error_id'));
     }
 
     /**

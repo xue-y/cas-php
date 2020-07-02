@@ -2285,7 +2285,7 @@ div.checker span {
 
 .form-control {
     border: 1px solid #c5bebe;
-	height: 38px;
+	height: 38px;line-height: 26px;
 }
 /*--------------------------------------------*/
 /*   chart
@@ -4444,7 +4444,7 @@ ul.unstyled, ol.unstyled {
 
 .text-muted {
     color: #7B7777  !important;
-	/*line-height: 40px;*/
+	line-height: 40px;
 }
 
 .text-primary {
@@ -5067,3 +5067,4 @@ nav>.pagination{ margin: 0px;}
 }
 .f-left{ float: left;}
 .text-disable{color:#bfbebe;}
+.text_p{padding: 4px 10px;}

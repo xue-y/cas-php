@@ -18,4 +18,5 @@ return [
     // user
     "user_name_unique"=>"用户名已存在",
     "user_rid"=>"请选择角色",
+    "user_pass"=>"如果密码为空使用默认密码 %s",
 ];

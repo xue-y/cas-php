@@ -7,9 +7,12 @@
 .search{width:200px;display:inline;height:38px;}
 </style>
 {__CONTENT__}
+
 <script type="text/html" id="toolbar">
 	<div class="layui-btn-container">
+		{neq name="Request.module" value="log"}
 		<div class="layui-btn layui-btn-sm" lay-event="add">{:lang('add')}</div>
+		{/neq}
 		<div class="layui-btn layui-btn-sm" lay-event="delete">{:lang('delete')}</div>
 	</div>
 </script>
@@ -105,10 +108,8 @@
 				window.location.href=url;
 			}else{
 			  // 批量删除
-			  $(".layui-table-body input[name='layTableCheckbox']:checked").each(function(i,e){
-					$(this).attr('name','id[]');
-			  });
-			  $('form').submit();
+				$('form').append("<input type='hidden' name='id' id='data_id' value='"+del_data+"'>");
+			    $('form').submit();
 			}
 			return;
 		 }
@@ -123,9 +124,9 @@
 				if(data.code==1)
 				{
 					if(del_data instanceof Array)
-						window.location.reload();
+                        window.location.reload();
 					else
-					  obj.del(); //删除对应行（tr）的DOM结构
+					    obj.del(); //删除对应行（tr）的DOM结构
 				}
 				layer.close(index); // 关闭当前窗口
 			});
@@ -139,6 +140,8 @@
 	}
 </script>
 {else/}
+	<!-- 表单验证插件 -->
+	{include file="common@vaildator" /}
 	<!-- 表单页面 -->
 	{__CONTENT__}
 	{include file="common@vail_form" /}

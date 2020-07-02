@@ -7,8 +7,7 @@
  * 自定义 curl 函数
  */
 
-namespace Think;
-
+//namespace Think;
 
 class Curl {
 
@@ -151,7 +150,7 @@ class Curl {
 		if ($errorno) {
 			return $errorno;
 		}else{
-			return $result
+			return $result;
 		}
 		// 关闭连接
 		curl_close($curl);

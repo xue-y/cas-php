@@ -27,27 +27,27 @@ class Login extends Base
         $w=[];
         $search_name_field=[];
 		
-        $post=$this->request->get();
+        $get=$this->request->get();
         if(empty($uid)){
             $search_name_field=['name'=>'name','field_type'=>'select','data'=>$assign['name'],'placeholder'=>lang('log_n_search')];
         }
 		if(!empty($uid))
 		{
 			 $w[]=['uid','=',$uid];
-		}elseif(!empty($post['name']) && (isset($assign['name'][$post['name']])))
+		}elseif(!empty($get['name']) && (isset($assign['name'][$get['name']])))
         {
-           $w[]=['uid','=',$post['name']];
+           $w[]=['uid','=',$get['name']];
         }
 
         // 时间区间查询
-          if(!empty($post['t'])){
-              $w[]=$this->dataRangeWhere($post['t']);
+          if(!empty($get['t'])){
+              $w[]=$this->dataRangeWhere($get['t']);
           }
 
         // 查询数据
         $back_login=new LogLogin();
         $assign['uid']=$uid;
-        $assign['list']=$list=$back_login->getList($w);
+        $assign['list']=$back_login->getList($w);
 
         // 搜索框框
         $search_form=new SearchForm();
@@ -62,23 +62,11 @@ class Login extends Base
     //TODO 删除
     public function delete($uid=null)
     {
-        $id=input('param.id');
-        if(empty($id))
-        {
-            $this->error(lang('error_id'));
-        }
+        $id=$this->filterId();
+        $log_login=new LogLogin();
+        $is_del=$log_login->del($id,$uid);
 
-        if(is_array($id)){
-            $id=array_unique(array_filter($id));
-            if(empty($id)){
-                $this->error(lang('error_id'));
-            }  
-        }
-        
-        $back_login=new LogLogin();
-        $is_del=$back_login->del($id,$uid);
-
-        if($is_del==true)
+        if($is_del)
         {
             $this->success(lang('del_success'),url('index'));
         }else

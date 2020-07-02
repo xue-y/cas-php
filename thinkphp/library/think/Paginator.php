@@ -27,12 +27,6 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
     protected $simple = false;
 
     /**
-     * 是否显示额外信息
-     * @var boolean
-     */
-    protected $additionalInfo=true;
-
-    /**
      * 数据集
      * @var Collection
      */
@@ -87,12 +81,9 @@ abstract class Paginator implements ArrayAccess, Countable, IteratorAggregate, J
 
         $this->simple   = $simple;
         $this->listRows = $listRows;
-        if(isset($options['additionalInfo'])){
-            $this->additionalInfo=$options['additionalInfo'];
-        }
-       
+
         if (!$items instanceof Collection) {
-            $items = Collection::make($items,$listRows, $currentPage, $total, $simple , $options = []);
+            $items = Collection::make($items);
         }
 
         if ($simple) {

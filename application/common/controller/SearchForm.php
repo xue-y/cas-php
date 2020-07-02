@@ -67,15 +67,15 @@ class SearchForm extends Controller
                 unset($field_item[$k]);
                 continue;
             }
-            if(empty($v['type'])){
-                $v['type']=$this->default_field_type;
-            }else if(!in_array($v['type'],$this->field_type)){
+            if(!isset($v['field_type']) || empty($v['field_type'])){
+                $field_item[$k]['field_type']=$this->default_field_type;
+            }else if(!in_array($v['field_type'],$this->field_type)){
                 unset($field_item[$k]);
                 continue;
             }
 
             $field_item[$k]['class']=isset($v['class'])?$v['class'].' search':'search';
-            if($v['type']=='select'){
+            if(isset($v['field_type']) && $v['field_type']=='select'){
                 if(empty($v['data'])){
                     unset($field_item[$k]);
                     continue;

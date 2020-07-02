@@ -7,14 +7,14 @@ Convenient and succinct（便捷的 简明的;言简意赅的）
 验证码：  think-captcha:    2.0.2
 
 前端组件： layui 	v2.5.4   
-表格、弹窗、时间、上传、部分字体图标   
+表格、弹窗、时间、部分字体图标   
 https://www.layui.com/
 
 表单验证器： bootstrapValidator  v0.5.3  
 http://bootstrapvalidator.com
 
-编辑器： KindEditor  4.1.10   
-http://kindeditor.net/
+编辑器： UEeditor  1.4.3.3 
+http://ueditor.baidu.com/website/index.html
 
 字体图标： Font Awesome  4.7.0    
 http://fontawesome.dashgame.com/
@@ -25,6 +25,9 @@ http://getbootstrap.com
 聊天插件库： Workerman 3.0.15    
 文档: http://doc2.workerman.net/   
 手册: http://www.workerman.net/gatewaydoc/
+下载Demo: http://doc2.workerman.net/
+Liunx: http://www.workerman.net/download/GatewayWorker.zip
+Window: http://www.workerman.net/download/GatewayWorker-for-win.zip
 
 修改源码部分,标记一下防止后期框架升级
 - ThinkPHP 分页添加参数  `paginate(config['additionalInfo'])` 
@@ -43,7 +46,8 @@ http://getbootstrap.com
     权限控制只是控制了 模块/控制器,方法没有控制
     如果权限父级菜单禁用，子级是可以访问的，禁用只作用于设置的菜单
     权限菜单批量删除，删除的是勾选的菜单，如果子级未勾选将不会删除，只是无法显示出来
-    权限/角色/用户【 禁用 】，是禁止用户访问
+    权限/角色/用户【 禁用 】，是禁止用户访问   
+	如果是 tab 菜单，如果用户有控制器权限，tab 菜单没有权限也可方法[配置管理]
 	
 配置管理
 
@@ -67,6 +71,11 @@ layui 待修复问题
 	2、静态表格无法重载
 	3、表格右上方工具栏无法实现再次点击消失信息框
 	
+UEeditor 待修复问题
+
+    1、截图已安装插件，还是提示未安装
+    2、音乐试听没有声音
+    	
 直接使用 ajax 提交的方法：
 
 	系统安装、发送邮件、是否为菜单、是否启用、单个/多个排序

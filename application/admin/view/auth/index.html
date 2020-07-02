@@ -149,11 +149,15 @@
             layer.alert(data.msg);
             // 手动更新页面--- 页面操作完不会自动更新
             if(data.code==1){
-              $.each(data.data,function(i,e){
-                    $('tr.node-'+e).remove();
-                })
+                if(typeof data.data=="string"){
+                    $("tr[data-id="+data.data+"]").remove();
+                }else{
+                    $.each(data.data,function(i,e){
+                        //$('tr.node-'+e).remove();
+                        $("tr[data-id="+e+"]").remove();
+                    })
+                }
             }
-         
         },'json').fail(function(xhr,status,error){
             // 调试模式
             if(app_debug){

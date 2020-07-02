@@ -1,6 +1,6 @@
 <div class="radio">
 {foreach $data as $k=>$v}
-<input type="radio" name="{$name|default=''}" class="{$class|default=''}" {$extra|default=''} value="{$v}" {eq name="k" value="$value|default=''"}checked{/eq}>
+<input type="radio" name="{$name|default=''}" class="{$class|default=''}" {$extra|default=''} value="{$k}" {eq name="k" value="$value|default=''"}checked{/eq}>
 <label>{$v}</label>
 {/foreach}
 </div>
