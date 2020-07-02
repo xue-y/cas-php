@@ -109,7 +109,7 @@ class Form extends Base
      * 字段属性 一维示例
      * array(7) {
         ["name"] => string(1) "t"
-        ["type"] => string(10) "date_range" // 必填
+        ["type"] => string(10) "date_range" 
         ["class"] => string(9) "aa search"
         ["placeholder"] => string(12) "时间区间"
         ["extra"] => string(18) "style=color:#eee"

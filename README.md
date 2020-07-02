@@ -131,6 +131,23 @@ UEeditor 待修复问题
 	模板中调用
     {:action("common/Base/includePage",['template'=>'search','data'=>$search])}
 
+消息队列
+
+    开启redis服务
+    监听服务 php think queue:listen --queue send_mail 
+        详细命令：https://www.cnblogs.com/xuey/p/13100202.html
+    访问页面调用
+         $job_queue=new Jobqueue();
+         $job_queue->index('send_mail',['php.develop@qq.com','星海','记录日志发送邮件'],null,'发送邮件');
+         第一个参数是调用的函数名 send_mail() 是放在/application/common.php 中的函数
+         第二个参数是调用函数的参数
+
+定时任务
+
+     执行定时任务 
+          Liunx 系统 
+          * * * * * /usr/bin/php /www/yoursite/public/index.php /tool/Crontab/execCrontab > /dev/null  2>&1 &
+
 页面布局
 
 	head头部

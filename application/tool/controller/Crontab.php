@@ -192,8 +192,7 @@ class Crontab extends Base
 
     // 执行任务
     public function execCrontab(){
-        // 这里先设置一下脚本执行当前方法间隔时间
-        $interval_crontab=300;// 具体要与脚本执行间隔时间一致
+
         // 设置永不超时
         set_time_limit(0);
 
@@ -201,11 +200,11 @@ class Crontab extends Base
          * 开始执行任务创建一个锁机制（创建一个锁文件），防止用户每分钟执行一次任务，当前定时任务没有完成
          * 不建议放在public目录，维护人员有时会误删除
          */
-        /*$lock_file='../backups/crontab_lock.txt';
+        $lock_file='../backups/crontab_lock.txt';
         if(is_file($lock_file)){
             Log::notice(lang('crontab_exec')['now_crontab_no_complete']);
             return;
-        }*/
+        }
 
         //查询任务表，启用状态
         $tool_crontab=new ToolCrontab();
@@ -213,22 +212,18 @@ class Crontab extends Base
         if(empty($crontab))return;
 
         // 创建锁文件
-        /*file_put_contents($lock_file,'');
+        file_put_contents($lock_file,'');
         if(!is_file($lock_file)){
             Log::error(lang('crontab_exec')['create_lock_file_fail']);
             return;
-        }*//*file_put_contents($lock_file,'');
-        if(!is_file($lock_file)){
-            Log::error(lang('crontab_exec')['create_lock_file_fail']);
-            return;
-        }*/
+        }
 
         // 开始执行任务
         foreach ($crontab as $v){
             //记录当前任务开始执行时间
             if(empty($v['next_time']) || empty($v['action']))continue;
-            $start_time=time();
-            $curren_time=strtotime(date('Y-m-d H:i',$start_time));
+            $start_time_stamp=time();
+            $curren_time=strtotime(date('Y-m-d H:i',$start_time_stamp));
             $interval_time=$curren_time-strtotime($v['next_time']);
 
             // 如果已经过期
@@ -265,10 +260,11 @@ class Crontab extends Base
 
             if(isset($run_data)){
                 // 写入日志数据表
-                $end_time=date('Y-m-d H:i',time());
+                $end_time_stamp=time();
+                $end_time=date('Y-m-d H:i:s',$end_time_stamp);
                 $log_crontab_data['crontab_id']=$v['id'];
 				$log_crontab_data['name']=$v['name'];
-                $log_crontab_data['start_time']=$start_time;
+                $log_crontab_data['start_time']=date('Y-m-d H:i:s',$start_time_stamp);
                 $log_crontab_data['end_time']=$end_time;
                 if(!empty($run_data['crontab_log_count'])){
                     $log_crontab_data['count']=$run_data['crontab_log_count'];
@@ -284,11 +280,17 @@ class Crontab extends Base
                 $crontab['exec_time']=$end_time;
                 $crontab['exec_status']=$run_data['exec_status'];
                 $crontab['exec_count']=$v['exec_count']+1;
-                $next_time=strtotime($v['next_time'])+30;
-                $next_time=date("Y-m-d H:i",$next_time);
-                $crontab['next_time']=$this->getNextExecDate($v['crontab'],$next_time);
                 $crontab['task_status']=CRONTAB_IS_EXEC;
-
+                // 如果执行过程不超过1分钟，下次执行会与最后一次执行时间相同
+                // 在执行完成后加一个数，设置下次执行时间
+                $run_time_stamp=$end_time_stamp-$start_time_stamp;
+                if(($run_time_stamp)>0){
+                    $next_time_stamp=$end_time_stamp;
+                }else{
+                    $next_time_stamp=$end_time_stamp+60;
+                }
+                $next_time=date("Y-m-d H:i",$next_time_stamp);
+                $crontab['next_time']=$this->getNextExecDate($v['crontab'],$next_time);
                 $is_update=$tool_crontab->allowField(true)->save($crontab,['id'=>$v['id']]);
                 if(!$is_update){
                     Log::notice($v['id'].lang('crontab_exec')['update_crontab_status_fail']);
@@ -297,9 +299,9 @@ class Crontab extends Base
         }
 
         // 执行完任务，删除锁文件
-        /*if(!@unlink($lock_file)){
+        if(!@unlink($lock_file)){
             Log::error(lang('create_complete_del_fail'));
-        }*/
+        }
     }
 
     /**

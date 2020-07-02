@@ -14,6 +14,7 @@ use think\Model;
 class ToolCrontab extends Model
 {
     protected $autoWriteTimestamp = 'datetime';
+	private $data_sort='sort desc,id desc';
 
     /**
      * getList
@@ -26,9 +27,9 @@ class ToolCrontab extends Model
         $list_rows=config('list_rows');
         if(!empty($w))
         {
-            return $this->where($w)->order('sort desc,id desc')->paginate($list_rows,false,['query'=>request()->get()]);
+            return $this->where($w)->order($this->data_sort)->paginate($list_rows,false,['query'=>request()->get()]);
         }
-        return $this->order('sort desc,id desc')->paginate($list_rows);
+        return $this->order($this->data_sort)->paginate($list_rows);
     }
 
     /**
@@ -67,7 +68,7 @@ class ToolCrontab extends Model
      * @throws \think\exception\DbException
      */
     public function selecData(){
-       return $this->field('id,name,action,crontab,exec_count,exec_expire,next_time,fail_count')->where('is_enable','=',IS_ENABLE)->select();
+       return $this->field('id,name,action,crontab,exec_count,exec_expire,next_time,fail_count')->where('is_enable','=',IS_ENABLE)->order($this->data_sort)->select();
     }
 
 }

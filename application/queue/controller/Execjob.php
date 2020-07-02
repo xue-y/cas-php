@@ -15,6 +15,7 @@ use think\facade\Cache;
 use think\Loader;
 use think\queue\Job;
 use think\facade\Log;
+use think\Exception;
 
 class Execjob extends Controller
 {
@@ -24,12 +25,27 @@ class Execjob extends Controller
         if(!isset($log_queue)){
             $log_queue=new LogQueue();
         }
+
+        $log_id=$data['log_id'];
+		
         //....这里执行具体的任务
         $action=$data['job_done'];
-        $result=call_user_func_array($action,$data['data']);
+		
+		// 如果方法不存在，或参数出错，致命错误时
+		try{
+			$result=call_user_func_array($action,$data['data']);
+		}catch (Exception $e){
+			$job->delete();
+            //日志记录
+            $queue_log['stauts']=FAIL;
+            $queue_log['end_time']=date('Y-m-d H:i:s');
+            $result=$log_queue->save($queue_log,['id'=>$log_id]);
+            if(!$result) {
+                Log::warning(lang('queue') . ': ID' . $log_id . ', ' . $action . lang('queue_write_log_error'));
+            }
+		}
 
         // 记录执行次数
-        $log_id=$data['log_id'];
         if(!isset($get_log_id)){
             Cache::set('queue_'.$log_id,1);
             $count=1;
@@ -41,7 +57,7 @@ class Execjob extends Controller
         {
             $job->delete();
             //日志记录
-            $queue_log['stauts']=QUEUE_SUCEESS;
+            $queue_log['stauts']=SUCEESS;
             $queue_log['end_time']=date('Y-m-d H:i:s');
             $queue_log['count']=$count;
 
@@ -59,7 +75,7 @@ class Execjob extends Controller
             //通过这个方法可以检查这个任务已经重试了几次了
             $job->delete();
             //日志记录
-            $queue_log['stauts']=QUEUE_FAIL;
+            $queue_log['stauts']=FAIL;
             $queue_log['end_time']=date('Y-m-d H:i:s');
             $queue_log['count']=$count;
             $result=$log_queue->save($queue_log,['id'=>$log_id]);
