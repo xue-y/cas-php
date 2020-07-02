@@ -1,5 +1,6 @@
 <!--底部插件-->
 <style>
+/*icon 图标样式与验证插件冲突特别处理*/
 #icon_class_vali.has-error .control-label
 {color: #333 !important;}
 #icon_class_vali.has-error .form-control{border-color: #c5bebe; !important;}
@@ -63,7 +64,7 @@
         });
     }
 
-    // all_icon 选择器--- 一个页面只有一个
+    // all_icon 选择器
     if($('.icp-auto').length>0){
 		$('#icon_class_vali').removeClass('has-error');
 	
@@ -129,5 +130,53 @@
                 });
             });
         });
+    }
+
+    // 自动上传文件、图片，如果上传多张需要对上传后样式适当调整，这里只做简单处理
+    var  app_debug="{:config('app_debug')}";
+    var auto_uplaod_num=$('.auto_upload').length;
+    var click_uplaod_num=$('#click_upload').length;
+    if((auto_uplaod_num>0) || (click_uplaod_num>0))
+    {
+        var option={};
+        $.ajax({
+            type: "POST",
+            url: "{:url('plugin/FieldUpfile/getConfig')}",
+            async:false,//这里选择同步为false，那么这个程序执行到这里的时候会暂停，等待数据加载完成后才继续执行
+            success: function (data, status, xhr) {
+                // 判断是否是开发模式
+                if (app_debug) {
+                    console.log(data);
+                }
+                if (data.code == 1) { // 成功
+                    option = data.data;
+                } else {
+                    layer.alert(data.msg, {icon: 5});
+                }
+            },
+            error: function (xhr, status, errorinfo) {
+                // 判断是否是开发模式
+                if (app_debug) {
+                    console.log(xhr);
+                }
+                layer.alert(status + ': ' + errorinfo, {icon: 5});
+            },
+            timeout: 3000
+        });
+
+        var option_num=Object.keys(option).length,auto_option={},click_option={};
+
+        // 点击按钮上传,一个页面只能有一个
+        if((click_uplaod_num>0) && (option_num>=2)){
+            upfile('#click_upload', option)// 上传本地
+        }
+
+        // 自动上传
+        if((auto_uplaod_num>0) && (option_num>=2)){
+            option.auto_up=true;
+            $('.auto_upload').each(function(i,e){
+                upfile($(this),option);
+            });
+        }
     }
 </script>

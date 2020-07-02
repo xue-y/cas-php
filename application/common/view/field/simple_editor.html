@@ -6,4 +6,14 @@
             ['fullscreen', 'source', 'undo', 'redo','bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc','simpleupload']
         ]
     });
+    var value="{$value|default=''}";
+    //对编辑器的操作最好在编辑器ready之后再做
+    ue.ready(function() {
+        //设置编辑器的内容
+        ue.setContent(value);
+        //获取html内容，返回: <p>hello</p>
+        var html = ue.getContent();
+        //获取纯文本内容，返回: hello
+        var txt = ue.getContentTxt();
+    });
 </script>

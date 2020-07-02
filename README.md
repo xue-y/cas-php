@@ -100,7 +100,11 @@ UEeditor 待修复问题
 	auth 权限列表因未找到合适的插件（因为其中判断条件较多）使用的是layui纯静态表格
 	
 构建form表单  
-
+    
+    一个页面相同的字段类型如果可以有多个，字段类型名为字段类（class）名称，插件操作 class
+    如果一个页面相同的字段类型只能有一个，不可重复，字段类型名 为字段ID ，插件操作 ID 
+    simple_editor, all_editor, click_upload 字段类型页面只可有一个，其他字段类型可以有多个
+    
     `public function test(){
         $form=new Form();
         $data=['key1'=>'value1sdfsdfsd','key2'=>'value2','key3'=>'value3dsfsdf'];

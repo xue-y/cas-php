@@ -15,7 +15,7 @@ use think\facade\Env;
 class Form extends Base
 {
     // 后期完善表单字段
-    private $field_type="text,textarea,number,email,url,select,select_multiple,radio,checkbox,checkbox_multiple,date,date_range,dates_range,time,time_range,upload_file,upload_files,lay_icon,all_icon,simple_editor,all_editor,select_city";
+    private $field_type="text,textarea,number,email,url,select,select_multiple,radio,checkbox,checkbox_multiple,date,date_range,dates_range,time,time_range,auto_upload,click_upload,lay_icon,all_icon,simple_editor,all_editor,select_city";
     // 默认字段类型
     private $default_field_type='text';
 
@@ -154,10 +154,14 @@ class Form extends Base
             }
         }
 
-        $field_type=[];// 特殊字段样式处理
+        $field_type=[];// 特殊字段样式处理 使用key 值做下标
         foreach ($field_item as $k=>$v){
             if($v['field_type']=='simple_editor' || $v['field_type']=='all_editor'){
                 $field_type['editor']=1;
+            }else if($v['field_type']=='click_upload'){
+                $field_type['uplaod']='click_upload';
+            }else if($v['field_type']=='auto_upload'){
+                $field_type['uplaod']='auto_upload';
             }else{
                 $field_type[$v['field_type']]=1;
             }

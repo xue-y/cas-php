@@ -2,6 +2,7 @@
 layui.use('layer', function(){
     let layer = layui.layer;
 });
+
 //功能：根据用户输入的Email跳转到相应的电子邮箱首页
 function gotoEmail(mail) {
     $t = mail.split('@')[1];
@@ -287,7 +288,7 @@ function form_submit(form,app_debug,jump,success_msg){
 }
 
 /**
- * 发送ajax 请求
+ * 发送ajax 请求表单
  */
 function ajax_request(form,app_debug,jump,success_msg){
     let url=form.attr('action');

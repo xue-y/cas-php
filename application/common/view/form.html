@@ -15,6 +15,13 @@
         <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.js"> </script>
         <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
         {/case}
+        {case uplaod}
+        <link rel="stylesheet" type="text/css" href="/static/upload/css/webuploader.css" />
+        <link rel="stylesheet" type="text/css" href="/static/upload/css/auto.css" />
+        <link rel="stylesheet" type="text/css" href="/static/upload/css/style.css" />
+        <script type="text/javascript" src="/static/upload/js/webuploader.js"></script>
+        <script type="text/javascript" src="/static/upload/js/upload.js"></script>
+        {/case}
         {/switch}
     {/foreach}
 {/notempty}
@@ -54,7 +61,7 @@
             <label class="col-md-2 control-label text-muted">{$data.label|default=''}</label>
             <div class="col-md-5">
                 {switch $data.field_type}
-                {case date|time|date_range|time_range|select|select_multiple|radio|checkbox|checkbox_multiple|lay_icon|all_icon|simple_editor|all_editor}
+                {case date|time|date_range|time_range|select|select_multiple|radio|checkbox|checkbox_multiple|lay_icon|all_icon|simple_editor|all_editor|auto_upload|click_upload}
                 {:action("common/Base/formItem",['template'=>$data.field_type,'data'=>$data])}
                 {/case}
                 {default /}

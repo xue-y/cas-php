@@ -83,7 +83,7 @@ class Base extends Controller
             'msg'  => $msg,
             'data' => $data,
         ];
-        $type                                   = $this->getResponseType();
+        $type = config('default_ajax_return');
         $header['Access-Control-Allow-Origin']  = '*';
         $header['Access-Control-Allow-Headers'] = 'X-Requested-With,Content-Type,XX-Device-Type,XX-Token,XX-Api-Version,XX-Wxapp-AppId';
         $header['Access-Control-Allow-Methods'] = 'GET,POST,PATCH,PUT,DELETE,OPTIONS';
