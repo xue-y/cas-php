@@ -1,6 +1,6 @@
 <div class="checkbox">
     {foreach $data as $k=>$v}
-    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$extra|default=''} value="{$v}" {eq name="k" value="$value|default=''"}checked{/eq}>
+    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$style|default=''} value="{$v}" {eq name="k" value="$value|default=''"}checked{/eq}>
     <label>{$v}</label>
     {/foreach}
 </div>

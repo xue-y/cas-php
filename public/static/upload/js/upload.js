@@ -20,6 +20,7 @@ function upfile(id_ele,option) {
     var del_file_url=option.del_file_url || 'src/examples/del_local_file.php';
     var up_file_url=option.up_file_url || 'src/examples/up_local_file.php';
     var get_sign_url=option.get_sign_url || '';
+    var up_field_name=option.up_field_name || 'up_file';
 
     // 上传文件图片描述
     var up_file_desc='图片';
@@ -631,7 +632,6 @@ function upfile(id_ele,option) {
                         $btns.stop().animate({height: 0});
                     });
                     //删除
-                    console.log(response.data);
                     $btns.on( 'click', 'span', function() {
                         if(response.code==1){
                             // 执行服务删除文件
@@ -642,7 +642,12 @@ function upfile(id_ele,option) {
 
                     if(response.code==1){
                         // 点击看大图
-                        $li.find('.imgWrap img').click(function(){
+                        layer.photos({
+                            photos: '.imgWrap'
+                            ,anim: 5//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                        });
+                        // 点击看大图
+                        /*$li.find('.imgWrap img').click(function(){
                             layer.photos({
                                 photos: {
                                   //  "start": 0, //初始显示的图片序号，默认0
@@ -658,9 +663,9 @@ function upfile(id_ele,option) {
                                 shade: [0.5, '#000000'],
                                 shadeClose: true,
                             })
-                        });
+                        });*/
                         // 元素赋值
-                        $li.append('<input type="hidden" name="up_img[]" value="'+response.data.file_path+'">');
+                        $li.append('<input type="hidden" name="'+option.up_field_name+'[]" value="'+response.data.file_url+'">');
                         $li.append( '<span class="success"></span>' );
                         $li.find('.progress').css('display','none');
 
@@ -668,9 +673,6 @@ function upfile(id_ele,option) {
                     }else{
                         $li.append( '<p class="error">'+response.msg+'</p>' );
                     }
-
-                    console.log(file);
-                    console.log(response);
                     break;
             }
         });

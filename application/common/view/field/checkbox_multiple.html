@@ -4,13 +4,13 @@ if(empty($value))$value=''
 <div class="checkbox">
     {foreach $data as $k=>$v}
     {if($k==$value) || (!empty($select_data) && is_array($select_data) && in_array($k,$select_data))}
-    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$extra|default=''} value="{$v}" checked>
+    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$style|default=''} value="{$v}" checked>
     <label>{$v}</label>
     {elseif(!empty($disable_data) && is_array($disable_data) && in_array($k,$disable_data)) /}
-    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$extra|default=''} value="{$v}" disabled>
+    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$style|default=''} value="{$v}" disabled>
     <label>{$v}</label>
     {else /}
-    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$extra|default=''} value="{$v}">
+    <input type="checkbox" name="{$name|default=''}" class="{$class|default=''}" {$style|default=''} value="{$v}">
     <label>{$v}</label>
     {/if}
     {/foreach}

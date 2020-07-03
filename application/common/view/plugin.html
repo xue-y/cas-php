@@ -136,47 +136,90 @@
     var  app_debug="{:config('app_debug')}";
     var auto_uplaod_num=$('.auto_upload').length;
     var click_uplaod_num=$('#click_upload').length;
+    var form_upload_option={},form_upload_config="{:url('plugin/FieldUpfile/getConfig')}";
     if((auto_uplaod_num>0) || (click_uplaod_num>0))
     {
-        var option={};
-        $.ajax({
-            type: "POST",
-            url: "{:url('plugin/FieldUpfile/getConfig')}",
-            async:false,//这里选择同步为false，那么这个程序执行到这里的时候会暂停，等待数据加载完成后才继续执行
-            success: function (data, status, xhr) {
-                // 判断是否是开发模式
-                if (app_debug) {
-                    console.log(data);
-                }
-                if (data.code == 1) { // 成功
-                    option = data.data;
-                } else {
-                    layer.alert(data.msg, {icon: 5});
-                }
-            },
-            error: function (xhr, status, errorinfo) {
-                // 判断是否是开发模式
-                if (app_debug) {
-                    console.log(xhr);
-                }
-                layer.alert(status + ': ' + errorinfo, {icon: 5});
-            },
-            timeout: 3000
-        });
+        form_upload_option=getConfig(form_upload_config,app_debug);
 
-        var option_num=Object.keys(option).length,auto_option={},click_option={};
+        var option_num=Object.keys(form_upload_option).length,auto_option={},click_option={};
 
         // 点击按钮上传,一个页面只能有一个
         if((click_uplaod_num>0) && (option_num>=2)){
-            upfile('#click_upload', option)// 上传本地
+            upfile('#click_upload', form_upload_option)// 上传本地
         }
 
         // 自动上传
         if((auto_uplaod_num>0) && (option_num>=2)){
-            option.auto_up=true;
+            form_upload_option.auto_up=true;
+            form_upload_option.file_num_limit=1;
             $('.auto_upload').each(function(i,e){
-                upfile($(this),option);
+                upfile($(this),form_upload_option);
             });
-        }
+        };
+
+        // 修改图片时，点击看大图
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.photos({
+                photos: '.imgWrap'
+                ,anim: 5//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            });
+        });
     }
+
+    // 自动上传单个文件 --- 修改，删除上传文件
+    if( $('.exit_auto_up').length>0){
+        $('.exit_auto_up li').each(function(i,e){
+            var $btns=$(this).find('.file-panel');
+            $(this).on( 'mouseenter', function() {
+                $btns.stop().animate({height: 30});
+            });
+            $(this).on( 'mouseleave', function() {
+                $btns.stop().animate({height: 0});
+            });
+            var _this=$(this);
+            var img_src=$(this).find('img').attr('src').substr(1);
+            $btns.find('span.cancel').click(function(){
+                // 删除服务文件
+                deleteServerFile(img_src,form_upload_option.del_file_url);
+                // 添加上传文件框
+                _this.closest('.queueList').append("<div class=\"placeholder\">\n" +
+                    "<div class=\"filePicker\"></div>\n" +
+                    "</div>");
+                var up_but=_this.closest('.auto_upload');
+
+                // 删除当前元素
+                _this.remove();
+                // 初始化按钮
+                var option={};
+                option=getConfig(form_upload_config,app_debug);
+                option.auto_up=true;
+                option.file_num_limit=1;
+                upfile(up_but,option);
+            });
+        });
+    }
+
+    // 上传组图 ----- 删除操作
+    if($('.exit_click_up').length>0){
+        $('.exit_click_up li').each(function(i,e){
+            var $btns=$(this).find('.file-panel');
+            $(this).on( 'mouseenter', function() {
+                $btns.stop().animate({height: 30});
+            });
+            $(this).on( 'mouseleave', function() {
+                $btns.stop().animate({height: 0});
+            });
+            var _this=$(this);
+            var img_src=$(this).find('img').attr('src').substr(1);
+            $btns.find('span.cancel').click(function(){
+                // 删除服务文件
+                deleteServerFile(img_src,form_upload_option.del_file_url);
+                // 删除当前元素
+                _this.remove();
+            });
+        });
+    }
+
+
 </script>

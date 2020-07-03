@@ -330,3 +330,37 @@ function ajax_request(form,app_debug,jump,success_msg){
         timeout: 3000
     });
 }
+
+/**
+ * 获取配置数据，返回json 格式
+ * @param url
+ * @param app_debug
+ */
+function getConfig(url,app_debug) {
+    var option={};
+    $.ajax({
+        type: "POST",
+        url: url,
+        async:false,//这里选择同步为false，那么这个程序执行到这里的时候会暂停，等待数据加载完成后才继续执行
+        success: function (data, status, xhr) {
+            // 判断是否是开发模式
+            if (app_debug) {
+                console.log(data);
+            }
+            if (data.code == 1) { // 成功
+                option = data.data;
+            } else {
+                layer.alert(data.msg, {icon: 5});
+            }
+        },
+        error: function (xhr, status, errorinfo) {
+            // 判断是否是开发模式
+            if (app_debug) {
+                console.log(xhr);
+            }
+            layer.alert(status + ': ' + errorinfo, {icon: 5});
+        },
+        timeout: 3000
+    });
+    return option;
+}

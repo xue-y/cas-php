@@ -103,8 +103,16 @@ UEeditor 待修复问题
     
     一个页面相同的字段类型如果可以有多个，字段类型名为字段类（class）名称，插件操作 class
     如果一个页面相同的字段类型只能有一个，不可重复，字段类型名 为字段ID ，插件操作 ID 
+    fieldItem 字段说明：
     simple_editor, all_editor, click_upload 字段类型页面只可有一个，其他字段类型可以有多个
-    
+    click_upload, auto_upload 字段名 name = up_file[]，创建表单时无需设置
+    name 字段name
+    field_type 字段类型
+    style 加载元素上样式
+    extra 添加在元素底部
+    value 字段值, 
+    data  数组形式数据，用于 select checkbox redio click_upload字 段类型
+     
     `public function test(){
         $form=new Form();
         $data=['key1'=>'value1sdfsdfsd','key2'=>'value2','key3'=>'value3dsfsdf'];
@@ -114,12 +122,12 @@ UEeditor 待修复问题
         $select_data=explode(',','1,2');
         $disable_data=explode(',','5,6');
         return $form->tabNav($data,$value,'','')->fieldItem([
-            ['name'=>'select_multiple','type'=>'select_multiple','data'=>$data2,'select_data'=>$select_data,'disable_data'=>$disable_data],
-            ['name'=>'radio','type'=>'radio','data'=>$data,'value'=>'key3'],
-            ['name'=>'checkbox','type'=>'checkbox','data'=>$data,'value'=>'key3'],
-            ['name'=>'checkbox_multiple','type'=>'checkbox_multiple','data'=>$data2,'select_data'=>$select_data,'disable_data'=>$disable_data],
-            ['data'=>'date','type'=>'date'],
-            ['data'=>'time','type'=>'time']
+            ['name'=>'select_multiple','field_type'=>'select_multiple','data'=>$data2,'select_data'=>$select_data,'disable_data'=>$disable_data],
+            ['name'=>'radio','field_type'=>'radio','data'=>$data,'value'=>'key3'],
+            ['name'=>'checkbox','field_type'=>'checkbox','data'=>$data,'value'=>'key3'],
+            ['name'=>'checkbox_multiple','field_type'=>'checkbox_multiple','data'=>$data2,'select_data'=>$select_data,'disable_data'=>$disable_data],
+            ['data'=>'date','field_type'=>'date'],
+            ['data'=>'time','field_type'=>'time']
         ])->create();
     }`
 

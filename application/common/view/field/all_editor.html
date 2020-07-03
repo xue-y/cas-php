@@ -1,4 +1,4 @@
-<div id="all_editor" type="text/plain"  name="{$name|default='all_editor'}" class="{$class|default=''}" {$extra|default=""}></div>
+<div id="all_editor" type="text/plain"  name="{$name|default='all_editor'}" class="{$class|default=''}" {$style|default=""}></div>
 <script>
     //实例化编辑器
     var ue = UE.getEditor('all_editor'); // 此处必须是ID
@@ -8,8 +8,9 @@
         //设置编辑器的内容
         ue.setContent(value);
         //获取html内容，返回: <p>hello</p>
-        var html = ue.getContent();
+        var all_editor_html = ue.getContent();
         //获取纯文本内容，返回: hello
-        var txt = ue.getContentTxt();
+        var all_editor_txt = ue.getContentTxt();
     });
 </script>
+{$extra|default=""}

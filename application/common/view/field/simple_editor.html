@@ -1,4 +1,4 @@
-<div id="simple_editor" type="text/plain"  name="{$name|default='simple_editor'}" class="{$class|default=''}" {$extra|default=""}>{$value}</div>
+<div id="simple_editor" type="text/plain"  name="{$name|default='simple_editor'}" class="{$class|default=''}" {$style|default=""}></div>
 <script>
     //实例化编辑器 // 此处必须是ID
     var ue = UE.getEditor('simple_editor', {
@@ -12,8 +12,9 @@
         //设置编辑器的内容
         ue.setContent(value);
         //获取html内容，返回: <p>hello</p>
-        var html = ue.getContent();
+        var simple_editor_html = ue.getContent();
         //获取纯文本内容，返回: hello
-        var txt = ue.getContentTxt();
+        var simple_editor_txt = ue.getContentTxt();
     });
 </script>
+{$extra|default=""}

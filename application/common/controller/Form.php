@@ -106,14 +106,14 @@ class Form extends Base
      * @todo 表单字段元素
      * @param array $field_item 二维数组
      * @return $this
-     * 字段属性 一维示例
+     * 字段属性 一维示例，extra 变量放在最后，style 是加在元素上的
      * array(7) {
         ["name"] => string(1) "t"
         ["type"] => string(10) "date_range" 
         ["class"] => string(9) "aa search"
         ["placeholder"] => string(12) "时间区间"
         ["extra"] => string(18) "style=color:#eee"
-        ["style"] => string(18) "width:100px;height:20px" // 备用属性，目前字段中没有添加
+        ["style"] => string(18) "width:100px;height:20px" //
         ["value"] => string(10) "2019-10-10"
         ["data"] => array(0) {     // 数组数据
         }

@@ -13,6 +13,7 @@ return [
         'file_root_dir'=>\think\facade\Env::get('app_path'),// 文件存放目录
         'file_url_dir'=>'/', // 文件访问域名路径
         'del_file_url'=>"/plugin/FieldUpfile/delete", // 必传
-        'up_file_url'=>"/plugin/FieldUpfile/upLocal" // 必传
+        'up_file_url'=>"/plugin/FieldUpfile/upLocal" ,// 必传
+        'up_field_name'=>'up_file' //
     ],
 ];

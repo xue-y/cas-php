@@ -1,7 +1,7 @@
 {php}
     if(empty($value))$value=''
 {/php}
-<select name="{$name}" class="form-control {$class|default=''}">
+<select name="{$name}" class="form-control {$class|default=''}" {$style|default=''}>
     <option value="">{$placeholder|default=lang('select')}</option>
     {foreach $data as $k=>$v }
     {if($k==$value)}
@@ -13,3 +13,4 @@
     {/if}
     {/foreach}
 </select>
+{$extra|default=""}

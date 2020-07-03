@@ -1,8 +1,21 @@
 <!--头部，相册选择和格式选择-->
-<div class="uploader col-md-2 auto_upload" >
+<div class="uploader auto_upload  {$class|default=''}" {$style|default='' }>
     <div class="queueList">
+        {empty name="value"}
         <div class="placeholder">
             <div class="filePicker"></div>
         </div>
+        {else /}
+        <!--图片展示开始,如果是修改图片-->
+        <ul class="filelist exit_auto_up">
+            <li class="state-complete"><p class="title">{$value|basename}</p>
+                <p class="imgWrap"><img src="{$value}" /></p>
+                <div class="file-panel" style="height: 0px;"><span class="cancel">删除</span></div>
+                <input type="hidden" name="up_file[]" value="{$value}">
+            </li>
+        </ul>
+        <!-- 图片展示结束-->
+        {/empty}
     </div>
 </div>
+{$extra|default=""}

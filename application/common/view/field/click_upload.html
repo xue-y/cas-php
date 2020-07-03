@@ -1,10 +1,21 @@
-<div id="container">
+{notempty name="data"}
+<div class="uploader">
+    <ul class="filelist exit_click_up">
+        {foreach $data as $v }
+        <li class="state-complete"><p class="title">{$v|basename}</p>
+            <p class="imgWrap"><img src="{$v}" /></p>
+            <div class="file-panel" style="height: 0px;"><span class="cancel">删除</span></div>
+            <input type="hidden" name="up_file[]" value="{$v}">
+        </li>
+        {/foreach}
+    </ul></div>
+{/notempty}
+<div id="container"  {$style|default=''} class="{$class|default=''}">
     <!--头部，相册选择和格式选择-->
     <div id="click_upload">
         <div class="queueList">
             <div class="placeholder">
                 <div class="filePicker"></div>
-                <p>或将文件拖到这里，本地最多上传300个文件，远程上传1个文件</p>
             </div>
         </div>
         <div class="statusBar" style="display:none;">
@@ -17,4 +28,6 @@
             </div>
         </div>
     </div>
+
 </div>
+{$extra|default=""}

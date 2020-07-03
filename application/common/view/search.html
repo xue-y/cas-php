@@ -1,5 +1,5 @@
 {notempty name="field_data"}
-<form method="{$method|default='get'}" action="{$action|default=''}" {$extra|default=''}>
+<form method="{$method|default='get'}" action="{$action|default=''}" {$style|default=''}>
     <div class="form-group">
         {foreach $field_data as $k=>$data}
             {switch $data.field_type}

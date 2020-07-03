@@ -1,4 +1,4 @@
-
+.uploader{overflow: hidden;}
 .element-invisible {
 	position: absolute !important;
 	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
@@ -14,6 +14,7 @@
 	position: relative;
 	box-sizing: border-box;
 	background-position: center 0px;padding-top:0px;min-height:135px; width:135px;
+	float: left;
 }
  
 .uploader .placeholder .webuploader-pick {
@@ -59,7 +60,7 @@
 .uploader .filelist {
 	list-style: none;
 	margin: 0;
-	padding: 0;
+	padding: 0;float:left;
 }
  
 .uploader .filelist:after {
@@ -73,7 +74,7 @@
  
 .uploader .filelist li {
 	width: 131px;
-	height: 131px;
+	height: 131px;margin-right: 20px;
 	background: url(../img/bg.png);
 	text-align: center;
 	/**margin: 0 8px 20px 0;**/
